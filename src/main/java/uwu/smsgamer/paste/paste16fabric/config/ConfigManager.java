@@ -21,7 +21,7 @@ public class ConfigManager {
     }
 
     public void loadConfig(File file) {
-        if (!file.exists()) throw new IllegalArgumentException(file + " does not exist!");
+        if (!file.exists()) return;
         try (Reader reader = new FileReader(file)) {
             loadConfig(reader);
         } catch (IOException e) {

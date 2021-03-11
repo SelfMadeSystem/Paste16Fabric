@@ -1,6 +1,7 @@
 package uwu.smsgamer.paste.paste16fabric.module;
 
 import lombok.Getter;
+import uwu.smsgamer.paste.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste.paste16fabric.values.*;
 
 public class PasteModule {
@@ -16,6 +17,8 @@ public class PasteModule {
         this.description = description;
         this.enabled = new VBool(this, "enabled", false);
         this.keyBind = new VKeybind(this, "keyBind", 0);
+
+        EventManager.registerListener(this);
     }
 
     public PasteModule(String name, String description, boolean enabled, int keybind) {
@@ -23,6 +26,8 @@ public class PasteModule {
         this.description = description;
         this.enabled = new VBool(this, "enabled", enabled);
         this.keyBind = new VKeybind(this, "keyBind", keybind);
+
+        EventManager.registerListener(this);
     }
 
     public boolean getState() {

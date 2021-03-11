@@ -12,9 +12,6 @@
   "icon": "assets/Paste16Fabric/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "uwu.smsgamer.paste.paste16fabric.client.Paste16FabricClient"
-    ],
     "main": [
       "uwu.smsgamer.paste.paste16fabric.Paste16Fabric"
     ]

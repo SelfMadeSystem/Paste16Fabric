@@ -1,5 +1,7 @@
 package uwu.smsgamer.paste.paste16fabric.module;
 
+import uwu.smsgamer.paste.paste16fabric.module.defaultmodules.render.Hud;
+
 import java.util.*;
 
 public class ModuleManager {
@@ -8,6 +10,10 @@ public class ModuleManager {
     public static ModuleManager getInstance() {
         if (instance == null) instance = new ModuleManager();
         return instance;
+    }
+
+    public ModuleManager() {
+        addModule(new Hud());
     }
 
     private final Set<PasteModule> modules = new HashSet<>();
