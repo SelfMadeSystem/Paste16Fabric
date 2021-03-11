@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "uwu.smsgamer.paste.paste16fabric.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "screen.MixinScreen"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

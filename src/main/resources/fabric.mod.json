@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "paste_16_fabric",
+  "version": "${version}",
+  "name": "Paste16Fabric",
+  "description": "PasteClient for Fabric 1.16.5",
+  "authors": [
+    "Sms_Gamer_3808"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/Paste16Fabric/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "uwu.smsgamer.paste.paste16fabric.client.Paste16FabricClient"
+    ],
+    "main": [
+      "uwu.smsgamer.paste.paste16fabric.Paste16Fabric"
+    ]
+  },
+  "mixins": [
+    "Paste16Fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.2",
+    "fabric": "*",
+    "minecraft": "1.16.5"
+  }
+}
