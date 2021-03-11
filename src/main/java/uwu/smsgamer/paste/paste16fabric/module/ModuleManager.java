@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste.core.module;
+package uwu.smsgamer.paste.paste16fabric.module;
 
 import java.util.*;
 

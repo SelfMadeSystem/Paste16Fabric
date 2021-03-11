@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste.core.config;
+package uwu.smsgamer.paste.paste16fabric.config;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;

@@ -1,44 +1,50 @@
-package uwu.smsgamer.paste.core.utils;
+package uwu.smsgamer.paste.paste16fabric.utils;
 
-import uwu.smsgamer.paste.core.utils.interfaces.IMathUtils;
+import net.minecraft.util.math.MathHelper;
 
 public class MathUtils {
-    public static IMathUtils utils;
-
     public static boolean approxEquals(double x, double y, double diff) {
         return Math.abs(x - y) <= diff;
     }
 
     public static double sin_dr(double r) {
-        return utils.sin(r);
+        return sin(r).doubleValue();
     }
 
     public static float sin_fr(float r) {
-        return (float) utils.sin(r);
+        return sin(r).floatValue();
     }
 
     public static double sin_dd(double r) {
-        return utils.sin(Math.toRadians(r));
+        return sin(Math.toRadians(r)).doubleValue();
     }
 
     public static float sin_fd(float r) {
-        return (float) utils.sin(Math.toRadians(r));
+        return sin(Math.toRadians(r)).floatValue();
     }
 
     public static double cos_dr(double r) {
-        return utils.cos(r);
+        return cos(r).doubleValue();
     }
 
     public static float cos_fr(float r) {
-        return (float) utils.cos(r);
+        return cos(r).floatValue();
     }
 
     public static double cos_dd(double r) {
-        return utils.cos(Math.toRadians(r));
+        return cos(Math.toRadians(r)).doubleValue();
     }
 
     public static float cos_fd(float r) {
-        return (float) utils.cos(Math.toRadians(r));
+        return cos(Math.toRadians(r)).floatValue();
+    }
+
+    public static Number sin(Number r) {
+        return MathHelper.sin(r.floatValue());
+    }
+
+    public static Number cos(Number r) {
+        return MathHelper.cos(r.floatValue());
     }
 
     public static float wrapAngle180(float f) {

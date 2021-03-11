@@ -1,9 +1,9 @@
-package uwu.smsgamer.paste.core.values;
+package uwu.smsgamer.paste.paste16fabric.values;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import uwu.smsgamer.paste.core.config.ConfigValue;
-import uwu.smsgamer.paste.core.module.PasteModule;
+import uwu.smsgamer.paste.paste16fabric.config.ConfigValue;
+import uwu.smsgamer.paste.paste16fabric.module.PasteModule;
 
 @Getter
 public class Val<T> extends ConfigValue<T> {

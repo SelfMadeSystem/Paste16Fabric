@@ -1,7 +1,7 @@
-package uwu.smsgamer.paste.core.values;
+package uwu.smsgamer.paste.paste16fabric.values;
 
 import org.jetbrains.annotations.NotNull;
-import uwu.smsgamer.paste.core.module.PasteModule;
+import uwu.smsgamer.paste.paste16fabric.module.PasteModule;
 
 public class VString extends Val<String> {
     public VString(@NotNull PasteModule module, @NotNull String name, @NotNull String defaultValue) {

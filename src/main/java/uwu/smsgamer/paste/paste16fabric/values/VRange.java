@@ -1,10 +1,10 @@
-package uwu.smsgamer.paste.core.values;
+package uwu.smsgamer.paste.paste16fabric.values;
 
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
-import uwu.smsgamer.paste.core.config.ConfigManager;
-import uwu.smsgamer.paste.core.module.PasteModule;
-import uwu.smsgamer.paste.core.utils.MathUtils;
+import uwu.smsgamer.paste.paste16fabric.config.ConfigManager;
+import uwu.smsgamer.paste.paste16fabric.module.PasteModule;
+import uwu.smsgamer.paste.paste16fabric.utils.MathUtils;
 
 import java.util.Map;
 

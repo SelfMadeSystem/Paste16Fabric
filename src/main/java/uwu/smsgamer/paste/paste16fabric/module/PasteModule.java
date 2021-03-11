@@ -1,7 +1,7 @@
-package uwu.smsgamer.paste.core.module;
+package uwu.smsgamer.paste.paste16fabric.module;
 
 import lombok.Getter;
-import uwu.smsgamer.paste.core.values.*;
+import uwu.smsgamer.paste.paste16fabric.values.*;
 
 public class PasteModule {
     @Getter

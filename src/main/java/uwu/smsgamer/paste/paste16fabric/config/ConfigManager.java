@@ -1,7 +1,7 @@
-package uwu.smsgamer.paste.core.config;
+package uwu.smsgamer.paste.paste16fabric.config;
 
 import org.yaml.snakeyaml.*;
-import uwu.smsgamer.paste.core.PasteCore;
+import uwu.smsgamer.paste.paste16fabric.Paste16Fabric;
 
 import java.io.*;
 import java.util.*;
@@ -17,7 +17,7 @@ public class ConfigManager {
     private Map<String, Object> objectMap = new LinkedHashMap<>();
 
     public void loadConfig(String name) {
-        loadConfig(new File(PasteCore.base.getModDirectory(), name));
+        loadConfig(new File(Paste16Fabric.getModDirectory(), name));
     }
 
     public void loadConfig(File file) {

@@ -4,6 +4,8 @@
   "package": "uwu.smsgamer.paste.paste16fabric.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "hud.MixinInGameOverlayRenderer",
+    "render.MixinGamerRenderer",
     "screen.MixinScreen"
   ],
   "client": [
