@@ -27,8 +27,8 @@ public class Render2D {
      * @param r radius
      * @param color color
      */
-    public static void drawCircle(MatrixStack matrixStack, float x, float y, float r, Color color) {
-        drawHollowCircle(matrixStack, x, y, r, 0, color);
+    public static void drawCircle(Matrix4f matrix, float x, float y, float r, Color color) {
+        drawHollowCircle(matrix, x, y, r, 0, color);
     }
 
     /**
@@ -40,8 +40,8 @@ public class Render2D {
      * @param ir inner radius
      * @param color color
      */
-    public static void drawHollowCircle(MatrixStack matrixStack, float x, float y, float r, float ir, Color color) {
-        drawHollowCircleSegm(matrixStack, x, y, r, ir, 0, 360, 0, 360, color);
+    public static void drawHollowCircle(Matrix4f matrix, float x, float y, float r, float ir, Color color) {
+        drawHollowCircleSegm(matrix, x, y, r, ir, 0, 360, 0, 360, color);
     }
 
     /**
@@ -54,8 +54,8 @@ public class Render2D {
      * @param endDeg Ending degrees
      * @param color color
      */
-    public static void drawCircleSegm(MatrixStack matrixStack, float x, float y, float r, float startDeg, float endDeg, Color color) {
-        drawHollowCircleSegm(matrixStack, x, y, r, 0, startDeg, endDeg, startDeg, endDeg, color);
+    public static void drawCircleSegm(Matrix4f matrix, float x, float y, float r, float startDeg, float endDeg, Color color) {
+        drawHollowCircleSegm(matrix, x, y, r, 0, startDeg, endDeg, startDeg, endDeg, color);
 
     }
 
@@ -72,7 +72,7 @@ public class Render2D {
      * @param outerEndDeg End degrees for outer
      * @param color color
      */
-    public static void drawHollowCircleSegm(MatrixStack matrixStack,
+    public static void drawHollowCircleSegm(Matrix4f matrix,
                                             float x, float y, float r, float ir,
                                             float innerStartDeg, float innerEndDeg,
                                             float outerStartDeg, float outerEndDeg,
@@ -102,16 +102,13 @@ public class Render2D {
             float oCos1 = MathUtils.cos_fd(f * ol + oa) * r;
             float iSin1 = MathUtils.sin_fd(f * il + ia) * ir;
             float iCos1 = MathUtils.cos_fd(f * il + ia) * ir;
-            matrixStack.push();
-            Matrix4f matrix4f = matrixStack.peek().getModel();
             bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
-            bufferBuilder.vertex(matrix4f, x + iSin, y - iCos, Z).color(red, green, blue, alpha).next();
-            bufferBuilder.vertex(matrix4f, x + oSin, y - oCos, Z).color(red, green, blue, alpha).next();
-            bufferBuilder.vertex(matrix4f, x + oSin1, y - oCos1, Z).color(red, green, blue, alpha).next();
-            bufferBuilder.vertex(matrix4f, x + iSin1, y - iCos1, Z).color(red, green, blue, alpha).next();
+            bufferBuilder.vertex(matrix, x + iSin, y - iCos, Z).color(red, green, blue, alpha).next();
+            bufferBuilder.vertex(matrix, x + oSin, y - oCos, Z).color(red, green, blue, alpha).next();
+            bufferBuilder.vertex(matrix, x + oSin1, y - oCos1, Z).color(red, green, blue, alpha).next();
+            bufferBuilder.vertex(matrix, x + iSin1, y - iCos1, Z).color(red, green, blue, alpha).next();
             bufferBuilder.end();
             BufferRenderer.draw(bufferBuilder);
-            matrixStack.pop();
         }
 
         RenderSystem.disableBlend();
@@ -119,7 +116,7 @@ public class Render2D {
         RenderSystem.depthFunc(515);
     }
 
-    public static void drawRect(MatrixStack matrixStack, float x, float y, float width, float height, Color color) {
+    public static void drawRect(Matrix4f matrix, float x, float y, float width, float height, Color color) {
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         RenderSystem.depthFunc(519);
         RenderSystem.depthMask(false);
@@ -131,19 +128,27 @@ public class Render2D {
         float blue = color.getBlue() / 255F;
         float alpha = color.getAlpha() / 255F;
 
-        matrixStack.push();
-        Matrix4f matrix4f = matrixStack.peek().getModel();
         bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(matrix4f, x, y, Z).color(red, green, blue, alpha).next();
-        bufferBuilder.vertex(matrix4f, x + width, y, Z).color(red, green, blue, alpha).next();
-        bufferBuilder.vertex(matrix4f, x + width, y + height, Z).color(red, green, blue, alpha).next();
-        bufferBuilder.vertex(matrix4f, x, y + height, Z).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x, y, Z).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x + width, y, Z).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x + width, y + height, Z).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x, y + height, Z).color(red, green, blue, alpha).next();
         bufferBuilder.end();
         BufferRenderer.draw(bufferBuilder);
-        matrixStack.pop();
 
         RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.depthFunc(515);
+    }
+
+    public static void drawBorderedRect(Matrix4f matrix, float x, float y, float width, float height, float borderWidth, Color color, Color borderColor) {
+        float b2 = borderWidth + borderWidth;
+
+        drawRect(matrix, x + borderWidth, y + borderWidth, width - b2, height - b2, color);
+
+        drawRect(matrix, x, y, width, borderWidth, borderColor);
+        drawRect(matrix, x, y + height - borderWidth, width, borderWidth, borderColor);
+        drawRect(matrix, x, y + borderWidth, borderWidth, height - b2, borderColor);
+        drawRect(matrix, x + width - borderWidth, y + borderWidth, borderWidth, height - b2, borderColor);
     }
 }
