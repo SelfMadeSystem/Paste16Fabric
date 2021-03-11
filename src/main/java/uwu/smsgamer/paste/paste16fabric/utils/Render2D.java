@@ -2,12 +2,13 @@ package uwu.smsgamer.paste.paste16fabric.utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
 import java.awt.*;
 
 public class Render2D {
+    public static final Matrix4f identity = Matrix4f.scale(1, 1, 1);
+
     public static final int
       GL_POINTS = 0x0,
       GL_LINES = 0x1,
@@ -150,5 +151,9 @@ public class Render2D {
         drawRect(matrix, x, y + height - borderWidth, width, borderWidth, borderColor);
         drawRect(matrix, x, y + borderWidth, borderWidth, height - b2, borderColor);
         drawRect(matrix, x + width - borderWidth, y + borderWidth, borderWidth, height - b2, borderColor);
+    }
+
+    public static void drawString(String text, float v, float v1, int i, int i1, Color color) {
+
     }
 }
