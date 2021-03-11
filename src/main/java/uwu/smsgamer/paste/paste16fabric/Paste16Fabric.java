@@ -17,7 +17,7 @@ public class Paste16Fabric implements ModInitializer {
     }
 
     public static File getModDirectory() {
-        return MinecraftClient.getInstance().runDirectory;
+        return new File(MinecraftClient.getInstance().runDirectory, "PasteClient");
     }
 
     @Override
