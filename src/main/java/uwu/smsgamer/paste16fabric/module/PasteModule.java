@@ -16,14 +16,14 @@ public class PasteModule implements MinecraftHelper {
     protected final VKeybind keyBind;
 
     public PasteModule(String name, String description, ModuleCategory category) {
-        this(name, description, category, true, 0);
+        this(name, description, category, false, -1);
     }
 
     public PasteModule(String name, String description, ModuleCategory category, boolean enabled, int keybind) {
         this.name = name;
         this.description = description;
         this.category = category;
-        this.enabled = new VBool(this, "enabled", enabled);
+        this.enabled = new VBool(this, "enabled", enabled, "Whether this module is enabled or not.");
         this.keyBind = new VKeybind(this, "keyBind", keybind);
 
         EventManager.registerListener(this);
@@ -58,5 +58,6 @@ public class PasteModule implements MinecraftHelper {
     }
 
     public void init() {
+        if (getState()) onEnable();
     }
 }

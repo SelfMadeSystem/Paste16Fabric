@@ -7,7 +7,7 @@ import uwu.smsgamer.paste16fabric.module.*;
 
 public class Hud extends PasteModule {
     public Hud() {
-        super("Hud", "Heads up display", ModuleCategory.RENDER, true, 0);
+        super("Hud", "Heads up display", ModuleCategory.RENDER, true, -1);
         HudManager.getInstance();
     }
 

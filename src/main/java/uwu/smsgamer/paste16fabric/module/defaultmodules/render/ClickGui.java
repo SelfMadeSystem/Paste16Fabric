@@ -6,6 +6,4 @@ public class ClickGui extends PasteModule {
     public ClickGui() {
         super("ClickGui", "ClickGui thing", ModuleCategory.RENDER, false, 344);
     }
-
-
 }

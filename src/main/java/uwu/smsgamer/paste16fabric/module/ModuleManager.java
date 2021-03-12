@@ -2,7 +2,8 @@ package uwu.smsgamer.paste16fabric.module;
 
 import uwu.smsgamer.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
-import uwu.smsgamer.paste16fabric.module.defaultmodules.render.Hud;
+import uwu.smsgamer.paste16fabric.module.defaultmodules.movement.*;
+import uwu.smsgamer.paste16fabric.module.defaultmodules.render.*;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 
 import java.util.*;
@@ -17,7 +18,12 @@ public class ModuleManager implements MinecraftHelper {
 
     public ModuleManager() {
         EventManager.registerListener(this);
+        addModule(new ClickGui());
         addModule(new Hud());
+
+        addModule(new Fly());
+        addModule(new Speed());
+        addModule(new Step());
     }
 
     // Lists because order matters.
@@ -44,7 +50,8 @@ public class ModuleManager implements MinecraftHelper {
     private void onKey(KeyPressEvent event) {
         if (mc.player != null && event.pressType == 1) {
             for (PasteModule module : modules) {
-                if (module.keyBind.getValue() == event.key)
+                System.out.println(module.getName() + " : " + module.getKeyBind());
+                if (module.getKeyBind() == event.key)
                     module.toggle();
             }
         }

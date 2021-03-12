@@ -14,15 +14,15 @@ public class VRange extends Val<VRange.Range> {
     protected final double max;
     protected final double step;
 
-    public VRange(@NotNull PasteModule module, @NotNull String name, @NotNull Number defaultMin, @NotNull Number defaultMax, Number min, Number max, Number step) {
-        super(module, name, new Range(defaultMin, defaultMax));
+    public VRange(@NotNull PasteModule module, @NotNull String name, @NotNull Number defaultMin, @NotNull Number defaultMax, Number min, Number max, Number step, String description) {
+        super(module, name, new Range(defaultMin, defaultMax), description);
         this.min = min.doubleValue();
         this.max = max.doubleValue();
         this.step = step.doubleValue();
     }
 
-    public VRange(@NotNull Val<?> parent, @NotNull String name, @NotNull Number defaultMin, @NotNull Number defaultMax, Number min, Number max, Number step) {
-        super(parent, name, new Range(defaultMin, defaultMax));
+    public VRange(@NotNull Val<?> parent, @NotNull String name, @NotNull Number defaultMin, @NotNull Number defaultMax, Number min, Number max, Number step, String description) {
+        super(parent, name, new Range(defaultMin, defaultMax), description);
         this.min = min.doubleValue();
         this.max = max.doubleValue();
         this.step = step.doubleValue();

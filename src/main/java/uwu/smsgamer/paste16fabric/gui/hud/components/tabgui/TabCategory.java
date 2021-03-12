@@ -2,6 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 
 import lombok.Setter;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.*;
 
@@ -40,6 +41,7 @@ public class TabCategory extends TabBlock {
                 e.printStackTrace();
             }
         }
+        if (modules.size() > 0) modules.get(0).setHovered(true);
     }
 
     @Override
@@ -57,12 +59,11 @@ public class TabCategory extends TabBlock {
         if (this.selected) {
             y = top;
             x += getBoxWidth();
-            float vAdd = gui.getModuleOptions().getBaseOptions().getBoxHeight();
             x += getXOffset();
             y += getYOffset();
             for (TabBlock module : modules) {
                 module.render(matrices, x, y, top);
-                y += vAdd;
+                y += module.getBoxHeight();
             }
         }
     }
@@ -74,6 +75,7 @@ public class TabCategory extends TabBlock {
             return;
         }
         if (event.pressType > 0) {
+            int prevH = hover;
             switch (event.key) {
                 case 265: // Up
                     hover--;
@@ -94,6 +96,18 @@ public class TabCategory extends TabBlock {
                     current.select(null, this);
                     break;
             }
+            if (prevH != hover) {
+                modules.get(prevH).setHovered(false);
+                modules.get(hover).setHovered(true);
+            }
+        }
+    }
+
+    @Override
+    public void select(@Nullable TabGui gui, @Nullable TabBlock block) {
+        if (gui != null && modules.size() == 0) {
+            gui.setCurrent(null);
+            this.setSelected(false);
         }
     }
 }

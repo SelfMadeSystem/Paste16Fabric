@@ -72,8 +72,7 @@ public class TabGui extends HudComponent {
         for (TabBlock category : modules) category.preRender(matrices, x, y, top);
         for (TabBlock category : modules) {
             category.render(matrices, x, y, top);
-            y += category.selected ? ySel :
-              category.hovered ? yHov : yAdd;
+            y += category.getBoxHeight();
         }
     }
 

@@ -10,15 +10,15 @@ public class VNumber extends Val<Double> {
     protected double max;
     protected double step;
 
-    public VNumber(@NotNull PasteModule module, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step) {
-        super(module, name, defaultValue.doubleValue());
+    public VNumber(@NotNull PasteModule module, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step, String description) {
+        super(module, name, defaultValue.doubleValue(), description);
         this.min = min.doubleValue();
         this.max = max.doubleValue();
         this.step = step.doubleValue();
     }
 
-    public VNumber(@NotNull Val<?> parent, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step) {
-        super(parent, name, defaultValue.doubleValue());
+    public VNumber(@NotNull Val<?> parent, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step, String description) {
+        super(parent, name, defaultValue.doubleValue(), description);
         this.min = min.doubleValue();
         this.max = max.doubleValue();
         this.step = step.doubleValue();
