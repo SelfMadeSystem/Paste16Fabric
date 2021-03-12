@@ -8,4 +8,7 @@ public interface ICommand {
     void runCommand(String label, String[] args);
 
     List<String> tabComplete(String label, String[] args);
+
+    default void init() {
+    }
 }

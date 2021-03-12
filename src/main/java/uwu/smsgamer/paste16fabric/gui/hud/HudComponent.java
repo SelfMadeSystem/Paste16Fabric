@@ -43,4 +43,11 @@ public abstract class HudComponent implements MinecraftHelper {
                 throw new IllegalStateException("VerticalAlignment is set to: " + verticalAlignment);
         }
     }
+
+    public abstract float getWidth();
+
+    public abstract float getHeight();
+
+    public void init() {
+    }
 }

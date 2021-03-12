@@ -1,8 +1,5 @@
 package uwu.smsgamer.paste16fabric.module.defaultmodules.render;
 
-import net.minecraft.client.Keyboard;
-import net.minecraft.client.input.KeyboardInput;
-import net.minecraft.client.util.InputUtil;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.*;
 import uwu.smsgamer.paste16fabric.gui.hud.HudManager;
@@ -41,7 +38,12 @@ public class Hud extends PasteModule {
     @PasteListener
     public void onKey(KeyPressEvent event) {
         if (!getState()) return;
-        System.out.println(event.key + ":" + event.pressType);
         HudManager.getInstance().onKey(event);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        HudManager.getInstance().init();
     }
 }

@@ -37,4 +37,8 @@ public final class CommandManager {
                 return commandSystem.tabComplete(command);
         return null;
     }
+
+    public void init() {
+        for (ICommandSystem commandSystem : commandSystems)commandSystem.init();
+    }
 }

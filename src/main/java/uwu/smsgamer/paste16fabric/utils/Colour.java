@@ -135,4 +135,12 @@ public abstract class Colour {
     }
 
     public abstract Color toColor();
+
+    public RGB interpolate(Colour o, float a) {
+        float i = 1 - a;
+        return new RGB(getRed() * a + o.getRed() * i,
+          getGreen() * a + o.getGreen() * i,
+          getBlue() * a + o.getBlue() * i,
+          getAlpha() * a + o.getAlpha() * i);
+    }
 }

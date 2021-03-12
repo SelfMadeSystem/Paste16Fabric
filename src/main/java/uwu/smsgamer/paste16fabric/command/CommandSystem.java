@@ -4,7 +4,7 @@ import java.util.*;
 
 public class CommandSystem implements ICommandSystem {
     protected String prefix;
-    protected Set<ICommand> commands;
+    protected Set<ICommand> commands = new HashSet<>();
 
     public CommandSystem(String prefix) {
         this.prefix = prefix;
@@ -42,5 +42,10 @@ public class CommandSystem implements ICommandSystem {
             }
         }
         return null;
+    }
+
+    @Override
+    public void init() {
+        for (ICommand iCommand : commands) iCommand.init();
     }
 }

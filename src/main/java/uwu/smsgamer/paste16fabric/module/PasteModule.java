@@ -56,4 +56,7 @@ public class PasteModule implements MinecraftHelper {
 
     protected void onDisable() {
     }
+
+    public void init() {
+    }
 }

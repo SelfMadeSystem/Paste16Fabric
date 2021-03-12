@@ -25,4 +25,14 @@ public class TextComponent extends HudComponent {
 
         Render2D.drawString(model, text, x, y, getHorizontalAlignment(), getVerticalAlignment(), shadow, false, colour);
     }
+
+    @Override
+    public float getWidth() {
+        return (float) (mc.textRenderer.getWidth(text) * size);
+    }
+
+    @Override
+    public float getHeight() {
+        return (float) (mc.textRenderer.fontHeight * size);
+    }
 }

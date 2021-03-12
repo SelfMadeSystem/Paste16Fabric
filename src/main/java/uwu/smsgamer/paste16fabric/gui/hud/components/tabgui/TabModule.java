@@ -1,6 +1,5 @@
 package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 
-import net.minecraft.client.util.math.MatrixStack;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
 
 public class TabModule extends TabBlock {
@@ -12,6 +11,12 @@ public class TabModule extends TabBlock {
     }
 
     @Override
-    public void render(MatrixStack matrices, float x, float y) {
+    protected TabGui.SelectedOptions getOptions() {
+        return gui.getModuleOptions();
+    }
+
+    @Override
+    protected String getText() {
+        return module.getName();
     }
 }

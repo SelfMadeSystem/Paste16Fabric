@@ -48,4 +48,8 @@ public class ModuleManager implements MinecraftHelper {
             }
         }
     }
+
+    public void init() {
+        for (PasteModule module : modules) module.init();
+    }
 }

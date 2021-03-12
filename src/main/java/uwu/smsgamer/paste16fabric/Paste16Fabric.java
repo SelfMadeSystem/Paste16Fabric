@@ -28,6 +28,9 @@ public class Paste16Fabric implements ModInitializer {
         CommandManager.getInstance();
 
         ConfigManager.getInstance().loadConfig("config.yml");
+
+        ModuleManager.getInstance().init();
+        CommandManager.getInstance().init();
     }
 
     public void onDisable() {

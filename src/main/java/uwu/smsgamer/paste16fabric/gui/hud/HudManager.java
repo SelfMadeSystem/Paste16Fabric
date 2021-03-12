@@ -52,4 +52,8 @@ public class HudManager {
     public void onKey(KeyPressEvent event) {
         for (HudComponent hudComponent : components.getValue()) hudComponent.onKey(event);
     }
+
+    public void init() {
+        for (HudComponent hudComponent : components.getValue()) hudComponent.init();
+    }
 }
