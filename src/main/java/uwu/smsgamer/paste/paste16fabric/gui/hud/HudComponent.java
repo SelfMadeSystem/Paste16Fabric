@@ -19,9 +19,9 @@ public abstract class HudComponent implements MinecraftHelper {
             case -1:
                 return xOffset;
             case 0:
-                return mc.getWindow().getWidth()/2F + xOffset;
+                return mc.getWindow().getScaledWidth()/2F + xOffset;
             case 1:
-                return mc.getWindow().getWidth() + xOffset;
+                return mc.getWindow().getScaledWidth() + xOffset;
             default:
                 throw new IllegalStateException("HorizontalAlignment is set to: " + horizontalAlignment);
         }
@@ -32,9 +32,9 @@ public abstract class HudComponent implements MinecraftHelper {
             case -1:
                 return yOffset;
             case 0:
-                return mc.getWindow().getHeight()/2F + yOffset;
+                return mc.getWindow().getScaledHeight()/2F + yOffset;
             case 1:
-                return mc.getWindow().getHeight() + yOffset;
+                return mc.getWindow().getScaledHeight() + yOffset;
             default:
                 throw new IllegalStateException("VerticalAlignment is set to: " + verticalAlignment);
         }

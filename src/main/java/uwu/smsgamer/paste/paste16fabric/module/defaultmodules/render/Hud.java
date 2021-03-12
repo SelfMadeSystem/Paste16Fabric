@@ -1,14 +1,9 @@
 package uwu.smsgamer.paste.paste16fabric.module.defaultmodules.render;
 
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.util.math.Matrix4f;
 import uwu.smsgamer.paste.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste.paste16fabric.events.events.RenderEvent;
 import uwu.smsgamer.paste.paste16fabric.gui.hud.HudManager;
 import uwu.smsgamer.paste.paste16fabric.module.*;
-import uwu.smsgamer.paste.paste16fabric.utils.Render2D;
-
-import java.awt.*;
 
 public class Hud extends PasteModule {
     public Hud() {

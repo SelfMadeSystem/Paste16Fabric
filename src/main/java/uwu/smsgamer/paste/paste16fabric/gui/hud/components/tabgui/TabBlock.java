@@ -11,5 +11,5 @@ public abstract class TabBlock {
     protected static final float HEIGHT = 20F;
     protected static final float WIDTH = 100F;
 
-    public abstract float render(MatrixStack matrices, float x, float y);
+    public abstract void render(MatrixStack matrices, float x, float y);
 }

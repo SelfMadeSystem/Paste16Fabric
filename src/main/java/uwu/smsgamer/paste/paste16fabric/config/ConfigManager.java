@@ -82,7 +82,7 @@ public class ConfigManager {
     }
 
     public void saveConfig(String name) {
-        saveConfig(new File(name));
+        saveConfig(new File(Paste16Fabric.getModDirectory(), name));
     }
 
     public void saveConfig(File file) {
@@ -95,6 +95,9 @@ public class ConfigManager {
         Yaml yaml = new Yaml(options);
 
         try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+
             yaml.dump(objectMap, new FileWriter(file));
         } catch (IOException e) {
             e.printStackTrace();

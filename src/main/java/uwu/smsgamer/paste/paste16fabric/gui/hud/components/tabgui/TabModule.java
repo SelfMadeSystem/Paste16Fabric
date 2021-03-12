@@ -11,7 +11,6 @@ public class TabModule extends TabBlock {
     }
 
     @Override
-    public float render(MatrixStack matrices, float x, float y) {
-        return 0;
+    public void render(MatrixStack matrices, float x, float y) {
     }
 }

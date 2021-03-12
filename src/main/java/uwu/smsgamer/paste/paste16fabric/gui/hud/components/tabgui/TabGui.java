@@ -19,8 +19,21 @@ public class TabGui extends HudComponent {
     public void onRender(MatrixStack matrices, float partialTicks) {
         float x = getX();
         float y = getY();
+        System.out.println(y);
+        float yAdd = TabBlock.HEIGHT - TabBlock.BORDER;
+        if (verticalAlignment == 1)
+            y -= yAdd * modules.size();
+        else if (verticalAlignment == 0) {
+            y -= yAdd * modules.size() * 0.5;
+        }
+        if (horizontalAlignment == 1)
+            x -= TabBlock.WIDTH;
+        else if (horizontalAlignment == 0) {
+            x -= TabBlock.WIDTH * 0.5;
+        }
         for (TabCategory category : modules) {
-            y = category.render(matrices, x, y);
+            category.render(matrices, x, y);
+            y += yAdd;
         }
     }
 }

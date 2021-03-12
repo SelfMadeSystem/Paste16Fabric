@@ -18,11 +18,9 @@ public class TabCategory extends TabBlock {
     }
 
     @Override
-    public float render(MatrixStack matrices, float x, float y) {
+    public void render(MatrixStack matrices, float x, float y) {
         Render2D.drawBorderedRect(matrices.peek().getModel(), x, y, x + WIDTH, y + HEIGHT, BORDER, bg, fg);
 
         Render2D.drawString(matrices.peek().getModel(), category.getName(), x + BORDER + 2, y + BORDER + 1, true, false, Color.BLACK);
-
-        return y + HEIGHT - BORDER;
     }
 }
