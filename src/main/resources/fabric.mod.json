@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "uwu.smsgamer.paste.paste16fabric.Paste16Fabric"
+      "uwu.smsgamer.paste16fabric.Paste16Fabric"
     ]
   },
   "mixins": [
