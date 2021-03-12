@@ -2,7 +2,9 @@ package uwu.smsgamer.paste16fabric.gui.hud;
 
 import uwu.smsgamer.paste16fabric.config.ConfigValue;
 import uwu.smsgamer.paste16fabric.events.events.*;
+import uwu.smsgamer.paste16fabric.gui.hud.components.TextComponent;
 import uwu.smsgamer.paste16fabric.gui.hud.components.tabgui.TabGui;
+import uwu.smsgamer.paste16fabric.utils.Colours;
 
 import java.util.*;
 
@@ -20,10 +22,23 @@ public class HudManager {
         List<HudComponent> list = new ArrayList<>();
         TabGui tabgui = new TabGui();
 
-        tabgui.horizontalAlignment = -1;
-        tabgui.verticalAlignment = -1;
+        tabgui.setYOffset(50);
+        tabgui.setHorizontalAlignment(-1);
+        tabgui.setVerticalAlignment(-1);
 
         list.add(tabgui);
+
+        TextComponent text = new TextComponent();
+
+        text.setText("PasteClient");
+        text.setSize(3);
+        text.setHorizontalAlignment(-1);
+        text.setVerticalAlignment(-1);
+        text.setYOffset(2);
+        text.setXOffset(2);
+        text.setColour(Colours.CYAN);
+
+        list.add(text);
 
         components = new ConfigValue<>("hud.components", list);
     }

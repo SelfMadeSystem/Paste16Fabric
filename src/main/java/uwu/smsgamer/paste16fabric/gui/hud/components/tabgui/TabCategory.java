@@ -21,7 +21,7 @@ public class TabCategory extends TabBlock {
 
     @Override
     public void render(MatrixStack matrices, float x, float y) {
-        Matrix4f model = Render2D.identity();//matrices.peek().getModel();
+        Matrix4f model = matrices.peek().getModel().copy();
         Render2D.drawBorderedRect(model, x, y, x + opt().getBoxWidth(), y + opt().getBoxHeight(), opt().getBoxBorder(),
           opt().getBoxInsideColour(), opt().getBoxBorderColour());
 
