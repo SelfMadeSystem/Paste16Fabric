@@ -21,13 +21,20 @@ public class ModuleManager implements MinecraftHelper {
     }
 
     private final Set<PasteModule> modules = new HashSet<>();
+    private final EnumMap<ModuleCategory, Set<PasteModule>> modulesByCategory = new EnumMap<>(ModuleCategory.class);
 
     public void addModule(PasteModule module) {
         modules.add(module);
+        modulesByCategory.computeIfAbsent(module.getCategory(), v -> new HashSet<>());
+        modulesByCategory.get(module.getCategory()).add(module);
     }
 
     public Set<PasteModule> getModules() {
         return new HashSet<>(modules);
+    }
+
+    public Set<PasteModule> modulesByCategory(ModuleCategory category) {
+        return new HashSet<>(modulesByCategory.get(category));
     }
 
     @PasteListener
