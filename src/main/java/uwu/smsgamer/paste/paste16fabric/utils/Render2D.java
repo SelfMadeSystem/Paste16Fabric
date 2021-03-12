@@ -174,7 +174,14 @@ public class Render2D implements MinecraftHelper {
         drawRect(matrix, x2 - bw, y1 + bw, x2, y2 - bw, borderColor);
     }
 
-    public static void drawString(String text, float v, float v1, int i, int i1, Color color) {
-
+    public static int drawString(Matrix4f matrix, String text, float x, float y, boolean shadow, boolean mirror, Color color) {
+        if (text == null) {
+            return 0;
+        } else {
+            VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
+            int i = mc.textRenderer.draw(text, x, y, color.getRGB(), shadow, matrix, immediate, false, 0, 15728880, mirror);
+            immediate.draw();
+            return i;
+        }
     }
 }

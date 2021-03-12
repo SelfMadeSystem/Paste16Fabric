@@ -7,7 +7,7 @@ import java.awt.*;
 public abstract class TabBlock {
     protected static final Color bg = Color.WHITE;
     protected static final Color fg = Color.RED;
-    protected static final float BORDER = 5F;
+    protected static final float BORDER = 2F;
     protected static final float HEIGHT = 20F;
     protected static final float WIDTH = 100F;
 
