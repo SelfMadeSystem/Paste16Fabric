@@ -33,10 +33,10 @@ public class ModuleManager implements MinecraftHelper {
         return new HashSet<>(modules);
     }
 
-    public Set<PasteModule> getModulesByCategory(ModuleCategory category) {
+    public List<PasteModule> getModulesByCategory(ModuleCategory category) {
         Set<PasteModule> pasteModules = modulesByCategory.get(category);
-        if (pasteModules == null) return new HashSet<>();
-        return new HashSet<>(pasteModules);
+        if (pasteModules == null) return new LinkedList<>();
+        return new LinkedList<>(pasteModules);
     }
 
     @PasteListener

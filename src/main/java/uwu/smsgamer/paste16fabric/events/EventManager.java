@@ -28,7 +28,11 @@ public class EventManager {
                 Class<? extends Event> eClass = (Class<? extends Event>) type;
                 method.setAccessible(true);
                 listeners.computeIfAbsent(eClass, x -> new HashSet<>());
-                listeners.get(eClass).add(new ObjMethod(obj, method));
+                Set<ObjMethod> objMethods = listeners.get(eClass);
+                if (objMethods.stream().anyMatch(m -> { // don't ask pls
+                    return m.method.getName().equals(method.getName()) && m.obj.getClass().getName().equals(obj.getClass().getName());
+                })) return;
+                objMethods.add(new ObjMethod(obj, method));
             } else {
                 logger.warning(method.getName() + "'s parameter is not of type Event! Actual type: " + type);
             }
@@ -39,7 +43,9 @@ public class EventManager {
 
     public static void call(Event event) {
         Set<ObjMethod> objMethods = listeners.get(event.getClass());
-        if (objMethods != null) for (ObjMethod m : objMethods) m.invoke(event);
+        if (objMethods != null) for (ObjMethod m : objMethods) {
+            m.invoke(event);
+        }
     }
 
     private static class ObjMethod {

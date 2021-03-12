@@ -1,7 +1,7 @@
 package uwu.smsgamer.paste16fabric.gui.hud;
 
 import uwu.smsgamer.paste16fabric.config.ConfigValue;
-import uwu.smsgamer.paste16fabric.events.events.RenderEvent;
+import uwu.smsgamer.paste16fabric.events.events.*;
 import uwu.smsgamer.paste16fabric.gui.hud.components.tabgui.TabGui;
 
 import java.util.*;
@@ -31,8 +31,10 @@ public class HudManager {
     public ConfigValue<List<HudComponent>> components;
 
     public void render(RenderEvent event) {
-        for (HudComponent hudComponent : components.getValue()) {
-            hudComponent.onRender(event.matrices, event.partialTicks);
-        }
+        for (HudComponent component : components.getValue()) component.onRender(event.matrices, event.partialTicks);
+    }
+
+    public void onKey(KeyPressEvent event) {
+        for (HudComponent hudComponent : components.getValue()) hudComponent.onKey(event);
     }
 }

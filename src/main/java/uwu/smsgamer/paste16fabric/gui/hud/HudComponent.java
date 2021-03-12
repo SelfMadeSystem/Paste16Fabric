@@ -2,6 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.hud;
 
 import lombok.*;
 import net.minecraft.client.util.math.MatrixStack;
+import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 
 @Getter
@@ -14,12 +15,15 @@ public abstract class HudComponent implements MinecraftHelper {
 
     public abstract void onRender(MatrixStack matrices, float partialTicks);
 
+    public void onKey(KeyPressEvent event) {
+    }
+
     public float getX() {
         switch (horizontalAlignment) {
             case -1:
                 return xOffset;
             case 0:
-                return mc.getWindow().getScaledWidth()/2F + xOffset;
+                return mc.getWindow().getScaledWidth() / 2F + xOffset;
             case 1:
                 return mc.getWindow().getScaledWidth() + xOffset;
             default:
@@ -32,7 +36,7 @@ public abstract class HudComponent implements MinecraftHelper {
             case -1:
                 return yOffset;
             case 0:
-                return mc.getWindow().getScaledHeight()/2F + yOffset;
+                return mc.getWindow().getScaledHeight() / 2F + yOffset;
             case 1:
                 return mc.getWindow().getScaledHeight() + yOffset;
             default:

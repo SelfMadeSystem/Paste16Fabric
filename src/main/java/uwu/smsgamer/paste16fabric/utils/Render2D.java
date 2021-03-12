@@ -5,10 +5,11 @@ import net.minecraft.client.render.*;
 import net.minecraft.util.math.Matrix4f;
 
 public class Render2D implements MinecraftHelper {
-    public static final Matrix4f identity = Matrix4f.scale(1, 1, 1);
+    public static Matrix4f identity() {
+        return Matrix4f.scale(1, 1, 1);
+    }
 
     public static Matrix4f windowScaled() {
-
         float scale = 1F / mc.getWindow().getHeight();
         return Matrix4f.scale(scale, scale, scale);
     }
