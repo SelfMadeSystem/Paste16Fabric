@@ -1,14 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "uwu.smsgamer.paste.paste16fabric.mixins",
+  "package": "uwu.smsgamer.paste16fabric.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "uwu.smsgamer.paste16fabric.mixins.client.MixinMinecraftClient",
-    "uwu.smsgamer.paste16fabric.mixins.hud.MixinInGameOverlayRenderer",
-    "uwu.smsgamer.paste16fabric.mixins.client.MixinKeyboard",
-    "uwu.smsgamer.paste16fabric.mixins.render.MixinGamerRenderer",
-    "uwu.smsgamer.paste16fabric.mixins.screen.MixinScreen"
+    "client.MixinMinecraftClient",
+    "hud.MixinInGameOverlayRenderer",
+    "client.MixinKeyboard",
+    "render.MixinGamerRenderer",
+    "screen.MixinScreen"
   ],
   "client": [
   ],

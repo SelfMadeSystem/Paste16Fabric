@@ -3,7 +3,6 @@ package uwu.smsgamer.paste16fabric.module;
 import lombok.Getter;
 import uwu.smsgamer.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
-import uwu.smsgamer.paste.paste16fabric.values.*;
 import uwu.smsgamer.paste16fabric.values.*;
 
 public class PasteModule implements MinecraftHelper {

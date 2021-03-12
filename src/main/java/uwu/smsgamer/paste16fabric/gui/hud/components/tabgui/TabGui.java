@@ -4,7 +4,6 @@ import lombok.*;
 import net.minecraft.client.util.math.MatrixStack;
 import uwu.smsgamer.paste16fabric.gui.hud.HudComponent;
 import uwu.smsgamer.paste16fabric.module.ModuleCategory;
-import uwu.smsgamer.paste.paste16fabric.utils.*;
 import uwu.smsgamer.paste16fabric.utils.*;
 
 import java.util.*;

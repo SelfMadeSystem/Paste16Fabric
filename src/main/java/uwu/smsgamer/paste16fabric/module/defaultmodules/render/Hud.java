@@ -3,7 +3,6 @@ package uwu.smsgamer.paste16fabric.module.defaultmodules.render;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.RenderEvent;
 import uwu.smsgamer.paste16fabric.gui.hud.HudManager;
-import uwu.smsgamer.paste.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.module.*;
 
 public class Hud extends PasteModule {

@@ -1,6 +1,5 @@
 package uwu.smsgamer.paste16fabric.module;
 
-import uwu.smsgamer.paste.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.defaultmodules.render.Hud;

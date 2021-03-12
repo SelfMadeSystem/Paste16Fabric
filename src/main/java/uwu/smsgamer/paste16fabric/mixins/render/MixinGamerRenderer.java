@@ -1,6 +1,6 @@
 package uwu.smsgamer.paste16fabric.mixins.render;
 
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;

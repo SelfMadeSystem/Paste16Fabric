@@ -1,7 +1,6 @@
 package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 
 import net.minecraft.client.util.math.MatrixStack;
-import uwu.smsgamer.paste.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.utils.Render2D;
 

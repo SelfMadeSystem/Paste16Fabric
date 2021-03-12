@@ -24,7 +24,7 @@ public class ConfigManager {
         if (!file.exists()) return;
         try (Reader reader = new FileReader(file)) {
             loadConfig(reader);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
