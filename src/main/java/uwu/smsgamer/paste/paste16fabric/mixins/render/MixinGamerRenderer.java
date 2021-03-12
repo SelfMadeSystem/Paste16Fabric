@@ -2,21 +2,17 @@ package uwu.smsgamer.paste.paste16fabric.mixins.render;
 
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import uwu.smsgamer.paste.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste.paste16fabric.events.events.RenderEvent;
-import uwu.smsgamer.paste.paste16fabric.utils.Render2D;
-
-import java.awt.*;
 
 @Mixin(GameRenderer.class)
 public class MixinGamerRenderer {
-    @Inject(method = "renderWorld", at = @At("RETURN"))
-    public void renderWorld(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
-        EventManager.call(new RenderEvent(tickDelta));
+    @Inject(method = "render", at = @At("RETURN"))//value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
+    public void render(float tickDelta, long startTime, boolean tick, CallbackInfo ci) {
+        EventManager.call(new RenderEvent(tickDelta, new MatrixStack()));
 
 
 //        Matrix4f identity = Matrix4f.scale(1, 1, 1);

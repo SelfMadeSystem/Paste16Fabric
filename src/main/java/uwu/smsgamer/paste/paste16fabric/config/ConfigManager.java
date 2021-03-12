@@ -14,7 +14,7 @@ public class ConfigManager {
         return instance;
     }
 
-    private Map<String, Object> objectMap = new LinkedHashMap<>();
+    private final Map<String, Object> objectMap = new LinkedHashMap<>();
 
     public void loadConfig(String name) {
         loadConfig(new File(Paste16Fabric.getModDirectory(), name));

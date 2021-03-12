@@ -14,19 +14,25 @@ public class HudManager {
         return instance;
     }
 
-    public ConfigValue<List<HudComponent>> components;
+    public HudManager() {
+        instance = this;
 
-    {
         List<HudComponent> list = new ArrayList<>();
         TabGui tabgui = new TabGui();
 
         tabgui.horizontalAlignment = -1;
-        tabgui.verticalAlignment = 1;
+        tabgui.verticalAlignment = -1;
+
+        list.add(tabgui);
 
         components = new ConfigValue<>("hud.components", list);
     }
 
-    public void render(RenderEvent event) {
+    public ConfigValue<List<HudComponent>> components;
 
+    public void render(RenderEvent event) {
+        for (HudComponent hudComponent : components.getValue()) {
+            hudComponent.onRender(event.matrices, event.partialTicks);
+        }
     }
 }

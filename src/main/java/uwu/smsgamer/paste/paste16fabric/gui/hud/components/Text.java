@@ -1,8 +1,8 @@
 package uwu.smsgamer.paste.paste16fabric.gui.hud.components;
 
 import lombok.*;
+import net.minecraft.client.util.math.MatrixStack;
 import uwu.smsgamer.paste.paste16fabric.gui.hud.HudComponent;
-import uwu.smsgamer.paste.paste16fabric.utils.Render2D;
 
 import java.awt.*;
 
@@ -16,6 +16,6 @@ public class Text extends HudComponent {
     protected String text;
 
     @Override
-    public void onRender(float partialTicks) {
+    public void onRender(MatrixStack matrices, float partialTicks) {
     }
 }

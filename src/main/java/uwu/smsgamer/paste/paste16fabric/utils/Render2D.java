@@ -6,8 +6,13 @@ import net.minecraft.util.math.Matrix4f;
 
 import java.awt.*;
 
-public class Render2D {
+public class Render2D implements MinecraftHelper {
     public static final Matrix4f identity = Matrix4f.scale(1, 1, 1);
+
+    public static Matrix4f windowScaled() {
+        float scale = 1F / mc.getWindow().getHeight();
+        return Matrix4f.scale(scale, scale, scale);
+    }
 
     public static final int
       GL_POINTS = 0x0,
@@ -18,7 +23,7 @@ public class Render2D {
       GL_TRIANGLE_STRIP = 0x5,
       GL_TRIANGLE_FAN = 0x6,
       GL_QUADS = 0x7;
-    public static float Z = -1.43F;
+    public static float Z = 0.0F;//-1.43F;
 
     /**
      * Draws a full circle.
@@ -79,11 +84,9 @@ public class Render2D {
                                             float outerStartDeg, float outerEndDeg,
                                             Color color) {
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
-        RenderSystem.depthFunc(519);
-        RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
         RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
         final float ol = outerEndDeg - outerStartDeg;
         final float oa = outerStartDeg;
         final float il = innerEndDeg - innerStartDeg;
@@ -111,46 +114,64 @@ public class Render2D {
             bufferBuilder.end();
             BufferRenderer.draw(bufferBuilder);
         }
-
+        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
-        RenderSystem.depthMask(true);
-        RenderSystem.depthFunc(515);
     }
 
-    public static void drawRect(Matrix4f matrix, float x, float y, float width, float height, Color color) {
-        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
-        RenderSystem.depthFunc(519);
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableTexture();
+    public static void drawRect(Matrix4f matrix, float x1, float y1, float x2, float y2, Color color) {
+        float j;
+        if (x1 < x2) {
+            j = x1;
+            x1 = x2;
+            x2 = j;
+        }
+
+        if (y1 < y2) {
+            j = y1;
+            y1 = y2;
+            y2 = j;
+        }
+
         float red = color.getRed() / 255f;
         float green = color.getGreen() / 255f;
         float blue = color.getBlue() / 255F;
         float alpha = color.getAlpha() / 255F;
 
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
         bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(matrix, x, y, Z).color(red, green, blue, alpha).next();
-        bufferBuilder.vertex(matrix, x + width, y, Z).color(red, green, blue, alpha).next();
-        bufferBuilder.vertex(matrix, x + width, y + height, Z).color(red, green, blue, alpha).next();
-        bufferBuilder.vertex(matrix, x, y + height, Z).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x1, y2, 0.0F).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x2, y2, 0.0F).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x2, y1, 0.0F).color(red, green, blue, alpha).next();
+        bufferBuilder.vertex(matrix, x1, y1, 0.0F).color(red, green, blue, alpha).next();
         bufferBuilder.end();
         BufferRenderer.draw(bufferBuilder);
-
+        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
-        RenderSystem.depthMask(true);
-        RenderSystem.depthFunc(515);
     }
 
-    public static void drawBorderedRect(Matrix4f matrix, float x, float y, float width, float height, float borderWidth, Color color, Color borderColor) {
-        float b2 = borderWidth + borderWidth;
+    public static void drawBorderedRect(Matrix4f matrix, float x1, float y1, float x2, float y2, float bw, Color color, Color borderColor) {
+        float j;
+        if (x1 > x2) {
+            j = x1;
+            x1 = x2;
+            x2 = j;
+        }
 
-        drawRect(matrix, x + borderWidth, y + borderWidth, width - b2, height - b2, color);
+        if (y1 > y2) {
+            j = y1;
+            y1 = y2;
+            y2 = j;
+        }
 
-        drawRect(matrix, x, y, width, borderWidth, borderColor);
-        drawRect(matrix, x, y + height - borderWidth, width, borderWidth, borderColor);
-        drawRect(matrix, x, y + borderWidth, borderWidth, height - b2, borderColor);
-        drawRect(matrix, x + width - borderWidth, y + borderWidth, borderWidth, height - b2, borderColor);
+        drawRect(matrix, x1 + bw, y1 + bw, x2 - bw, y2 - bw, color);
+
+        drawRect(matrix, x1, y1, x2, y1 + bw, borderColor);
+        drawRect(matrix, x1, y1 + bw, x1 + bw, y2, borderColor);
+        drawRect(matrix, x1 + bw, y2 - bw, x2, y2, borderColor);
+        drawRect(matrix, x2 - bw, y1 + bw, x2, y2 - bw, borderColor);
     }
 
     public static void drawString(String text, float v, float v1, int i, int i1, Color color) {
