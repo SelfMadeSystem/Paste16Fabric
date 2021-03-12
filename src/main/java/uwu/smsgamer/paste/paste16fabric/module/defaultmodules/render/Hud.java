@@ -17,6 +17,7 @@ public class Hud extends PasteModule {
     public void onRender(RenderEvent event) {
         if (!getState()) return;
         if (mc.textRenderer == null) return;
+        System.out.println(event.matrices.peek().getModel());
         HudManager.getInstance().render(event);
 
 //        DrawableHelper.fill(event.matrices, 0, 0, 20, 20, 0xFFFFFFFF);

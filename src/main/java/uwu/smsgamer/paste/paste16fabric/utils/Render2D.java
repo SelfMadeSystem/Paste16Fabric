@@ -31,10 +31,10 @@ public class Render2D implements MinecraftHelper {
      * @param x x position
      * @param y y position
      * @param r radius
-     * @param color color
+     * @param colour colour
      */
-    public static void drawCircle(Matrix4f matrix, float x, float y, float r, Color color) {
-        drawHollowCircle(matrix, x, y, r, 0, color);
+    public static void drawCircle(Matrix4f matrix, float x, float y, float r, Colour colour) {
+        drawHollowCircle(matrix, x, y, r, 0, colour);
     }
 
     /**
@@ -44,10 +44,10 @@ public class Render2D implements MinecraftHelper {
      * @param y y position
      * @param r radius
      * @param ir inner radius
-     * @param color color
+     * @param colour colour
      */
-    public static void drawHollowCircle(Matrix4f matrix, float x, float y, float r, float ir, Color color) {
-        drawHollowCircleSegm(matrix, x, y, r, ir, 0, 360, 0, 360, color);
+    public static void drawHollowCircle(Matrix4f matrix, float x, float y, float r, float ir, Colour colour) {
+        drawHollowCircleSegm(matrix, x, y, r, ir, 0, 360, 0, 360, colour);
     }
 
     /**
@@ -58,10 +58,10 @@ public class Render2D implements MinecraftHelper {
      * @param r radius
      * @param startDeg Starting degrees
      * @param endDeg Ending degrees
-     * @param color color
+     * @param colour colour
      */
-    public static void drawCircleSegm(Matrix4f matrix, float x, float y, float r, float startDeg, float endDeg, Color color) {
-        drawHollowCircleSegm(matrix, x, y, r, 0, startDeg, endDeg, startDeg, endDeg, color);
+    public static void drawCircleSegm(Matrix4f matrix, float x, float y, float r, float startDeg, float endDeg, Colour colour) {
+        drawHollowCircleSegm(matrix, x, y, r, 0, startDeg, endDeg, startDeg, endDeg, colour);
 
     }
 
@@ -76,13 +76,13 @@ public class Render2D implements MinecraftHelper {
      * @param innerEndDeg End degrees for inner
      * @param outerStartDeg Start degrees for outer
      * @param outerEndDeg End degrees for outer
-     * @param color color
+     * @param colour colour
      */
     public static void drawHollowCircleSegm(Matrix4f matrix,
                                             float x, float y, float r, float ir,
                                             float innerStartDeg, float innerEndDeg,
                                             float outerStartDeg, float outerEndDeg,
-                                            Color color) {
+                                            Colour colour) {
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         RenderSystem.enableBlend();
         RenderSystem.disableTexture();
@@ -91,10 +91,10 @@ public class Render2D implements MinecraftHelper {
         final float oa = outerStartDeg;
         final float il = innerEndDeg - innerStartDeg;
         final float ia = innerStartDeg;
-        float red = color.getRed() / 255f;
-        float green = color.getGreen() / 255f;
-        float blue = color.getBlue() / 255F;
-        float alpha = color.getAlpha() / 255F;
+        float red = (float) colour.getRed();
+        float green = (float) colour.getGreen();
+        float blue = (float) colour.getBlue();
+        float alpha = (float) colour.getAlpha();
         for (int i = 0; i <= 356; i += 4) {
             float f = i / 360f;
             float oSin = MathUtils.sin_fd(f * ol + oa) * r;
@@ -118,7 +118,7 @@ public class Render2D implements MinecraftHelper {
         RenderSystem.disableBlend();
     }
 
-    public static void drawRect(Matrix4f matrix, float x1, float y1, float x2, float y2, Color color) {
+    public static void drawRect(Matrix4f matrix, float x1, float y1, float x2, float y2, Colour colour) {
         float j;
         if (x1 < x2) {
             j = x1;
@@ -132,10 +132,10 @@ public class Render2D implements MinecraftHelper {
             y2 = j;
         }
 
-        float red = color.getRed() / 255f;
-        float green = color.getGreen() / 255f;
-        float blue = color.getBlue() / 255F;
-        float alpha = color.getAlpha() / 255F;
+        float red = (float) colour.getRed();
+        float green = (float) colour.getGreen();
+        float blue = (float) colour.getBlue();
+        float alpha = (float) colour.getAlpha();
 
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         RenderSystem.enableBlend();
@@ -152,7 +152,7 @@ public class Render2D implements MinecraftHelper {
         RenderSystem.disableBlend();
     }
 
-    public static void drawBorderedRect(Matrix4f matrix, float x1, float y1, float x2, float y2, float bw, Color color, Color borderColor) {
+    public static void drawBorderedRect(Matrix4f matrix, float x1, float y1, float x2, float y2, float bw, Colour colour, Colour borderColour) {
         float j;
         if (x1 > x2) {
             j = x1;
@@ -166,20 +166,29 @@ public class Render2D implements MinecraftHelper {
             y2 = j;
         }
 
-        drawRect(matrix, x1 + bw, y1 + bw, x2 - bw, y2 - bw, color);
+        drawRect(matrix, x1 + bw, y1 + bw, x2 - bw, y2 - bw, colour);
 
-        drawRect(matrix, x1, y1, x2, y1 + bw, borderColor);
-        drawRect(matrix, x1, y1 + bw, x1 + bw, y2, borderColor);
-        drawRect(matrix, x1 + bw, y2 - bw, x2, y2, borderColor);
-        drawRect(matrix, x2 - bw, y1 + bw, x2, y2 - bw, borderColor);
+        drawRect(matrix, x1, y1, x2, y1 + bw, borderColour);
+        drawRect(matrix, x1, y1 + bw, x1 + bw, y2, borderColour);
+        drawRect(matrix, x1 + bw, y2 - bw, x2, y2, borderColour);
+        drawRect(matrix, x2 - bw, y1 + bw, x2, y2 - bw, borderColour);
     }
 
-    public static int drawString(Matrix4f matrix, String text, float x, float y, boolean shadow, boolean mirror, Color color) {
+    public static int drawString(Matrix4f matrix, String text, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, boolean mirror, Colour colour) {
         if (text == null) {
             return 0;
         } else {
             VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
-            int i = mc.textRenderer.draw(text, x, y, color.getRGB(), shadow, matrix, immediate, false, 0, 15728880, mirror);
+            int height = mc.textRenderer.fontHeight;
+            int width = mc.textRenderer.getWidth(text);
+
+            if (horizontalAlignment == 1) x -= width;
+            else if (horizontalAlignment == 0) x -= width * 0.5;
+
+            if (verticalAlignment == 1) y -= height;
+            else if (verticalAlignment == 0) y -= height * 0.5;
+
+            int i = mc.textRenderer.draw(text, x, y, colour.getRGB(), shadow, matrix, immediate, false, 0, 15728880, mirror);
             immediate.draw();
             return i;
         }

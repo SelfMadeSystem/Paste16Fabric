@@ -6,7 +6,8 @@ import uwu.smsgamer.paste.paste16fabric.module.PasteModule;
 public class TabModule extends TabBlock {
     public final PasteModule module;
 
-    public TabModule(PasteModule module) {
+    public TabModule(TabGui gui, PasteModule module) {
+        super(gui);
         this.module = module;
     }
 
