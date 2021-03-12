@@ -22,7 +22,7 @@ public class HudManager {
         List<HudComponent> list = new ArrayList<>();
         TabGui tabgui = new TabGui();
 
-        tabgui.setYOffset(50);
+        tabgui.setYOffset(30);
         tabgui.setHorizontalAlignment(-1);
         tabgui.setVerticalAlignment(-1);
 
