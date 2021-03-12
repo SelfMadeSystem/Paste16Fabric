@@ -20,21 +20,22 @@ public class ModuleManager implements MinecraftHelper {
         addModule(new Hud());
     }
 
-    private final Set<PasteModule> modules = new HashSet<>();
-    private final EnumMap<ModuleCategory, Set<PasteModule>> modulesByCategory = new EnumMap<>(ModuleCategory.class);
+    // Lists because order matters.
+    private final List<PasteModule> modules = new LinkedList<>();
+    private final EnumMap<ModuleCategory, List<PasteModule>> modulesByCategory = new EnumMap<>(ModuleCategory.class);
 
     public void addModule(PasteModule module) {
         modules.add(module);
-        modulesByCategory.computeIfAbsent(module.getCategory(), v -> new HashSet<>());
+        modulesByCategory.computeIfAbsent(module.getCategory(), v -> new LinkedList<>());
         modulesByCategory.get(module.getCategory()).add(module);
     }
 
-    public Set<PasteModule> getModules() {
-        return new HashSet<>(modules);
+    public List<PasteModule> getModules() {
+        return new LinkedList<>(modules);
     }
 
     public List<PasteModule> getModulesByCategory(ModuleCategory category) {
-        Set<PasteModule> pasteModules = modulesByCategory.get(category);
+        List<PasteModule> pasteModules = modulesByCategory.get(category);
         if (pasteModules == null) return new LinkedList<>();
         return new LinkedList<>(pasteModules);
     }

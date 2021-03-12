@@ -69,6 +69,7 @@ public class TabGui extends HudComponent {
         else if (horizontalAlignment == 0) {
             x -= getWidth() * 0.5;
         }
+        for (TabBlock category : modules) category.preRender(matrices, x, y, top);
         for (TabBlock category : modules) {
             category.render(matrices, x, y, top);
             y += category.selected ? ySel :
@@ -77,13 +78,20 @@ public class TabGui extends HudComponent {
     }
 
     private int hovered = 0;
+    @Setter
+    @Getter
+    private TabBlock current;
 
     @Override
     public void onKey(KeyPressEvent event) {
+        if (current != null) {
+            current.onKey(event);
+            return;
+        }
         if (event.pressType > 0) {
             int prevH = hovered;
             switch(event.key) {
-                case 265:
+                case 265: // Up
                     hovered--;
                     if (hovered < 0) hovered = event.pressType == 2 ? 0 : modules.size() - 1;
                     break;
@@ -91,9 +99,10 @@ public class TabGui extends HudComponent {
                     hovered++;
                     if (hovered >= modules.size()) hovered = event.pressType == 2 ? modules.size() - 1 : 0;
                     break;
-                case 263: // Left
-                    break;
                 case 262: // Right
+                    current = modules.get(hovered);
+                    current.setSelected(true);
+                    current.select(this, null);
                     break;
             }
             if (prevH != hovered) {
@@ -119,6 +128,8 @@ public class TabGui extends HudComponent {
         private Options baseOptions;
         private Options hoverOptions;
         private Options selectedOptions;
+        private int textHorizontalAlignment = -1;
+        private int textVerticalAlignment = 0;
         private int fade = 100;
 
         public SelectedOptions() {
@@ -142,7 +153,7 @@ public class TabGui extends HudComponent {
         private int boxHeight = 20;
         private int boxBorder = 2;
         private double textSize = 1;
-        private int textHorizontalAlignment = -1;
-        private int textVerticalAlignment = 0;
+        private int yOffset = 0;
+        private int xOffset = 0;
     }
 }

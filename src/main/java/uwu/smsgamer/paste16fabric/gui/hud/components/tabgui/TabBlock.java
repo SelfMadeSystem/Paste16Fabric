@@ -3,6 +3,8 @@ package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 import lombok.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+import org.jetbrains.annotations.Nullable;
+import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.utils.*;
 
 @Getter
@@ -11,6 +13,10 @@ public abstract class TabBlock implements MinecraftHelper {
     protected final TabGui gui;
     protected boolean hovered;
     protected boolean selected;
+
+    protected int hover = 0;
+    @Setter
+    protected TabBlock current;
 
     protected TabBlock(TabGui gui) {
         this.gui = gui;
@@ -55,6 +61,8 @@ public abstract class TabBlock implements MinecraftHelper {
         prevBoxBorderColour = getBoxBorderColour();
         prevTextSize = getTextSize();
         prevTextColour = getTextColour();
+        prevXOffset = getXOffset();
+        prevYOffset = getYOffset();
     }
 
     public float getTime() {
@@ -110,14 +118,33 @@ public abstract class TabBlock implements MinecraftHelper {
         return opt().getTextColour().interpolate(prevTextColour, getTime());
     }
 
+    private float prevXOffset = -1;
+
+    public float getXOffset() {
+        if (prevXOffset == -1) prevXOffset = (float) opt().getXOffset();
+        return (float) (prevXOffset + (opt().getXOffset() - prevXOffset) * getTime());
+    }
+
+    private float prevYOffset = -1;
+
+    public float getYOffset() {
+        if (prevYOffset == -1) prevYOffset = (float) opt().getYOffset();
+        return (float) (prevYOffset + (opt().getYOffset() - prevYOffset) * getTime());
+    }
+
     public void render(MatrixStack matrices, float x, float y, float top) {
+        x += getXOffset();
+        y += getYOffset();
+
         opt();
         Matrix4f model = matrices.peek().getModel().copy();
         Render2D.drawBorderedRect(model, x, y, x + getBoxWidth(), y + getBoxHeight(), getBoxBorder(),
           getBoxInsideColour(), getBoxBorderColour());
 
-        int horizontalAlignment = opt().getTextHorizontalAlignment();
-        int verticalAlignment = opt().getTextVerticalAlignment();
+        int textHorizontalAlignment = getOptions().getTextHorizontalAlignment();
+        int horizontalAlignment = textHorizontalAlignment;
+        int textVerticalAlignment = getOptions().getTextVerticalAlignment();
+        int verticalAlignment = textVerticalAlignment;
 
         switch (horizontalAlignment) {
             case -1:
@@ -143,13 +170,22 @@ public abstract class TabBlock implements MinecraftHelper {
                 break;
         }
 
-        model.multiply((float) getTextSize());
+        model.multiply(getTextSize());
 
         x /= getTextSize();
         y /= getTextSize();
 
         Render2D.drawString(model, getText(), x, y,
-          opt().getTextHorizontalAlignment(), opt().getTextVerticalAlignment(),
+          textHorizontalAlignment, textVerticalAlignment,
           true, false, getTextColour());
+    }
+
+    public void preRender(MatrixStack matrices, float x, float y, float top) {
+    }
+
+    public void onKey(KeyPressEvent event) {
+    }
+
+    public void select(@Nullable TabGui gui, @Nullable TabBlock block) {
     }
 }
