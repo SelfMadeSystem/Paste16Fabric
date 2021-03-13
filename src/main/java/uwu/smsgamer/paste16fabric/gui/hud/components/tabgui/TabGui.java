@@ -4,14 +4,25 @@ import lombok.*;
 import net.minecraft.client.util.math.MatrixStack;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.gui.hud.HudComponent;
+import uwu.smsgamer.paste16fabric.gui.hud.components.HudText;
 import uwu.smsgamer.paste16fabric.module.ModuleCategory;
 import uwu.smsgamer.paste16fabric.utils.*;
+import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.List;
 
 public class TabGui extends HudComponent {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private final List<TabBlock> modules = new ArrayList<>();
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    protected GlyphPageFontRenderer categoryRenderer;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    protected GlyphPageFontRenderer moduleRenderer;
     @Getter
     @Setter
     private CategoryOptions categoryOptions = new CategoryOptions();
@@ -49,6 +60,15 @@ public class TabGui extends HudComponent {
             }
         }
         this.modules.get(0).hovered = true;
+        regenerateRenderers();
+    }
+
+    public void regenerateRenderers() {
+        if (categoryOptions.getFontSettings().getFont() != null && !categoryOptions.getFontSettings().getFont().isBlank())
+            categoryRenderer = categoryOptions.getFontSettings().generateRenderer();
+
+        if (moduleOptions.getFontSettings().getFont() != null && !moduleOptions.getFontSettings().getFont().isBlank())
+            moduleRenderer = moduleOptions.getFontSettings().generateRenderer();
     }
 
     @Override
@@ -56,9 +76,6 @@ public class TabGui extends HudComponent {
         float x = getX();
         float top = getY();
         float y = top;
-        float yAdd = categoryOptions.baseOptions.boxHeight - categoryOptions.baseOptions.boxBorder;
-        float ySel = categoryOptions.selectedOptions.boxHeight - categoryOptions.selectedOptions.boxBorder;
-        float yHov = categoryOptions.hoverOptions.boxHeight - categoryOptions.hoverOptions.boxBorder;
         if (verticalAlignment == 1)
             y -= getHeight();
         else if (verticalAlignment == 0) {
@@ -77,9 +94,7 @@ public class TabGui extends HudComponent {
     }
 
     private int hovered = 0;
-    @Setter
-    @Getter
-    private TabBlock current;
+    protected TabBlock current;
 
     @Override
     public void onKey(KeyPressEvent event) {
@@ -129,19 +144,16 @@ public class TabGui extends HudComponent {
         protected Options selectedOptions;
         protected int textHorizontalAlignment = -1;
         protected int textVerticalAlignment = 0;
-        protected String font;
-        protected boolean shadow;
+        protected HudText.FontSettings fontSettings = new HudText.FontSettings();
         protected int fade = 100;
-        protected int baseFontSize = 10;
 
         public CategoryOptions() {
             baseOptions = new Options();
             hoverOptions = new Options();
-            hoverOptions.setBoxBorder(3);
+            hoverOptions.setBoxBorder(2);
             hoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
             selectedOptions = new Options();
-            selectedOptions.setBoxBorder(4);
-            selectedOptions.setBoxInsideColour(Colours.GRAY);
+            selectedOptions.setBoxBorder(2);
         }
     }
 
@@ -152,17 +164,20 @@ public class TabGui extends HudComponent {
 
         public ModuleOptions() {
             baseOptions = new Options();
-            hoverOptions = new Options();
-            hoverOptions.setBoxBorder(3);
+            baseOptions.setBoxWidth(90);
+            baseOptions.setBoxHeight(17);
+            baseOptions.setTextSize(0.9);
+
+            hoverOptions = baseOptions.clone();
+            hoverOptions.setBoxBorder(2);
             hoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
 
-            selectedOptions = new Options();
-            selectedOptions.setTextColour(Colours.RED);
-
-            selectedHoverOptions = new Options();
-            selectedHoverOptions.setBoxBorder(3);
+            selectedOptions = baseOptions.clone();
+            selectedHoverOptions = baseOptions.clone();
+            selectedHoverOptions.setBoxBorder(2);
             selectedHoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
-            selectedHoverOptions.setTextColour(Colours.RED);
+            selectedOptions.setBoxBorder(2);
+            selectedOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
         }
     }
 
@@ -170,11 +185,11 @@ public class TabGui extends HudComponent {
     @Setter
     public static class Options implements Cloneable {
         private Colour boxInsideColour = Colours.WHITE;
-        private Colour boxBorderColour = Colours.RED;
+        private Colour boxBorderColour = Colours.BLACK;
         private Colour textColour = Colours.BLACK;
         private int boxWidth = 100;
         private int boxHeight = 20;
-        private int boxBorder = 2;
+        private int boxBorder = 1;
         private double textSize = 1;
         private int yOffset = 0;
         private int xOffset = 0;

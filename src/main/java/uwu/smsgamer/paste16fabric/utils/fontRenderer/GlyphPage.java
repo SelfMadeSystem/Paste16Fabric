@@ -12,6 +12,8 @@ package uwu.smsgamer.paste16fabric.utils.fontRenderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.texture.*;
+import net.minecraft.client.util.math.Vector4f;
+import net.minecraft.util.math.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import javax.imageio.ImageIO;
@@ -123,8 +125,8 @@ public class GlyphPage {
     public void setupTexture() {
         try {
             loadedTexture = new NativeImageBackedTexture(NativeImage.read(imgToBase64String(bufferedImage, "png")));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -148,7 +150,8 @@ public class GlyphPage {
         RenderSystem.bindTexture(0);
     }
 
-    public float drawChar(char ch, float x, float y) {
+    public float drawChar(Matrix4f matrix, char ch, float x, float y) {
+
         Glyph glyph = glyphCharacterMap.get(ch);
 
         if (glyph == null) throw new IllegalArgumentException("'" + ch + "' wasn't found");
@@ -165,27 +168,33 @@ public class GlyphPage {
         GL11.glBegin(GL11.GL_TRIANGLES);
 
         GL11.glTexCoord2f(pageX + pageWidth, pageY);
-        GL11.glVertex2f(x + width, y);
+        vertex(matrix, x + width, y);
 
         GL11.glTexCoord2f(pageX, pageY);
-        GL11.glVertex2f(x, y);
+        vertex(matrix, x, y);
 
         GL11.glTexCoord2f(pageX, pageY + pageHeight);
-        GL11.glVertex2f(x, y + height);
+        vertex(matrix, x, y + height);
 
         GL11.glTexCoord2f(pageX, pageY + pageHeight);
-        GL11.glVertex2f(x, y + height);
+        vertex(matrix, x, y + height);
 
         GL11.glTexCoord2f(pageX + pageWidth, pageY + pageHeight);
-        GL11.glVertex2f(x + width, y + height);
+        vertex(matrix, x + width, y + height);
 
         GL11.glTexCoord2f(pageX + pageWidth, pageY);
-        GL11.glVertex2f(x + width, y);
+        vertex(matrix, x + width, y);
 
 
         GL11.glEnd();
 
         return width - 8;
+    }
+
+    private void vertex(Matrix4f matrix, float x, float y) {
+        Vector4f vector4f = new Vector4f(x, y, 1.0F, 1.0F);
+        vector4f.transform(matrix);
+        GL11.glVertex2f(vector4f.getX(), vector4f.getY());
     }
 
     public float getWidth(char ch) {

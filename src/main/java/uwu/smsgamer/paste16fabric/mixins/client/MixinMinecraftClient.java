@@ -12,4 +12,9 @@ public class MixinMinecraftClient {
     public void stop(CallbackInfo ci) {
         Paste16Fabric.getInstance().onDisable();
     }
+
+    @Inject(method = "run", at = @At("HEAD"))
+    public void start(CallbackInfo ci) {
+        Paste16Fabric.getInstance().onEnable();
+    }
 }

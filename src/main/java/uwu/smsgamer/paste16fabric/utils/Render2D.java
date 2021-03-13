@@ -1,7 +1,11 @@
 package uwu.smsgamer.paste16fabric.utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.client.render.*;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
@@ -216,10 +220,7 @@ public class Render2D implements MinecraftHelper {
         }
     }
 
-    public static int drawString(Matrix4f matrix, String text, String font, int fontSize, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
-        GlyphPageFontRenderer renderer = GlyphPageFontRenderer.create(font, fontSize, false, false, false);
-
-
+    public static int drawString(Matrix4f matrix, String text, GlyphPageFontRenderer renderer, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
         int height = renderer.getFontHeight();
         int width = renderer.getStringWidth(text);
 

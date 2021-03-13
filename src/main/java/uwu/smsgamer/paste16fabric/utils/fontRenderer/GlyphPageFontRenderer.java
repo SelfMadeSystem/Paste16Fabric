@@ -107,17 +107,7 @@ public class GlyphPageFontRenderer {
         }
     }
 
-    private static final HashMap<Integer, GlyphPageFontRenderer> rendererCache = new HashMap<>();
-
-    private static int hash(String fontName, int size, boolean bold, boolean italic, boolean boldItalic) {
-        return Objects.hash(fontName, size, bold, italic, boldItalic);
-    }
-
     public static GlyphPageFontRenderer create(String fontName, int size, boolean bold, boolean italic, boolean boldItalic) {
-        int hash = hash(fontName, size, bold, italic, boldItalic);
-        GlyphPageFontRenderer renderer = rendererCache.get(hash);
-        if (renderer != null) return renderer;
-
         char[] chars = new char[256];
 
         for (int i = 0; i < chars.length; i++) {
@@ -156,9 +146,7 @@ public class GlyphPageFontRenderer {
             boldItalicPage.setupTexture();
         }
 
-        renderer = new GlyphPageFontRenderer(regularPage, boldPage, italicPage, boldItalicPage);
-        rendererCache.put(hash, renderer);
-        return renderer;
+        return new GlyphPageFontRenderer(regularPage, boldPage, italicPage, boldItalicPage);
     }
 
 
@@ -277,7 +265,7 @@ public class GlyphPageFontRenderer {
 
                 glyphPage.bindTexture();
 
-                float f = glyphPage.drawChar(c0, posX, posY);
+                float f = glyphPage.drawChar(matrix, c0, posX, posY);
 
                 doDraw(matrix, f, glyphPage);
             }
@@ -306,10 +294,10 @@ public class GlyphPageFontRenderer {
             RenderSystem.disableTexture();
             worldrenderer.begin(7, VertexFormats.POSITION);
             int l = this.underlineStyle ? -1 : 0;
-            worldrenderer.vertex(this.posX + (float) l, this.posY + (float) glyphPage.getMaxFontHeight(), 0.0D).next();
-            worldrenderer.vertex(this.posX + f, this.posY + (float) glyphPage.getMaxFontHeight(), 0.0D).next();
-            worldrenderer.vertex(this.posX + f, this.posY + (float) glyphPage.getMaxFontHeight() - 1.0F, 0.0D).next();
-            worldrenderer.vertex(this.posX + (float) l, this.posY + (float) glyphPage.getMaxFontHeight() - 1.0F, 0.0D).next();
+            worldrenderer.vertex(matrix, this.posX + (float) l, this.posY + (float) glyphPage.getMaxFontHeight(), 0).next();
+            worldrenderer.vertex(matrix, this.posX + f, this.posY + (float) glyphPage.getMaxFontHeight(), 0).next();
+            worldrenderer.vertex(matrix, this.posX + f, this.posY + (float) glyphPage.getMaxFontHeight() - 1.0F, 0).next();
+            worldrenderer.vertex(matrix, this.posX + (float) l, this.posY + (float) glyphPage.getMaxFontHeight() - 1.0F, 0).next();
             tessellator.draw();
             RenderSystem.enableTexture();
         }

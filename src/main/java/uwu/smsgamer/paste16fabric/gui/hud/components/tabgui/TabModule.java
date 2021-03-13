@@ -2,6 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 
 import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
+import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
 
 public class TabModule extends TabBlock {
     public final PasteModule module;
@@ -19,7 +20,7 @@ public class TabModule extends TabBlock {
     @Override
     protected TabGui.Options getOpt() {
         TabGui.ModuleOptions o = getOptions();
-        return selected ?
+        return module.getState() ?
           hovered ? o.getSelectedHoverOptions() : o.getSelectedOptions():
           hovered ? o.getHoverOptions() : o.getBaseOptions();
     }
@@ -30,9 +31,14 @@ public class TabModule extends TabBlock {
     }
 
     @Override
+    protected GlyphPageFontRenderer getRenderer() {
+        return gui.moduleRenderer;
+    }
+
+    @Override
     public void select(@Nullable TabGui gui, @Nullable TabBlock block) {
         if (block != null) {
-            block.setCurrent(null);
+            block.current = null;
             module.toggle();
             this.setSelected(module.getState());
         }

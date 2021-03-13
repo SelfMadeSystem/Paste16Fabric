@@ -10,6 +10,7 @@ import java.io.File;
 
 public class Paste16Fabric implements ModInitializer {
     private static Paste16Fabric instance;
+    public static boolean enabled = false;
 
     public static Paste16Fabric getInstance() {
         if (instance == null) instance = new Paste16Fabric();
@@ -22,6 +23,9 @@ public class Paste16Fabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+    }
+
+    public void onEnable() {
         System.out.println("Starting Paste16Fabric...");
 
         ModuleManager.getInstance();

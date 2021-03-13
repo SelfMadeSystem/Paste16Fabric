@@ -6,6 +6,7 @@ import net.minecraft.util.math.Matrix4f;
 import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.utils.*;
+import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
 
 @Getter
 @Setter
@@ -14,8 +15,11 @@ public abstract class TabBlock implements MinecraftHelper {
     protected boolean hovered;
     protected boolean selected;
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     protected int hover = 0;
-    @Setter
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     protected TabBlock current;
 
     protected TabBlock(TabGui gui) {
@@ -27,6 +31,8 @@ public abstract class TabBlock implements MinecraftHelper {
     protected abstract TabGui.Options getOpt();
 
     protected abstract String getText();
+
+    protected abstract GlyphPageFontRenderer getRenderer();
 
     private TabGui.Options options;
 
@@ -175,15 +181,21 @@ public abstract class TabBlock implements MinecraftHelper {
         x /= getTextSize();
         y /= getTextSize();
 
-        String font = getOptions().getFont();
+        String font = getOptions().getFontSettings().getFont();
         if (font == null || font.isBlank()) {
+            float v = getOptions().getFontSettings().getBaseFontSize() / 14F;
+            model.multiply(v);
+
+            x /= v;
+            y /= v;
+
             Render2D.drawString(model, getText(), x, y,
               textHorizontalAlignment, textVerticalAlignment,
-              getOptions().shadow, false, getTextColour());
+              getOptions().getFontSettings().isShadow(), false, getTextColour());
         } else {
-            Render2D.drawString(model, getText(), font, getOptions().getBaseFontSize(), x, y,
+            Render2D.drawString(model, getText(), getRenderer(), x, y,
               textHorizontalAlignment, textVerticalAlignment,
-              getOptions().shadow, getTextColour());
+              getOptions().getFontSettings().isShadow(), getTextColour());
         }
     }
 

@@ -2,7 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.hud;
 
 import uwu.smsgamer.paste16fabric.config.ConfigValue;
 import uwu.smsgamer.paste16fabric.events.events.*;
-import uwu.smsgamer.paste16fabric.gui.hud.components.TextComponent;
+import uwu.smsgamer.paste16fabric.gui.hud.components.HudText;
 import uwu.smsgamer.paste16fabric.gui.hud.components.tabgui.TabGui;
 import uwu.smsgamer.paste16fabric.utils.Colours;
 
@@ -28,16 +28,16 @@ public class HudManager {
 
         list.add(tabgui);
 
-        TextComponent text = new TextComponent();
+        HudText text = new HudText();
 
         text.setText("PasteClient");
-        text.setFont("consolas");
-        text.setSize(3);
-        text.setBaseFontSize(15);
+        text.getFontSettings().setFont("consolas");
+        text.setSize(0.5F);
+        text.getFontSettings().setBaseFontSize(40);
         text.setHorizontalAlignment(-1);
         text.setVerticalAlignment(-1);
-        text.setYOffset(2);
-        text.setXOffset(2);
+        text.setYOffset(-1);
+        text.setXOffset(0);
         text.setColour(Colours.CYAN);
 
         list.add(text);

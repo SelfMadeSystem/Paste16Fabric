@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.module.defaultmodules.render.Hud;
+import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -65,6 +66,11 @@ public class TabCategory extends TabBlock {
     }
 
     @Override
+    protected GlyphPageFontRenderer getRenderer() {
+        return gui.categoryRenderer;
+    }
+
+    @Override
     public void preRender(MatrixStack matrices, float x, float y, float top) {
         if (this.selected) {
             y = top;
@@ -97,7 +103,7 @@ public class TabCategory extends TabBlock {
                     break;
                 case 263: // Left
                     setSelected(false);
-                    gui.setCurrent(null);
+                    gui.current = null;
                     hover = 0;
                     break;
                 case 262: // Right
@@ -116,7 +122,7 @@ public class TabCategory extends TabBlock {
     @Override
     public void select(@Nullable TabGui gui, @Nullable TabBlock block) {
         if (gui != null && modules.size() == 0) {
-            gui.setCurrent(null);
+            gui.current = null;
             this.setSelected(false);
         }
     }
