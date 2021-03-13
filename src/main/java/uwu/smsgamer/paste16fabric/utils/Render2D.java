@@ -5,6 +5,7 @@ import net.minecraft.client.render.*;
 import net.minecraft.text.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
+import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
 
 public class Render2D implements MinecraftHelper {
     public static Matrix4f identity() {
@@ -217,9 +218,15 @@ public class Render2D implements MinecraftHelper {
     }
 
     public static int drawString(Matrix4f matrix, String text, String font, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
-        Identifier myFont = new Identifier("paste_16_fabric", "font/" + font);
-        Text literal = new LiteralText(text).styled(style -> style.withFont(myFont));
 
-        return drawString(matrix, literal, x, y, horizontalAlignment, verticalAlignment, shadow, colour);
+        GlyphPageFontRenderer renderer = GlyphPageFontRenderer.create(font, 15, false, false, false);
+        renderer.drawString(matrix, text, x, y, colour.getRGB(), false);
+
+        return 0;
+
+//        Identifier myFont = new Identifier("paste_16_fabric", "font/" + font);
+//        Text literal = new LiteralText(text).styled(style -> style.withFont(myFont));
+//
+//        return drawString(matrix, literal, x, y, horizontalAlignment, verticalAlignment, shadow, colour);
     }
 }

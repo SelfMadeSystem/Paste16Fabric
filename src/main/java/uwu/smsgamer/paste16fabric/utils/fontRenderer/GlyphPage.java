@@ -14,11 +14,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.texture.*;
 import org.lwjgl.opengl.GL11;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.*;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
+import java.awt.image.*;
+import java.io.*;
+import java.util.*;
 
 public class GlyphPage {
     private int imgSize;
@@ -29,7 +31,7 @@ public class GlyphPage {
     private HashMap<Character, Glyph> glyphCharacterMap = new HashMap<>();
 
     private BufferedImage bufferedImage;
-    private AbstractTexture loadedTexture;
+    private NativeImageBackedTexture loadedTexture;
 
     public GlyphPage(Font font, boolean antiAliasing, boolean fractionalMetrics) {
         this.font = font;
@@ -119,9 +121,24 @@ public class GlyphPage {
     }
 
     public void setupTexture() {
-        NativeImage image = new NativeImage(bufferedImage.getWidth(), bufferedImage.getHeight(), false);
-        loadedTexture = new NativeImageBackedTexture(image);
+        try {
+            loadedTexture = new NativeImageBackedTexture(NativeImage.read(imgToBase64String(bufferedImage, "png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public static String imgToBase64String(final RenderedImage img, final String formatName) {
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(img, formatName, os);
+            return Base64.getEncoder().encodeToString(os.toByteArray());
+        } catch (final IOException ioe) {
+            throw new UncheckedIOException(ioe);
+        }
+    }
+
 
     public void bindTexture() {
         RenderSystem.bindTexture(loadedTexture.getGlId());
