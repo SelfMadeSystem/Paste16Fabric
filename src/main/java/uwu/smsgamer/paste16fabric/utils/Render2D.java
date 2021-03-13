@@ -223,11 +223,11 @@ public class Render2D implements MinecraftHelper {
         int height = renderer.getFontHeight();
         int width = renderer.getStringWidth(text);
 
-        if (horizontalAlignment == 1) x -= width * 2;
-        else if (horizontalAlignment == 0) x -= width;
+        if (horizontalAlignment == 1) x -= width;
+        else if (horizontalAlignment == 0) x -= width * 0.5;
 
-        if (verticalAlignment == 1) y -= height * 2;
-        else if (verticalAlignment == 0) y -= height;
+        if (verticalAlignment == 1) y -= height;
+        else if (verticalAlignment == 0) y -= height * 0.5;
 
         x /= 2;
         y /= 2;

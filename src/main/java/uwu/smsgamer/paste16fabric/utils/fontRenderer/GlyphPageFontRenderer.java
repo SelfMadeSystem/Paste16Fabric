@@ -107,8 +107,17 @@ public class GlyphPageFontRenderer {
         }
     }
 
+    private static final HashMap<Integer, GlyphPageFontRenderer> rendererCache = new HashMap<>();
+
+    private static int hash(String fontName, int size, boolean bold, boolean italic, boolean boldItalic) {
+        return Objects.hash(fontName, size, bold, italic, boldItalic);
+    }
 
     public static GlyphPageFontRenderer create(String fontName, int size, boolean bold, boolean italic, boolean boldItalic) {
+        int hash = hash(fontName, size, bold, italic, boldItalic);
+        GlyphPageFontRenderer renderer = rendererCache.get(hash);
+        if (renderer != null) return renderer;
+
         char[] chars = new char[256];
 
         for (int i = 0; i < chars.length; i++) {
@@ -147,7 +156,9 @@ public class GlyphPageFontRenderer {
             boldItalicPage.setupTexture();
         }
 
-        return new GlyphPageFontRenderer(regularPage, boldPage, italicPage, boldItalicPage);
+        renderer = new GlyphPageFontRenderer(regularPage, boldPage, italicPage, boldItalicPage);
+        rendererCache.put(hash, renderer);
+        return renderer;
     }
 
 
@@ -376,7 +387,7 @@ public class GlyphPageFontRenderer {
             }
         }
 
-        return width / 2;
+        return width;
     }
 
     /**
