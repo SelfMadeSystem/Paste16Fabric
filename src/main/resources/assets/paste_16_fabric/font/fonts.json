@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "paste_16_fabric:consolas.ttf",
+      "shift": [0, 0],
+      "size": 12,
+      "oversample": 20
+    }
+  ]
+}

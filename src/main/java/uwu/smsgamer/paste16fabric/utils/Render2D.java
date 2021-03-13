@@ -2,6 +2,8 @@ package uwu.smsgamer.paste16fabric.utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.*;
+import net.minecraft.text.*;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 
 public class Render2D implements MinecraftHelper {
@@ -192,5 +194,32 @@ public class Render2D implements MinecraftHelper {
             immediate.draw();
             return i;
         }
+    }
+
+    public static int drawString(Matrix4f matrix, Text text, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
+        if (text == null) {
+            return 0;
+        } else {
+            VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
+            int height = mc.textRenderer.fontHeight;
+            int width = mc.textRenderer.getWidth(text);
+
+            if (horizontalAlignment == 1) x -= width;
+            else if (horizontalAlignment == 0) x -= width * 0.5;
+
+            if (verticalAlignment == 1) y -= height;
+            else if (verticalAlignment == 0) y -= height * 0.5;
+
+            int i = mc.textRenderer.draw(text, x, y, colour.getRGB(), shadow, matrix, immediate, false, 0, 15728880);
+            immediate.draw();
+            return i;
+        }
+    }
+
+    public static int drawString(Matrix4f matrix, String text, String font, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
+        Identifier myFont = new Identifier("paste_16_fabric", font);
+        Text literal = new LiteralText(text).styled(style -> style.withFont(myFont));
+
+        return drawString(matrix, literal, x, y, horizontalAlignment, verticalAlignment, shadow, colour);
     }
 }

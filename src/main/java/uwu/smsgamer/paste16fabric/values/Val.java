@@ -5,12 +5,15 @@ import org.jetbrains.annotations.NotNull;
 import uwu.smsgamer.paste16fabric.config.ConfigValue;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
 
+import java.util.ArrayList;
+
 @Getter
 public class Val<T> extends ConfigValue<T> {
     private final PasteModule module;
     private final Val<?> parent;
     private final String name;
     private final String description;
+    private final ArrayList<Val<?>> vals = new ArrayList<>();
 
     public Val(@NotNull PasteModule module, @NotNull String name, @NotNull T defaultValue, String description) {
         super("modules." + module.getName() + "." + name, defaultValue);
@@ -30,5 +33,10 @@ public class Val<T> extends ConfigValue<T> {
 
     public PasteModule getModule() {
         return module == null ? parent.getModule() : module;
+    }
+
+    public<V extends Val<?>> V addVal(V val) {
+        vals.add(val);
+        return val;
     }
 }

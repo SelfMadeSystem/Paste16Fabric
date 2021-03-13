@@ -50,7 +50,6 @@ public class ModuleManager implements MinecraftHelper {
     private void onKey(KeyPressEvent event) {
         if (mc.player != null && event.pressType == 1) {
             for (PasteModule module : modules) {
-                System.out.println(module.getName() + " : " + module.getKeyBind());
                 if (module.getKeyBind() == event.key)
                     module.toggle();
             }
