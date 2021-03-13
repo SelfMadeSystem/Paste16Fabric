@@ -12,6 +12,8 @@ import uwu.smsgamer.paste16fabric.utils.*;
 public class TextComponent extends HudComponent {
     protected Colour colour = Colours.BLACK;
     protected String text = "Orem Lipsum";
+    protected String font = "";
+    protected int baseFontSize = 10;
     protected double size = 1;
     protected boolean shadow = true;
 
@@ -23,7 +25,11 @@ public class TextComponent extends HudComponent {
         float x = (float) (getX() / size);
         float y = (float) (getY() / size);
 
-        Render2D.drawString(model, text, x, y, getHorizontalAlignment(), getVerticalAlignment(), shadow, false, colour);
+        if (font == null || font.isBlank()) {
+            Render2D.drawString(model, text, x, y, getHorizontalAlignment(), getVerticalAlignment(), shadow, false, colour);
+        } else {
+            Render2D.drawString(model, text, font, baseFontSize, x, y, getHorizontalAlignment(), getVerticalAlignment(), shadow, colour);
+        }
     }
 
     @Override

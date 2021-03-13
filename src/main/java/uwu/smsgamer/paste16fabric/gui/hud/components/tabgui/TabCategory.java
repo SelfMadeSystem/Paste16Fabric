@@ -1,10 +1,10 @@
 package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 
-import lombok.Setter;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.*;
+import uwu.smsgamer.paste16fabric.module.defaultmodules.render.Hud;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -35,8 +35,11 @@ public class TabCategory extends TabBlock {
         }
 
         for (PasteModule pasteModule : ModuleManager.getInstance().getModulesByCategory(category)) {
+            if (pasteModule.getClass().equals(Hud.class)) continue;
             try {
-                this.modules.add(constructor.newInstance(gui, pasteModule));
+                TabBlock block = constructor.newInstance(gui, pasteModule);
+                this.modules.add(block);
+                block.setSelected(pasteModule.getState());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -45,8 +48,15 @@ public class TabCategory extends TabBlock {
     }
 
     @Override
-    protected TabGui.SelectedOptions getOptions() {
+    protected TabGui.CategoryOptions getOptions() {
         return gui.getCategoryOptions();
+    }
+
+    @Override
+    protected TabGui.Options getOpt() {
+        TabGui.CategoryOptions o = getOptions();
+        return selected ? o.getSelectedOptions() :
+          hovered ? o.getHoverOptions() : o.getBaseOptions();
     }
 
     @Override

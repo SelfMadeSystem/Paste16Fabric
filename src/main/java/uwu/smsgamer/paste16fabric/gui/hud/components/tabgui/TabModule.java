@@ -12,8 +12,16 @@ public class TabModule extends TabBlock {
     }
 
     @Override
-    protected TabGui.SelectedOptions getOptions() {
+    protected TabGui.ModuleOptions getOptions() {
         return gui.getModuleOptions();
+    }
+
+    @Override
+    protected TabGui.Options getOpt() {
+        TabGui.ModuleOptions o = getOptions();
+        return selected ?
+          hovered ? o.getSelectedHoverOptions() : o.getSelectedOptions():
+          hovered ? o.getHoverOptions() : o.getBaseOptions();
     }
 
     @Override

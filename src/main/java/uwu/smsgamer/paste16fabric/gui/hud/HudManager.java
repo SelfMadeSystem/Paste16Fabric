@@ -31,7 +31,9 @@ public class HudManager {
         TextComponent text = new TextComponent();
 
         text.setText("PasteClient");
+        text.setFont("consolas");
         text.setSize(3);
+        text.setBaseFontSize(15);
         text.setHorizontalAlignment(-1);
         text.setVerticalAlignment(-1);
         text.setYOffset(2);

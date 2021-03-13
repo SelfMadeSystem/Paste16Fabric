@@ -22,7 +22,9 @@ public abstract class TabBlock implements MinecraftHelper {
         this.gui = gui;
     }
 
-    protected abstract TabGui.SelectedOptions getOptions();
+    protected abstract TabGui.CategoryOptions getOptions();
+
+    protected abstract TabGui.Options getOpt();
 
     protected abstract String getText();
 
@@ -47,9 +49,7 @@ public abstract class TabBlock implements MinecraftHelper {
 
     private void setOpt(boolean start) {
         if (!start) setLasts();
-        TabGui.SelectedOptions o = getOptions();
-        options = selected ? o.getSelectedOptions() :
-          hovered ? o.getHoverOptions() : o.getBaseOptions();
+        options = getOpt();
         lastChange = System.currentTimeMillis();
     }
 
@@ -175,9 +175,16 @@ public abstract class TabBlock implements MinecraftHelper {
         x /= getTextSize();
         y /= getTextSize();
 
-        Render2D.drawString(model, getText(), x, y,
-          textHorizontalAlignment, textVerticalAlignment,
-          true, false, getTextColour());
+        String font = getOptions().getFont();
+        if (font == null || font.isBlank()) {
+            Render2D.drawString(model, getText(), x, y,
+              textHorizontalAlignment, textVerticalAlignment,
+              getOptions().shadow, false, getTextColour());
+        } else {
+            Render2D.drawString(model, getText(), font, getOptions().getBaseFontSize(), x, y,
+              textHorizontalAlignment, textVerticalAlignment,
+              getOptions().shadow, getTextColour());
+        }
     }
 
     public void preRender(MatrixStack matrices, float x, float y, float top) {

@@ -7,17 +7,17 @@ import uwu.smsgamer.paste16fabric.gui.hud.HudComponent;
 import uwu.smsgamer.paste16fabric.module.ModuleCategory;
 import uwu.smsgamer.paste16fabric.utils.*;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class TabGui extends HudComponent {
     private final List<TabBlock> modules = new ArrayList<>();
     @Getter
     @Setter
-    private SelectedOptions categoryOptions = new SelectedOptions();
+    private CategoryOptions categoryOptions = new CategoryOptions();
     @Getter
     @Setter
-    private SelectedOptions moduleOptions = new SelectedOptions();
+    private ModuleOptions moduleOptions = new ModuleOptions();
     @Getter
     @Setter
     private String categoryClassName = TabCategory.class.getName();
@@ -31,7 +31,7 @@ public class TabGui extends HudComponent {
         Constructor<? extends TabBlock> constructor = null;
         try {
             constructor = clazz.getConstructor(TabGui.class, ModuleCategory.class);
-            Class<?> cl =  Class.forName(categoryClassName);
+            Class<?> cl = Class.forName(categoryClassName);
             Constructor<?> co = cl.getConstructor(TabGui.class, ModuleCategory.class);
             constructor = (Constructor<? extends TabBlock>) co;
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class TabGui extends HudComponent {
         }
         if (event.pressType > 0) {
             int prevH = hovered;
-            switch(event.key) {
+            switch (event.key) {
                 case 265: // Up
                     hovered--;
                     if (hovered < 0) hovered = event.pressType == 2 ? 0 : modules.size() - 1;
@@ -123,28 +123,52 @@ public class TabGui extends HudComponent {
 
     @Getter
     @Setter
-    public static class SelectedOptions {
-        private Options baseOptions;
-        private Options hoverOptions;
-        private Options selectedOptions;
-        private int textHorizontalAlignment = -1;
-        private int textVerticalAlignment = 0;
-        private int fade = 100;
+    public static class CategoryOptions {
+        protected Options baseOptions;
+        protected Options hoverOptions;
+        protected Options selectedOptions;
+        protected int textHorizontalAlignment = -1;
+        protected int textVerticalAlignment = 0;
+        protected String font;
+        protected boolean shadow;
+        protected int fade = 100;
+        protected int baseFontSize = 10;
 
-        public SelectedOptions() {
+        public CategoryOptions() {
             baseOptions = new Options();
             hoverOptions = new Options();
             hoverOptions.setBoxBorder(3);
             hoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
             selectedOptions = new Options();
             selectedOptions.setBoxBorder(4);
-            hoverOptions.setBoxInsideColour(Colours.GRAY);
+            selectedOptions.setBoxInsideColour(Colours.GRAY);
         }
     }
 
     @Getter
     @Setter
-    public static class Options {
+    public static class ModuleOptions extends CategoryOptions {
+        protected Options selectedHoverOptions;
+
+        public ModuleOptions() {
+            baseOptions = new Options();
+            hoverOptions = new Options();
+            hoverOptions.setBoxBorder(3);
+            hoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
+
+            selectedOptions = new Options();
+            selectedOptions.setTextColour(Colours.RED);
+
+            selectedHoverOptions = new Options();
+            selectedHoverOptions.setBoxBorder(3);
+            selectedHoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
+            selectedHoverOptions.setTextColour(Colours.RED);
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class Options implements Cloneable {
         private Colour boxInsideColour = Colours.WHITE;
         private Colour boxBorderColour = Colours.RED;
         private Colour textColour = Colours.BLACK;
@@ -154,5 +178,14 @@ public class TabGui extends HudComponent {
         private double textSize = 1;
         private int yOffset = 0;
         private int xOffset = 0;
+
+        @Override
+        public Options clone() {
+            try {
+                return (Options) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

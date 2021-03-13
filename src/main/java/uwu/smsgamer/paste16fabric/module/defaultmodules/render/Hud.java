@@ -1,13 +1,9 @@
 package uwu.smsgamer.paste16fabric.module.defaultmodules.render;
 
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.text.*;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.*;
 import uwu.smsgamer.paste16fabric.gui.hud.HudManager;
 import uwu.smsgamer.paste16fabric.module.*;
-import uwu.smsgamer.paste16fabric.utils.*;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
 
 public class Hud extends PasteModule {
     public Hud() {
@@ -21,9 +17,9 @@ public class Hud extends PasteModule {
     public void onRender(RenderEvent event) {
         if (!getState()) return;
         if (mc.textRenderer == null) return;
-//        HudManager.getInstance().render(event);
+        HudManager.getInstance().render(event);
 
-        Render2D.drawString(Render2D.identity(), "Hello world!", "consolas", 0, 0, -1, -1, true, Colours.WHITE);
+//        Render2D.drawString(Render2D.identity(), "Hello world!", "consolas", 0, 0, -1, -1, true, Colours.WHITE);
 
 //        DrawableHelper.fill(event.matrices, 0, 0, 20, 20, 0xFFFFFFFF);
 //        Render2D.drawRect(event.matrices.peek().getModel(), 0, 0, 10000, 10000, Color.BLACK);
