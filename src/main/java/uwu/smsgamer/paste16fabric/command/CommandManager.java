@@ -1,5 +1,8 @@
 package uwu.smsgamer.paste16fabric.command;
 
+import com.mojang.brigadier.suggestion.Suggestions;
+import uwu.smsgamer.paste16fabric.command.commands.BindCommand;
+
 import java.util.*;
 
 public final class CommandManager {
@@ -16,6 +19,7 @@ public final class CommandManager {
 
     public CommandManager() {
         addCommandSystem(mainSystem);
+        mainSystem.commands.add(new BindCommand());
     }
 
     public void addCommandSystem(CommandSystem commandSystem) {
@@ -31,7 +35,7 @@ public final class CommandManager {
         return false;
     }
 
-    public List<String> handleTabComplete(String command) {
+    public Suggestions handleTabComplete(String command) {
         for (ICommandSystem commandSystem : commandSystems)
             if (commandSystem.canRunCommand(command))
                 return commandSystem.tabComplete(command);
@@ -39,6 +43,6 @@ public final class CommandManager {
     }
 
     public void init() {
-        for (ICommandSystem commandSystem : commandSystems)commandSystem.init();
+        for (ICommandSystem commandSystem : commandSystems) commandSystem.init();
     }
 }

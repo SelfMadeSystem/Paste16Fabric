@@ -217,7 +217,7 @@ public class Render2D implements MinecraftHelper {
     }
 
     public static int drawString(Matrix4f matrix, String text, String font, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
-        Identifier myFont = new Identifier("paste_16_fabric", font);
+        Identifier myFont = new Identifier("paste_16_fabric", "font/" + font);
         Text literal = new LiteralText(text).styled(style -> style.withFont(myFont));
 
         return drawString(matrix, literal, x, y, horizontalAlignment, verticalAlignment, shadow, colour);

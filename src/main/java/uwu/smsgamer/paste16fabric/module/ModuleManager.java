@@ -46,6 +46,13 @@ public class ModuleManager implements MinecraftHelper {
         return new LinkedList<>(pasteModules);
     }
 
+    public PasteModule getModuleByName(String name) {
+        for (PasteModule module : modules) {
+            if (module.getName().equals(name)) return module;
+        }
+        return null;
+    }
+
     @PasteListener
     private void onKey(KeyPressEvent event) {
         if (mc.player != null && event.pressType == 1) {

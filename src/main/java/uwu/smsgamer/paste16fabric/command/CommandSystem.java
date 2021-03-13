@@ -1,5 +1,7 @@
 package uwu.smsgamer.paste16fabric.command;
 
+import com.mojang.brigadier.suggestion.Suggestions;
+
 import java.util.*;
 
 public class CommandSystem implements ICommandSystem {
@@ -31,7 +33,7 @@ public class CommandSystem implements ICommandSystem {
     }
 
     @Override
-    public List<String> tabComplete(String command) {
+    public Suggestions tabComplete(String command) {
         String str = command.substring(prefix.length());
         String[] split = str.split(" ");
         String label = split[0];

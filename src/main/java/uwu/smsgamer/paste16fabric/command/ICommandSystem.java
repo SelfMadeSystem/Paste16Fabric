@@ -1,13 +1,13 @@
 package uwu.smsgamer.paste16fabric.command;
 
-import java.util.List;
+import com.mojang.brigadier.suggestion.Suggestions;
 
 public interface ICommandSystem {
     boolean canRunCommand(String command);
 
     void runCommand(String command);
 
-    List<String> tabComplete(String command);
+    Suggestions tabComplete(String command);
 
     default void init(){}
 }
