@@ -53,11 +53,18 @@ public class ModuleManager implements MinecraftHelper {
         return null;
     }
 
+    public PasteModule getModuleByNameIgnoreCase(String name) {
+        name = name.toLowerCase();
+        for (PasteModule module : modules)
+            if (module.getName().toLowerCase().equals(name)) return module;
+        return null;
+    }
+
     @PasteListener
     private void onKey(KeyPressEvent event) {
         if (mc.player != null && event.pressType == 1) {
             for (PasteModule module : modules) {
-                if (module.getKeyBind() == event.key)
+                if (module.getKeyBinding() == event.key)
                     module.toggle();
             }
         }

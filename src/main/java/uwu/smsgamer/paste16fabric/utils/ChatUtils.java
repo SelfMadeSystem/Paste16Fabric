@@ -29,7 +29,6 @@ public class ChatUtils implements MinecraftHelper {
                     int curr = 1;
                     for (int j = 2; j <= 7; j++) {
                         int digit = Character.digit(chars[i + j], 16);
-                        sendMessage(new LiteralText(String.format("J: %s D: %s", j, digit)));
                         if (digit >= 0) {
                             cColor += digit * curr;
                         } else {

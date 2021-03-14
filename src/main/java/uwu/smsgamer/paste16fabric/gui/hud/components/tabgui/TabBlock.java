@@ -33,6 +33,10 @@ public abstract class TabBlock implements MinecraftHelper {
     protected abstract String getText();
 
     protected abstract GlyphPageFontRenderer getRenderer();
+    
+    protected boolean shouldUpdate() {
+        return false;
+    }
 
     private TabGui.Options options;
 
@@ -128,14 +132,14 @@ public abstract class TabBlock implements MinecraftHelper {
 
     public float getXOffset() {
         if (prevXOffset == -1) prevXOffset = (float) opt().getXOffset();
-        return (float) (prevXOffset + (opt().getXOffset() - prevXOffset) * getTime());
+        return prevXOffset + (opt().getXOffset() - prevXOffset) * getTime();
     }
 
     private float prevYOffset = -1;
 
     public float getYOffset() {
         if (prevYOffset == -1) prevYOffset = (float) opt().getYOffset();
-        return (float) (prevYOffset + (opt().getYOffset() - prevYOffset) * getTime());
+        return prevYOffset + (opt().getYOffset() - prevYOffset) * getTime();
     }
 
     public void render(MatrixStack matrices, float x, float y, float top) {
@@ -143,6 +147,9 @@ public abstract class TabBlock implements MinecraftHelper {
         y += getYOffset();
 
         opt();
+        
+        if (shouldUpdate()) setOpt(false);
+        
         Matrix4f model = matrices.peek().getModel().copy();
         Render2D.drawBorderedRect(model, x, y, x + getBoxWidth(), y + getBoxHeight(), getBoxBorder(),
           getBoxInsideColour(), getBoxBorderColour());

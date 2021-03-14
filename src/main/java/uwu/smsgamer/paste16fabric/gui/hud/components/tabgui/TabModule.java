@@ -12,6 +12,16 @@ public class TabModule extends TabBlock {
         this.module = module;
     }
 
+    private boolean lastState = false;
+
+    @Override
+    protected boolean shouldUpdate() {
+        boolean a = module.getState();
+        boolean b = lastState == a;
+        lastState = a;
+        return b;
+    }
+
     @Override
     protected TabGui.ModuleOptions getOptions() {
         return gui.getModuleOptions();

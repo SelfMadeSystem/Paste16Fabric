@@ -33,8 +33,12 @@ public class PasteModule implements MinecraftHelper {
         return enabled.getValue();
     }
 
-    public int getKeyBind() {
+    public int getKeyBinding() {
         return keyBind.getValue();
+    }
+
+    public VKeybind getKeyBind() {
+        return keyBind;
     }
 
     public final void toggle() {

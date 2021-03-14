@@ -176,8 +176,10 @@ public class TabGui extends HudComponent {
             selectedHoverOptions = baseOptions.clone();
             selectedHoverOptions.setBoxBorder(2);
             selectedHoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
+            selectedHoverOptions.setTextColour(Colours.RED);
             selectedOptions.setBoxBorder(2);
             selectedOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
+            selectedOptions.setTextColour(Colours.RED);
         }
     }
 

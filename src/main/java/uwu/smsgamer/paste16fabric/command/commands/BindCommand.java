@@ -1,7 +1,6 @@
 package uwu.smsgamer.paste16fabric.command.commands;
 
 import com.mojang.brigadier.suggestion.Suggestions;
-import net.minecraft.client.util.InputUtil;
 import uwu.smsgamer.paste16fabric.command.Command;
 import uwu.smsgamer.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
@@ -28,9 +27,30 @@ public class BindCommand extends Command {
                   "&ls cool!&rReset.");
                 break;
             case 1:
-                PasteModule moduleByName = ModuleManager.getInstance().getModuleByName(args[0]);
-                if (moduleByName != null){
-                    ChatUtils.sendMessage(moduleByName.getName() + " is bound to: " + moduleByName.getKeyBind());
+                PasteModule moduleByName = ModuleManager.getInstance().getModuleByNameIgnoreCase(args[0]);
+                if (moduleByName != null) {
+                    ChatUtils.sendMessage("Press a key...");
+                    currentModule = moduleByName;
+                } else {
+                    ChatUtils.sendMessage("That module does not exist.");
+                }
+                break;
+            case 2:
+                moduleByName = ModuleManager.getInstance().getModuleByNameIgnoreCase(args[0]);
+                if (moduleByName == null) {
+                    ChatUtils.sendMessage("That module does not exist.");
+                    return;
+                }
+                String arg1 = args[1].toLowerCase();
+                switch (arg1) {
+                    case "get":
+                        ChatUtils.sendMessage(moduleByName.getName() + " is bound to: " + moduleByName.getKeyBind().getKey().getLocalizedText().asString());
+                        break;
+                    case "reset":
+                    case "none":
+                    case "null":
+                        moduleByName.getKeyBind().setValue(-1);
+                        ChatUtils.sendMessage(moduleByName.getName() + " bound to: " + moduleByName.getKeyBind().getKey().getLocalizedText().asString());
                 }
         }
     }
@@ -42,6 +62,11 @@ public class BindCommand extends Command {
 
     @PasteListener
     public void onKey(KeyPressEvent event) {
-        System.out.println(event.key + " : "+ event.scancode);
+        if (currentModule != null && event.pressType == 1) {
+            currentModule.getKeyBind().setValue(event.key);
+            ChatUtils.sendMessage(String.format("%s bound to %s.", currentModule.getName(), currentModule.getKeyBind().getKey().getLocalizedText().asString()));
+            currentModule = null;
+        }
+//        System.out.println(event.key + " : " + event.scancode);
     }
 }
