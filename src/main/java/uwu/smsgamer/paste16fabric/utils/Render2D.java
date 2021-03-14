@@ -1,14 +1,11 @@
 package uwu.smsgamer.paste16fabric.utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.api.*;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.client.render.*;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
+
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
 public class Render2D implements MinecraftHelper {
     public static Matrix4f identity() {
@@ -21,15 +18,26 @@ public class Render2D implements MinecraftHelper {
     }
 
     public static final int
-      GL_POINTS = 0x0,
-      GL_LINES = 0x1,
-      GL_LINE_LOOP = 0x2,
-      GL_LINE_STRIP = 0x3,
-      GL_TRIANGLES = 0x4,
-      GL_TRIANGLE_STRIP = 0x5,
-      GL_TRIANGLE_FAN = 0x6,
-      GL_QUADS = 0x7;
+    GL_POINTS = 0x0,
+    GL_LINES = 0x1,
+    GL_LINE_LOOP = 0x2,
+    GL_LINE_STRIP = 0x3,
+    GL_TRIANGLES = 0x4,
+    GL_TRIANGLE_STRIP = 0x5,
+    GL_TRIANGLE_FAN = 0x6,
+    GL_QUADS = 0x7;
     public static float Z = 0.0F;//-1.43F;
+
+    public static void bezierPoses(Matrix4f matrix, BufferBuilder builder, Vec3f[] pts) {
+        Vec3f[] bezierPoints = MathUtils.getBezierPoints(pts);
+        Vec3f prevPoint = bezierPoints[0];
+        for (int i = 1; i < bezierPoints.length; i++) {
+            Vec3f point = bezierPoints[i];
+            builder.vertex(matrix, point.x, point.y, 0.0F).next();
+            builder.vertex(matrix, prevPoint.x, prevPoint.y, 0.0F).next();
+            prevPoint = point;
+        }
+    }
 
     /**
      * Draws a full circle.
@@ -218,21 +226,5 @@ public class Render2D implements MinecraftHelper {
             immediate.draw();
             return i;
         }
-    }
-
-    public static int drawString(Matrix4f matrix, String text, GlyphPageFontRenderer renderer, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
-        int height = renderer.getFontHeight();
-        int width = renderer.getStringWidth(text);
-
-        if (horizontalAlignment == 1) x -= width;
-        else if (horizontalAlignment == 0) x -= width * 0.5;
-
-        if (verticalAlignment == 1) y -= height;
-        else if (verticalAlignment == 0) y -= height * 0.5;
-
-        x /= 2;
-        y /= 2;
-
-        return renderer.drawString(matrix, text, x, y, colour.getRGB(), shadow);
     }
 }
