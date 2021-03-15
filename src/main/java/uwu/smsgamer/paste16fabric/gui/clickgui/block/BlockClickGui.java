@@ -25,24 +25,24 @@ public class BlockClickGui extends AbstractClickGui {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        for (AbstractBlockMenu menu : menus) {
-            if(menu.mouseClicked(mouseX, mouseY, button)) break;
+        for (int i = menus.size() - 1; i >= 0; i--) {
+            if(menus.get(i).mouseClicked(mouseX, mouseY, button)) return true;
         }
         return false;
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        for (AbstractBlockMenu menu : menus) {
-            if (menu.mouseReleased(mouseX, mouseY, button)) break;
+        for (int i = menus.size() - 1; i >= 0; i--) {
+            if(menus.get(i).mouseReleased(mouseX, mouseY, button)) return true;
         }
         return false;
     }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        for (AbstractBlockMenu menu : menus) {
-            if (menu.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) break;
+        for (int i = menus.size() - 1; i >= 0; i--) {
+            if(menus.get(i).mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) return true;
         }
         return false;
     }

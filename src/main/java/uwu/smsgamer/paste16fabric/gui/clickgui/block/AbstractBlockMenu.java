@@ -12,12 +12,12 @@ import java.util.List;
 public abstract class AbstractBlockMenu extends Screen implements MinecraftHelper {
     public BlockClickGui gui;
 
-    public float posX = 50;
-    public float posY = 50;
+    public float posX;
+    public float posY = 10;
     public float w;
     public float h;
 
-    public float minHeight;
+    public float minHeight = 5;
     public float minWidth = 50;
 
     public boolean resizing = false;
@@ -43,7 +43,7 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         float x = posX;
         float y = posY;
-        fill(matrices, (int) x, (int) y - 10, (int) (x + w), (int) y, 0xFFFF5500);
+        fill(matrices, (int) x, (int) y - 10, (int) (x + w), (int) y, 0xFF707070);
         if (removable) {
             fill(matrices, (int) (x + w - 10), (int) y - 10, (int) (x + w), (int) y, 0xFFFF0000);
         }
@@ -93,14 +93,18 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
         if (button == 0) {
             if (isMouseOverRemove(mouseX, mouseY)) {
                 gui.menus.remove(this);
+                return true;
             } else if (isMouseOverMove(mouseX, mouseY)) {
                 resizing = false;
                 setDragging(true);
+                gui.menus.remove(this);
+                gui.menus.add(this);
+                return true;
             } else if (isMouseOverResize(mouseX, mouseY)) {
                 resizing = true;
                 setDragging(true);
+                return true;
             }
-            return true;
         }
         return false;
     }

@@ -29,21 +29,32 @@ public class CategoryMenu extends AbstractBlockMenu {
     public String getName() {
         return "Categories";
     }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button)) return true;
+        if (button == 0 && isMouseOver(mouseX, mouseY)) {
+            for (CategoryBlock child : children) {
+                if (child.mouseClicked(mouseX, mouseY, button)) return true;
+            }
+        }
+        return false;
+    }
 }
 
 class CategoryBlock extends AbstractClickComponent {
-    private final ModuleCategory value;
+    private final ModuleCategory category;
     private final CategoryMenu menu;
 
-    public CategoryBlock(ModuleCategory value, CategoryMenu menu) {
-        this.value = value;
+    public CategoryBlock(ModuleCategory category, CategoryMenu menu) {
+        this.category = category;
         this.menu = menu;
     }
 
     @Override
     public Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY) {
         fill(stack, (int) x + 1, (int) y + 1, (int) (x + width) - 2, (int) (y + height) - 2, 0xFF777777);
-        drawCenteredString(stack, mc.textRenderer, value.getName(), (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
+        drawCenteredString(stack, mc.textRenderer, category.getName(), (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
         return new Vec2f(width, height);
     }
 
@@ -59,5 +70,22 @@ class CategoryBlock extends AbstractClickComponent {
         h = 20;
         menu.minHeight = (float) (h * Math.ceil(ModuleCategory.values().length / max));
         return super.getSize(gui, w, h);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isMouseOver(mouseX, mouseY)) {
+            if (menu.gui.menus.stream().noneMatch(menu ->
+              menu instanceof ModuleMenu && ((ModuleMenu) menu).category == category))
+                menu.gui.menus.add(new ModuleMenu(menu.gui, category));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return mouseX >= lastX && mouseX <= lastX + width &&
+          mouseY >= lastY && mouseY <= lastY + height;
     }
 }
