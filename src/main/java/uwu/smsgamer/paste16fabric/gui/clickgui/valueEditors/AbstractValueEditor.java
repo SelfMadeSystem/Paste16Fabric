@@ -1,15 +1,12 @@
 package uwu.smsgamer.paste16fabric.gui.clickgui.valueEditors;
 
-import net.minecraft.client.gui.*;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.*;
-import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickGui;
-import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
+import net.minecraft.client.gui.Element;
+import uwu.smsgamer.paste16fabric.gui.clickgui.*;
 import uwu.smsgamer.paste16fabric.values.Val;
 
 import java.util.*;
 
-public abstract class AbstractValueEditor<T> extends AbstractParentElement implements MinecraftHelper {
+public abstract class AbstractValueEditor<T> extends AbstractClickComponent {
     protected final Val<T> val;
     protected final List<Element> children = new LinkedList<>();
 
@@ -24,6 +21,4 @@ public abstract class AbstractValueEditor<T> extends AbstractParentElement imple
     public List<? extends Element> children() {
         return children;
     }
-
-    public abstract Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, float w, float h);
 }

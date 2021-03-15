@@ -12,7 +12,7 @@ import uwu.smsgamer.paste16fabric.events.events.RenderEvent;
 public class MixinGamerRenderer {
     @Inject(method = "render", at = @At("RETURN"))//value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
     public void render(float tickDelta, long startTime, boolean tick, CallbackInfo ci) {
-        EventManager.call(new RenderEvent(tickDelta, new MatrixStack()));
+        EventManager.call(new RenderEvent(tickDelta, new MatrixStack(), RenderEvent.Place.POST));
 
 
 //        Matrix4f identity = Matrix4f.scale(1, 1, 1);

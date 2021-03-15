@@ -7,6 +7,7 @@
     "client.MixinKeyboard",
     "client.MixinMinecraftClient",
     "entity.MixinClientPlayerEntity",
+    "hud.MixinInGameHud",
     "hud.MixinInGameOverlayRenderer",
     "render.MixinGamerRenderer",
     "screen.MixinScreen"

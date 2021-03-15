@@ -18,7 +18,7 @@ public class ModuleManager implements MinecraftHelper {
 
     public ModuleManager() {
         EventManager.registerListener(this);
-        addModule(new ClickGui());
+        addModule(ClickGui.getInstance());
         addModule(new Hud());
 
         addModule(new Fly());

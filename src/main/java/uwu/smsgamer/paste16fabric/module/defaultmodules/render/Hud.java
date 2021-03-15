@@ -1,5 +1,6 @@
 package uwu.smsgamer.paste16fabric.module.defaultmodules.render;
 
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.*;
 import uwu.smsgamer.paste16fabric.gui.hud.HudManager;
@@ -31,8 +32,7 @@ public class Hud extends PasteModule {
 //        renderer.drawString(matrix, "Bottom", 0, -1F, Color.GREEN);
 //        renderer.setVerticalAnchor(1);
 //        renderer.drawString(matrix, "Top", 0, 1F, Color.GREEN);
-
-        HudManager.getInstance().render(event);
+        if (event.place.equals(RenderEvent.Place.HUD)) HudManager.getInstance().render(event);
 
 //        Render2D.drawString(Render2D.identity(), "Hello world!", "consolas", 0, 0, -1, -1, true, Colours.WHITE);
 
@@ -55,7 +55,8 @@ public class Hud extends PasteModule {
     @PasteListener
     public void onKey(KeyPressEvent event) {
         if (!getState()) return;
-        HudManager.getInstance().onKey(event);
+        if (mc.player == null) return;
+        if (mc.currentScreen == null) HudManager.getInstance().onKey(event);
     }
 
     @Override
