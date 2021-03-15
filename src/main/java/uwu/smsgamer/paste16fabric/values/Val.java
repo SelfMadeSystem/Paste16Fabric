@@ -3,6 +3,7 @@ package uwu.smsgamer.paste16fabric.values;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import uwu.smsgamer.paste16fabric.config.ConfigValue;
+import uwu.smsgamer.paste16fabric.gui.clickgui.valueEditors.*;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
 
 import java.util.ArrayList;
@@ -38,5 +39,13 @@ public class Val<T> extends ConfigValue<T> {
     public<V extends Val<?>> V addVal(V val) {
         vals.add(val);
         return val;
+    }
+
+    public String getStringValue() {
+        return getValue().toString();
+    }
+
+    public AbstractValueEditor<?> getValueEditor() {
+        return new NoValueEditor(this);
     }
 }

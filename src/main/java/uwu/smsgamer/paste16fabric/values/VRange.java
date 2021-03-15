@@ -75,10 +75,7 @@ public class VRange extends Val<VRange.Range> {
 
         @Override
         public String toString() {
-            return "Range{" +
-              "min=" + min +
-              ", max=" + max +
-              '}';
+            return min + " - " + max;
         }
     }
 }
