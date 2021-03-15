@@ -7,8 +7,8 @@ import uwu.smsgamer.paste16fabric.gui.clickgui.block.menus.CategoryMenu;
 import java.util.*;
 
 public class BlockClickGui extends AbstractClickGui {
-    private final CategoryMenu categoryMenu;
-    private final List<AbstractBlockMenu> menus = new LinkedList<>();
+    public final CategoryMenu categoryMenu;
+    public final List<AbstractBlockMenu> menus = new LinkedList<>();
 
     public BlockClickGui() {
         categoryMenu = new CategoryMenu(this);
@@ -26,7 +26,7 @@ public class BlockClickGui extends AbstractClickGui {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         for (AbstractBlockMenu menu : menus) {
-            menu.mouseClicked(mouseX, mouseY, button);
+            if(menu.mouseClicked(mouseX, mouseY, button)) break;
         }
         return false;
     }
@@ -34,7 +34,7 @@ public class BlockClickGui extends AbstractClickGui {
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         for (AbstractBlockMenu menu : menus) {
-            menu.mouseReleased(mouseX, mouseY, button);
+            if (menu.mouseReleased(mouseX, mouseY, button)) break;
         }
         return false;
     }
@@ -42,7 +42,7 @@ public class BlockClickGui extends AbstractClickGui {
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         for (AbstractBlockMenu menu : menus) {
-            menu.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+            if (menu.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) break;
         }
         return false;
     }

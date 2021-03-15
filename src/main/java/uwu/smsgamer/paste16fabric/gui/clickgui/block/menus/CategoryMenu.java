@@ -13,10 +13,11 @@ public class CategoryMenu extends AbstractBlockMenu {
     private final List<CategoryBlock> children = new LinkedList<>();
 
     public CategoryMenu(BlockClickGui gui) {
-        super(gui);
+        super(gui, 200, 40, false);
         for (ModuleCategory value : ModuleCategory.values()) {
-            children.add(new CategoryBlock(value));
+            children.add(new CategoryBlock(value, this));
         }
+        this.minWidth = 60;
     }
 
     @Override
@@ -28,22 +29,19 @@ public class CategoryMenu extends AbstractBlockMenu {
     public String getName() {
         return "Categories";
     }
-
-    @Override
-    public Vec2f getSize(AbstractClickGui gui) {
-        return new Vec2f(200, 40);
-    }
 }
 
 class CategoryBlock extends AbstractClickComponent {
     private final ModuleCategory value;
+    private final CategoryMenu menu;
 
-    public CategoryBlock(ModuleCategory value) {
+    public CategoryBlock(ModuleCategory value, CategoryMenu menu) {
         this.value = value;
+        this.menu = menu;
     }
 
     @Override
-    public Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y) {
+    public Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY) {
         fill(stack, (int) x + 1, (int) y + 1, (int) (x + width) - 2, (int) (y + height) - 2, 0xFF777777);
         drawCenteredString(stack, mc.textRenderer, value.getName(), (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
         return new Vec2f(width, height);
@@ -56,8 +54,10 @@ class CategoryBlock extends AbstractClickComponent {
 
     @Override
     public Vec2f getSize(AbstractClickGui gui, float w, float h) {
-        w /= Math.max(1, Math.floor(w / 55));
-        h = Math.min(h, 20);
+        double max = Math.max(1, Math.floor(w / 55));
+        w /= Math.min(ModuleCategory.values().length, max);
+        h = 20;
+        menu.minHeight = (float) (h * Math.ceil(ModuleCategory.values().length / max));
         return super.getSize(gui, w, h);
     }
 }

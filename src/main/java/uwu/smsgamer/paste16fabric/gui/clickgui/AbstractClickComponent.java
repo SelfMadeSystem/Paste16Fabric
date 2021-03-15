@@ -9,14 +9,14 @@ public abstract class AbstractClickComponent extends AbstractParentElement imple
     protected float width;
     protected float height;
 
-    public Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, float w, float h) {
+    public Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY, float w, float h) {
         Vec2f size = getSize(gui, w, h);
         this.width = size.x;
         this.height = size.y;
-        return render(stack, gui, x, y);
+        return render(stack, gui, x, y, mouseX, mouseY);
     }
 
-    public abstract Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y);
+    protected abstract Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY);
 
     public Vec2f getSize(AbstractClickGui gui, float w, float h) {
         return new Vec2f(w, h);

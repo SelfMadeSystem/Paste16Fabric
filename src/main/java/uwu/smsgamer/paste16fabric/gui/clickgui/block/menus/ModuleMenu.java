@@ -1,14 +1,13 @@
 package uwu.smsgamer.paste16fabric.gui.clickgui.block.menus;
 
-import net.minecraft.util.math.Vec2f;
-import uwu.smsgamer.paste16fabric.gui.clickgui.*;
+import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickComponent;
 import uwu.smsgamer.paste16fabric.gui.clickgui.block.*;
 
 import java.util.List;
 
 public class ModuleMenu extends AbstractBlockMenu {
     public ModuleMenu(BlockClickGui gui) {
-        super(gui);
+        super(gui, 200, 40);
     }
 
     @Override
@@ -18,11 +17,6 @@ public class ModuleMenu extends AbstractBlockMenu {
 
     @Override
     public String getName() {
-        return null;
-    }
-
-    @Override
-    public Vec2f getSize(AbstractClickGui gui) {
         return null;
     }
 }
