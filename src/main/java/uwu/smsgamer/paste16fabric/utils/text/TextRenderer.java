@@ -9,7 +9,9 @@
 
 package uwu.smsgamer.paste16fabric.utils.text;
 
-import net.minecraft.client.render.BufferBuilder;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.render.*;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.Matrix4f;
 import uwu.smsgamer.paste16fabric.utils.*;
 
@@ -19,6 +21,8 @@ import java.awt.geom.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
+// Work on this later.
+@Deprecated
 public class TextRenderer {
     private HSV debugHSV = new HSV(0, 1, 1);
     private Font font;
@@ -140,10 +144,11 @@ public class TextRenderer {
 
     public void drawString(Matrix4f matrix, String text, float x, float y, Color color) {
         reset(x, y);
+        BufferBuilder builder = Tessellator.getInstance().getBuffer();
         startStencil();
-        drawStencils(getPathIterator(text));
+        drawStencils(matrix, builder, getPathIterator(text));
         endStencil();
-        if (!debug_no_render) paintAllCanvas(color);
+        if (!debug_no_render) paintAllCanvas(matrix, builder, color);
         endDrawing();
     }
 
@@ -157,30 +162,42 @@ public class TextRenderer {
 
     private void setDebugColor() {
         Color color = debugHSV.toColor();
-        glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.25f);
+//        glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.25f);
         debugHSV.h += 10;
         if (debugHSV.h > 360) debugHSV.h = 0;
     }
 
     private void startStencil() {
-        glEnable(GL_STENCIL_TEST);
-        glClearStencil(0);
-        glClear(GL_STENCIL_BUFFER_BIT);
+        RenderSystem.colorMask(false, false, false, false);
+        RenderSystem.clearStencil(0);
+        RenderSystem.clear(GL_STENCIL_BUFFER_BIT, false);
 
-        if (!debug_layers) glColorMask(false, false, false, false);
+        RenderSystem.stencilFunc(GL_ALWAYS, 1, 0xFF);
+        RenderSystem.stencilMask(0xFF);
+        RenderSystem.stencilOp(GL_KEEP, GL_KEEP, GL_INCR);
         glEnable(GL_STENCIL_TEST);
-        glStencilFunc(GL_ALWAYS, 1, 0xFF);
-        glStencilMask(0xFF);
-        glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+//        glEnable(GL_STENCIL_TEST);
+//        glClearStencil(0);
+//        glClear(GL_STENCIL_BUFFER_BIT);
+//
+//        if (!debug_layers) glColorMask(false, false, false, false);
+//        glEnable(GL_STENCIL_TEST);
+//        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+//        glStencilMask(0xFF);
+//        glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
     }
 
 
     private void endStencil() {
-        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-        glColorMask(true, true, true, true);
+        RenderSystem.stencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        RenderSystem.colorMask(true, true, true, true);
+//        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+//        glColorMask(true, true, true, true);
     }
 
     private void endDrawing() {
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
         glDisable(GL_STENCIL_TEST);
     }
 
@@ -207,22 +224,27 @@ public class TextRenderer {
             case 1:
                 yOffset -= rect.getHeight() * mSize;
         }
+        minX = xOffset;
+        minY = yOffset;
+        maxX = (float) (xOffset + rect.getWidth() * mSize);
+        maxY = (float) (yOffset + rect.getHeight() * mSize);
     }
 
     private void drawStencils(Matrix4f matrix, BufferBuilder builder, PathIterator pathIterator) {
         setDebugColor();
-        glBegin(GL_POLYGON);
+        builder.begin(GL_POLYGON, VertexFormats.POSITION);
         float[] points = new float[8];
         Vec3f current = new Vec3f();
         while (!pathIterator.isDone()) {
             int code = pathIterator.currentSegment(points);
             switch (code) {
                 case PathIterator.SEG_MOVETO:
-                    glEnd();
+                    builder.end();
+                    BufferRenderer.draw(builder);
                     setDebugColor();
-                    glBegin(GL_POLYGON);
+                    builder.begin(GL_POLYGON, VertexFormats.POSITION);
                 case PathIterator.SEG_LINETO: {
-                    glVertex2f(minX = Math.min(points[0] * mSize + xOffset, minX), -points[1] * mSize + yOffset);
+                    builder.vertex(matrix, minX = Math.min(points[0] * mSize + xOffset, minX), -points[1] * mSize + yOffset, 0).next();
                     current = new Vec3f(points[0] * mSize + xOffset, -points[1] * mSize + yOffset);
                     break;
                 }
@@ -240,9 +262,10 @@ public class TextRenderer {
                     break;
                 }
                 case PathIterator.SEG_CLOSE: {
-                    glEnd();
+                    builder.end();
+                    BufferRenderer.draw(builder);
                     setDebugColor();
-                    glBegin(GL_POLYGON);
+                    builder.begin(GL_POLYGON, VertexFormats.POSITION);
                     current = null;
                     break;
                 }
@@ -251,15 +274,32 @@ public class TextRenderer {
             }
             pathIterator.next();
         }
-        glEnd();
+        builder.end();
+        BufferRenderer.draw(builder);
     }
 
     // Pls hmu if u know any better way of doing this.
-    private void paintAllCanvas(Color color) {
-        for (int i = 0; i < 500; i++) {
-            glStencilFunc(GL_EQUAL, i * 2 + 1, 0xFF);
+    private void paintAllCanvas(Matrix4f matrix, BufferBuilder builder, Color color) {
+//        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+//        RenderSystem.defaultBlendFunc();
+        for (int i = 0; i < 1; i++) {
+            RenderSystem.stencilFunc(GL_NEVER, i * 2 + 1, 0xFF);
+//            glStencilFunc(GL_EQUAL, i * 2 + 1, 0xFF);
 
-            Render2D.drawRectUnDiv(-1, -1, 1, 1, color);
+            builder.begin(GL_POLYGON, VertexFormats.POSITION_COLOR);
+            builder.vertex(matrix, minX, maxY, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).next();
+            builder.vertex(matrix, maxX, maxY, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).next();
+            builder.vertex(matrix, maxX, minY, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).next();
+            builder.vertex(matrix, minX, minY, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).next();
+            builder.end();
+            BufferRenderer.draw(builder);
         }
+    }
+
+    private void vertex(Matrix4f matrix, int x, int y) {
+        Vector4f vector = new Vector4f(x, y, 0, 1F);
+        vector.transform(matrix);
+        glVertex2f(vector.getX(), vector.getY());
     }
 }

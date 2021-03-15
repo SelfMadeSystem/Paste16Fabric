@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
+import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
@@ -226,5 +227,21 @@ public class Render2D implements MinecraftHelper {
             immediate.draw();
             return i;
         }
+    }
+
+    public static int drawString(Matrix4f matrix, String text, GlyphPageFontRenderer renderer, float x, float y, int horizontalAlignment, int verticalAlignment, boolean shadow, Colour colour) {
+        int height = renderer.getFontHeight();
+        int width = renderer.getStringWidth(text);
+
+        if (horizontalAlignment == 1) x -= width;
+        else if (horizontalAlignment == 0) x -= width * 0.5;
+
+        if (verticalAlignment == 1) y -= height;
+        else if (verticalAlignment == 0) y -= height * 0.5;
+
+        x /= 2;
+        y /= 2;
+
+        return renderer.drawString(matrix, text, x, y, colour.getRGB(), shadow);
     }
 }

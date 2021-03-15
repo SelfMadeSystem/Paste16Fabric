@@ -7,7 +7,7 @@ import uwu.smsgamer.paste16fabric.gui.hud.HudComponent;
 import uwu.smsgamer.paste16fabric.gui.hud.components.HudText;
 import uwu.smsgamer.paste16fabric.module.ModuleCategory;
 import uwu.smsgamer.paste16fabric.utils.*;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
+import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 import java.lang.reflect.Constructor;
 import java.util.*;

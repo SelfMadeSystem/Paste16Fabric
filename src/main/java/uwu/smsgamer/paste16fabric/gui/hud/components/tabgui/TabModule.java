@@ -2,7 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.hud.components.tabgui;
 
 import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
+import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 public class TabModule extends TabBlock {
     public final PasteModule module;

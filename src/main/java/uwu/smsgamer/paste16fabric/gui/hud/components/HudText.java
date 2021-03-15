@@ -5,7 +5,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 import uwu.smsgamer.paste16fabric.gui.hud.HudComponent;
 import uwu.smsgamer.paste16fabric.utils.*;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
+import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 
 @Getter

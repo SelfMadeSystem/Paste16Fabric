@@ -10,6 +10,8 @@ public class Hud extends PasteModule {
         super("Hud", "Heads up display", ModuleCategory.RENDER, true, -1);
         HudManager.getInstance();
     }
+//    private static final TextRenderer renderer = new TextRenderer("richardson brand accelerator", 200F, 0)
+//      .setVerticalAnchor(0).setHorizontalAnchor(0);
 
     float add;
 
@@ -17,6 +19,19 @@ public class Hud extends PasteModule {
     public void onRender(RenderEvent event) {
         if (!getState()) return;
         if (mc.textRenderer == null) return;
+//        Matrix4f matrix = event.matrices.peek().getModel();
+//        renderer.setHorizontalAnchor(-1);
+//        renderer.drawString(matrix, "Left", -1, 0.5F, Color.GREEN);
+//        renderer.setHorizontalAnchor(1);
+//        renderer.drawString(matrix, "Right", 1, 0.5F, Color.GREEN);
+//        renderer.setHorizontalAnchor(0);
+//        renderer.setVerticalAnchor(0);
+//        renderer.drawString(matrix, "Middle", 0, 0, Color.GREEN);
+//        renderer.setVerticalAnchor(-1);
+//        renderer.drawString(matrix, "Bottom", 0, -1F, Color.GREEN);
+//        renderer.setVerticalAnchor(1);
+//        renderer.drawString(matrix, "Top", 0, 1F, Color.GREEN);
+
         HudManager.getInstance().render(event);
 
 //        Render2D.drawString(Render2D.identity(), "Hello world!", "consolas", 0, 0, -1, -1, true, Colours.WHITE);

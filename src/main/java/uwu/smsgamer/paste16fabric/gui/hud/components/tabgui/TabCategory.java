@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.module.defaultmodules.render.Hud;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
+import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -24,7 +24,7 @@ public class TabCategory extends TabBlock {
         Constructor<? extends TabBlock> constructor = null;
         try {
             constructor = clazz.getConstructor(TabGui.class, PasteModule.class);
-            Class<?> cl =  Class.forName(gui.getModuleClassName());
+            Class<?> cl = Class.forName(gui.getModuleClassName());
             Constructor<?> co = cl.getConstructor(TabGui.class, PasteModule.class);
             constructor = (Constructor<? extends TabBlock>) co;
         } catch (Exception e) {

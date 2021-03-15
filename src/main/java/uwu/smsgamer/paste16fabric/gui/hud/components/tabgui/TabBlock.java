@@ -6,7 +6,7 @@ import net.minecraft.util.math.Matrix4f;
 import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.utils.*;
-import uwu.smsgamer.paste16fabric.utils.fontRenderer.GlyphPageFontRenderer;
+import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 @Getter
 @Setter
@@ -33,7 +33,7 @@ public abstract class TabBlock implements MinecraftHelper {
     protected abstract String getText();
 
     protected abstract GlyphPageFontRenderer getRenderer();
-    
+
     protected boolean shouldUpdate() {
         return false;
     }
@@ -147,9 +147,9 @@ public abstract class TabBlock implements MinecraftHelper {
         y += getYOffset();
 
         opt();
-        
+
         if (shouldUpdate()) setOpt(false);
-        
+
         Matrix4f model = matrices.peek().getModel().copy();
         Render2D.drawBorderedRect(model, x, y, x + getBoxWidth(), y + getBoxHeight(), getBoxBorder(),
           getBoxInsideColour(), getBoxBorderColour());
