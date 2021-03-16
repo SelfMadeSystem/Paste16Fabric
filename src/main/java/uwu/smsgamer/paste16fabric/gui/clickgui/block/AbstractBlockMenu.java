@@ -64,6 +64,7 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
         }
         y += maxY;
         minHeight = y - posY;
+        if (h < minHeight) h = minHeight;
 
         fill(matrices, (int) (posX + w - 5), (int) (posY + h - 5), (int) (posX + w), (int) (posY + h), 0xFF00FF00);
     }

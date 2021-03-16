@@ -4,7 +4,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec2f;
 import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickGui;
 import uwu.smsgamer.paste16fabric.utils.MathUtils;
-import uwu.smsgamer.paste16fabric.values.*;
+import uwu.smsgamer.paste16fabric.values.VRange;
 
 public class RangeEditor extends AbstractValueEditor<VRange, VRange.Range> {
     private boolean max;
@@ -16,8 +16,9 @@ public class RangeEditor extends AbstractValueEditor<VRange, VRange.Range> {
     @Override
     protected Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY) {
         fill(stack, (int) x, (int) y, (int) (x + width), (int) (y + height), 0xFF666666);
-        fill(stack, (int) (x + width * MathUtils.clamp(val.getScaledMin(), 0, 1)), (int) y,
-          (int) (x + width * MathUtils.clamp(val.getScaledMax(), 0, 1)),
+        double d = width * MathUtils.clamp(val.getScaledMin(), 0, 1);
+        fill(stack, (int) (x + d), (int) y,
+          (int) (x + Math.max(d + 1, width * MathUtils.clamp(val.getScaledMax(), 0, 1))),
           (int) (y + height), 0xFF66FFFF);
         drawCenteredString(stack, mc.textRenderer, val.getStringValue(), (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
         return new Vec2f(width, height);
@@ -53,8 +54,12 @@ public class RangeEditor extends AbstractValueEditor<VRange, VRange.Range> {
     }
 
     public void setValue(double mouseX) {
-        if (max) val.setScaledMax(getScaledMouse(mouseX));
-        else val.setScaledMin(getScaledMouse(mouseX));
+        if (max) {
+            val.setScaledMax(getScaledMouse(mouseX));
+        } else {
+            val.setScaledMin(getScaledMouse(mouseX));
+        }
+        if (val.getValue().testAndSwap()) max = !max;
     }
 
     public double getScaledMouse(double mouseX) {

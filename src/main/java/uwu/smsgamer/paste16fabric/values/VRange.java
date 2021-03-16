@@ -117,5 +117,15 @@ public class VRange extends Val<VRange.Range> {
         public String toString() {
             return min + " - " + max;
         }
+
+        public boolean testAndSwap() {
+            boolean b = min.doubleValue() > max.doubleValue();
+            if (b) {
+                Number n = min;
+                min = max;
+                max = n;
+            }
+            return b;
+        }
     }
 }
