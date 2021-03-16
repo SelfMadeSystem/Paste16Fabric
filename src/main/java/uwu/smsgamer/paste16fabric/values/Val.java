@@ -49,4 +49,8 @@ public class Val<T> extends ConfigValue<T> {
     public AbstractValueEditor<?, ?> getValueEditor() {
         return new NoValueEditor<>(this);
     }
+
+    public boolean visible() {
+        return true;
+    }
 }

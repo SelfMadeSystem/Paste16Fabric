@@ -1,6 +1,6 @@
 package uwu.smsgamer.paste16fabric.utils;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 
 public class MathUtils {
     public static boolean approxEquals(double x, double y, double diff) {
@@ -70,6 +70,11 @@ public class MathUtils {
 
     public static double clamp(double a, double min, double max) {
         return Math.max(Math.min(a, max), min);
+    }
+
+    public static Vec3d rotToVec(double yaw, double pitch) {
+        double xzLen = cos_dd(pitch);
+        return new Vec3d(xzLen * cos_dd(yaw), sin_dd(pitch), xzLen * sin_dd(-yaw));
     }
 
     //Thx https://github.com/detel/bezier-curve/blob/master/bezeir-curves.cpp

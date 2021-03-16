@@ -10,11 +10,12 @@ import uwu.smsgamer.paste16fabric.module.PasteModule;
 import uwu.smsgamer.paste16fabric.values.Val;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 // Todo: Clicking and other input stuff.
 public class ValueMenu extends AbstractBlockMenu {
     public String name;
-    public List<ValueBlock> children = new LinkedList<>();
+    private final List<ValueBlock> children = new LinkedList<>();
 
     public ValueMenu(BlockClickGui gui, String name, List<Val<?>> vals) {
         super(gui, 200, 60);
@@ -38,7 +39,7 @@ public class ValueMenu extends AbstractBlockMenu {
 
     @Override
     public List<? extends AbstractClickComponent> children() {
-        return children;
+        return children.stream().filter(v -> v.editor.val.visible()).collect(Collectors.toList());
     }
 
     @Override
