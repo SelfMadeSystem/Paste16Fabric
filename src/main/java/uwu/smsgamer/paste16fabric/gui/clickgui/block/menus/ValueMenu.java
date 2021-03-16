@@ -45,6 +45,17 @@ public class ValueMenu extends AbstractBlockMenu {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button)) return true;
+        if (button <= 1 && isMouseOver(mouseX, mouseY)) {
+            for (ValueBlock child : children) {
+                if (child.mouseClicked(mouseX, mouseY, button)) return true;
+            }
+        }
+        return false;
+    }
 }
 
 class ValueBlock extends AbstractClickComponent {
@@ -87,5 +98,18 @@ class ValueBlock extends AbstractClickComponent {
     @Override
     public List<? extends Element> children() {
         return Collections.singletonList(editor);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isMouseOver(mouseX, mouseY)) {
+            if (button == 0) {
+                editor.mouseClicked(mouseX, mouseY, button);
+            } else if (button == 1) {
+                // TODO: 2021-03-15 Open val's children.
+            }
+            return button <= 1;
+        }
+        return false;
     }
 }

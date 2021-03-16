@@ -25,4 +25,13 @@ public class ToggleEditor extends AbstractValueEditor<Boolean> {
     public Vec2f getSize(AbstractClickGui gui, float w, float h) {
         return new Vec2f(10, 10);
     }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isMouseOver(mouseX, mouseY) && button == 0) {
+            val.setValue(!val.getValue());
+            return true;
+        }
+        return false;
+    }
 }

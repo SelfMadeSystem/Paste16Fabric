@@ -35,7 +35,7 @@ public class ModuleMenu extends AbstractBlockMenu {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (super.mouseClicked(mouseX, mouseY, button)) return true;
-        if (button == 0 && isMouseOver(mouseX, mouseY)) {
+        if (button <= 1 && isMouseOver(mouseX, mouseY)) {
             for (ModuleBlock child : children) {
                 if (child.mouseClicked(mouseX, mouseY, button)) return true;
             }
@@ -81,11 +81,5 @@ class ModuleBlock extends AbstractClickComponent {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean isMouseOver(double mouseX, double mouseY) {
-        return mouseX >= lastX && mouseX <= lastX + width &&
-          mouseY >= lastY && mouseY <= lastY + height;
     }
 }

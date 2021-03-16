@@ -19,5 +19,6 @@ public class ClickGui extends PasteModule {
     @Override
     protected void onEnable() {
         ClickGuiManager.getInstance().openClickGUI();
+        setState(false);
     }
 }

@@ -11,7 +11,9 @@ public class ClickGuiManager implements MinecraftHelper {
         return instance;
     }
 
+    private final BlockClickGui blockGui = new BlockClickGui();
+
     public void openClickGUI() {
-        mc.openScreen(new BlockClickGui());
+        mc.openScreen(blockGui);
     }
 }

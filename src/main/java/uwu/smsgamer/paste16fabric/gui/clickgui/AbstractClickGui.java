@@ -8,6 +8,7 @@ import uwu.smsgamer.paste16fabric.values.Val;
 
 import java.util.List;
 
+// Todo: Descriptions & internal name (for commands)
 public abstract class AbstractClickGui extends Screen implements MinecraftHelper {
     protected AbstractClickGui() {
         super(NarratorManager.EMPTY);
