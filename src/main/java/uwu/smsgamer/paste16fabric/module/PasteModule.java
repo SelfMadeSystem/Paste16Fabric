@@ -5,6 +5,8 @@ import uwu.smsgamer.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 import uwu.smsgamer.paste16fabric.values.*;
 
+import java.util.*;
+
 public class PasteModule implements MinecraftHelper {
     @Getter
     protected final String name;
@@ -14,6 +16,7 @@ public class PasteModule implements MinecraftHelper {
     protected final ModuleCategory category;
     protected final VBool enabled;
     protected final VKeybind keyBind;
+    protected final List<Val<?>> values = new ArrayList<>();
 
     public PasteModule(String name, String description, ModuleCategory category) {
         this(name, description, category, false, -1);
@@ -39,6 +42,10 @@ public class PasteModule implements MinecraftHelper {
 
     public VKeybind getKeyBind() {
         return keyBind;
+    }
+
+    public List<Val<?>> getValues() {
+        return values;
     }
 
     public final void toggle() {

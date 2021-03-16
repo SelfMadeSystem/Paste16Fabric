@@ -22,6 +22,7 @@ public class Val<T> extends ConfigValue<T> {
         this.name = name;
         this.description = description;
         this.parent = null;
+        this.module.getValues().add(this);
     }
 
     public Val(@NotNull Val<?> parent, @NotNull String name, @NotNull T defaultValue, String description) {

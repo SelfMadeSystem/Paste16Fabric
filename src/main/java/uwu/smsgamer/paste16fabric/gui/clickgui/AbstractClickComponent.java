@@ -22,7 +22,5 @@ public abstract class AbstractClickComponent extends AbstractParentElement imple
 
     protected abstract Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY);
 
-    public Vec2f getSize(AbstractClickGui gui, float w, float h) {
-        return new Vec2f(w, h);
-    }
+    public abstract Vec2f getSize(AbstractClickGui gui, float w, float h);
 }

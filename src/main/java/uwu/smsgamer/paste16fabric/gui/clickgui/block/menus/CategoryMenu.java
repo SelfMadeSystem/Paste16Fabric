@@ -68,8 +68,8 @@ class CategoryBlock extends AbstractClickComponent {
         double max = Math.max(1, Math.floor(w / 55));
         w /= Math.min(ModuleCategory.values().length, max);
         h = 20;
-        menu.minHeight = (float) (h * Math.ceil(ModuleCategory.values().length / max));
-        return super.getSize(gui, w, h);
+//        menu.minHeight = (float) (h * Math.ceil(ModuleCategory.values().length / max));
+        return new Vec2f(w, h);
     }
 
     @Override

@@ -31,6 +31,17 @@ public class ModuleMenu extends AbstractBlockMenu {
     public String getName() {
         return category.getName();
     }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button)) return true;
+        if (button == 0 && isMouseOver(mouseX, mouseY)) {
+            for (ModuleBlock child : children) {
+                if (child.mouseClicked(mouseX, mouseY, button)) return true;
+            }
+        }
+        return false;
+    }
 }
 
 class ModuleBlock extends AbstractClickComponent {
@@ -59,7 +70,22 @@ class ModuleBlock extends AbstractClickComponent {
         double max = Math.max(1, Math.floor(w / 55));
         w /= Math.min(menu.children().size(), max);
         h = 20;
-        menu.minHeight = (float) (h * Math.ceil(menu.children().size() / max));
-        return super.getSize(gui, w, h);
+//        menu.minHeight = (float) (h * Math.ceil(menu.children().size() / max));
+        return new Vec2f(w, h);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isMouseOver(mouseX, mouseY)) {
+            menu.gui.menus.add(new ValueMenu(menu.gui, module));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return mouseX >= lastX && mouseX <= lastX + width &&
+          mouseY >= lastY && mouseY <= lastY + height;
     }
 }

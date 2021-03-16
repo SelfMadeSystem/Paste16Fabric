@@ -3,6 +3,7 @@ package uwu.smsgamer.paste16fabric.gui.clickgui.block;
 import net.minecraft.client.util.math.MatrixStack;
 import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickGui;
 import uwu.smsgamer.paste16fabric.gui.clickgui.block.menus.CategoryMenu;
+import uwu.smsgamer.paste16fabric.values.Val;
 
 import java.util.*;
 
@@ -13,6 +14,11 @@ public class BlockClickGui extends AbstractClickGui {
     public BlockClickGui() {
         categoryMenu = new CategoryMenu(this);
         menus.add(categoryMenu);
+    }
+
+    @Override
+    public void openValues(List<Val<?>> vals) {
+
     }
 
     @Override

@@ -4,8 +4,11 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.NarratorManager;
 import uwu.smsgamer.paste16fabric.module.defaultmodules.render.ClickGui;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
+import uwu.smsgamer.paste16fabric.values.Val;
 
-public class AbstractClickGui extends Screen implements MinecraftHelper {
+import java.util.List;
+
+public abstract class AbstractClickGui extends Screen implements MinecraftHelper {
     protected AbstractClickGui() {
         super(NarratorManager.EMPTY);
     }
@@ -15,4 +18,6 @@ public class AbstractClickGui extends Screen implements MinecraftHelper {
         this.client.openScreen(null);
         ClickGui.getInstance().setState(false);
     }
+
+    public abstract void openValues(List<Val<?>> vals);
 }

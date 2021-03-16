@@ -7,8 +7,8 @@ import uwu.smsgamer.paste16fabric.values.Val;
 import java.util.*;
 
 public abstract class AbstractValueEditor<T> extends AbstractClickComponent {
-    protected final Val<T> val;
-    protected final List<Element> children = new LinkedList<>();
+    public final Val<T> val;
+    public final List<Element> children = new LinkedList<>();
 
     protected AbstractValueEditor(Val<T> thisVal) {
         this.val = thisVal;

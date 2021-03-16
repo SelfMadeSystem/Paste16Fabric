@@ -49,20 +49,20 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
         }
         drawCenteredString(matrices, mc.textRenderer, getName(), (int) (x + w / 2), (int) (y - 5 - mc.textRenderer.fontHeight / 2), 0xFF404040);
         fill(matrices, (int) x, (int) y, (int) (x + w), (int) (y + h), 0xFFFFFFFF);
-        final float maxX = x + w - 2;
+        final float maxX = x + w + 1;
         float maxY = 0;
         for (AbstractClickComponent component : children()) {
-            Vec2f componentSize = component.render(matrices, gui, x, y, mouseX, mouseY, w, h);
-            x += componentSize.x;
-            maxY = Math.max(maxY, componentSize.y);
-            if (x >= maxX) {
+            if (x + component.getSize(gui, w, h).x > maxX) {
                 x = posX;
                 y += maxY;
                 maxY = 0;
             }
+            Vec2f componentSize = component.render(matrices, gui, x, y, mouseX, mouseY, w, h);
+            x += componentSize.x;
+            maxY = Math.max(maxY, componentSize.y);
         }
         y += maxY;
-        if (y - posY > h) h = minHeight = y - posY;
+        minHeight = y - posY;
 
         fill(matrices, (int) (posX + w - 5), (int) (posY + h - 5), (int) (posX + w), (int) (posY + h), 0xFF00FF00);
     }
@@ -129,6 +129,8 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
             } else {
                 posX += deltaX;
                 posY += deltaY;
+                posX = Math.max(0, posX);
+                posY = Math.max(5, posY);
             }
             return true;
         }
