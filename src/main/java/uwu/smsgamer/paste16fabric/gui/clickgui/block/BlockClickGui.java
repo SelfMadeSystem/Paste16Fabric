@@ -27,10 +27,12 @@ public class BlockClickGui extends AbstractClickGui {
         for (AbstractBlockMenu menu : menus) {
             menu.render(matrices, mouseX, mouseY, delta);
         }
+        super.render(matrices, mouseX, mouseY, delta);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button)) return true;
         for (int i = menus.size() - 1; i >= 0; i--) {
             if(menus.get(i).mouseClicked(mouseX, mouseY, button)) return true;
         }
@@ -39,6 +41,7 @@ public class BlockClickGui extends AbstractClickGui {
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (super.mouseReleased(mouseX, mouseY, button)) return true;
         for (int i = menus.size() - 1; i >= 0; i--) {
             if(menus.get(i).mouseReleased(mouseX, mouseY, button)) return true;
         }
@@ -47,6 +50,7 @@ public class BlockClickGui extends AbstractClickGui {
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        if (super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) return true;
         for (int i = menus.size() - 1; i >= 0; i--) {
             if(menus.get(i).mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) return true;
         }

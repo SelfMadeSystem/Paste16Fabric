@@ -24,11 +24,19 @@ public abstract class AbstractClickComponent extends AbstractParentElement imple
 
     protected abstract Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY);
 
+    protected void postRender(MatrixStack stack) {
+    }
+
     public abstract Vec2f getSize(AbstractClickGui gui, float w, float h);
 
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
         return mouseX >= lastX && mouseX <= lastX + width &&
           mouseY >= lastY && mouseY <= lastY + height;
+    }
+
+    // I don't wanna release
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        return this.hoveredElement(mouseX, mouseY).filter((element) -> element.mouseReleased(mouseX, mouseY, button)).isPresent();
     }
 }
