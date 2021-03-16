@@ -21,6 +21,7 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
     public float minWidth = 50;
 
     public boolean resizing = false;
+    public boolean childDrag = false;
     public final boolean removable;
 
     protected AbstractBlockMenu(BlockClickGui gui, int w, int h) {
@@ -111,7 +112,7 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        if (isDragging() && button == 0) {
+        if (isDragging() && button == 0 && !childDrag) {
             setDragging(false);
             return true;
         }
@@ -120,7 +121,7 @@ public abstract class AbstractBlockMenu extends Screen implements MinecraftHelpe
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        if (isDragging()) {
+        if (isDragging() && !childDrag) {
             if (resizing) {
                 w += deltaX;
                 h += deltaY;

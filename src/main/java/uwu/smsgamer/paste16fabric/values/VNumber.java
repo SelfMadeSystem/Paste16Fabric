@@ -2,10 +2,11 @@ package uwu.smsgamer.paste16fabric.values;
 
 import org.jetbrains.annotations.NotNull;
 import uwu.smsgamer.paste16fabric.config.ConfigManager;
+import uwu.smsgamer.paste16fabric.gui.clickgui.valueEditors.*;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
 import uwu.smsgamer.paste16fabric.utils.MathUtils;
 
-public class VNumber extends Val<Double> {
+public class VNumber extends Val<Number> {
     protected double min;
     protected double max;
     protected double step;
@@ -58,5 +59,18 @@ public class VNumber extends Val<Double> {
 
     public double getDouble() {
         return getValue().doubleValue();
+    }
+
+    public double getScaledValue() {
+        return (getDouble() - this.min) / (this.max - this.min);
+    }
+
+    public void setScaledValue(double d) {
+        setValue(d * (this.max - this.min) + this.min);
+    }
+
+    @Override
+    public AbstractValueEditor<?> getValueEditor() {
+        return new NumberEditor(this);
     }
 }

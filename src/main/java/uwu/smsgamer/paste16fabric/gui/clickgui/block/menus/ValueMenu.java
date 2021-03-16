@@ -48,10 +48,38 @@ public class ValueMenu extends AbstractBlockMenu {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        childDrag = false;
         if (super.mouseClicked(mouseX, mouseY, button)) return true;
         if (button <= 1 && isMouseOver(mouseX, mouseY)) {
             for (ValueBlock child : children) {
-                if (child.mouseClicked(mouseX, mouseY, button)) return true;
+                if (child.mouseClicked(mouseX, mouseY, button)) {
+                    childDrag = true;
+                    setDragging(true);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (super.mouseReleased(mouseX, mouseY, button)) return true;
+        if (isDragging()) {
+            setDragging(false);
+            for (ValueBlock child : children) {
+                if (child.mouseReleased(mouseX, mouseY, button)) return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        if (super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) return true;
+        if (isDragging()) {
+            for (ValueBlock child : children) {
+                if (child.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)) return true;
             }
         }
         return false;
@@ -105,11 +133,27 @@ class ValueBlock extends AbstractClickComponent {
         if (isMouseOver(mouseX, mouseY)) {
             if (button == 0) {
                 editor.mouseClicked(mouseX, mouseY, button);
+                setDragging(true);
             } else if (button == 1) {
                 // TODO: 2021-03-15 Open val's children.
             }
             return button <= 1;
         }
+        return false;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (isDragging()) {
+            setDragging(false);
+            editor.mouseReleased(mouseX, mouseY, button);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        if (isDragging()) editor.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
         return false;
     }
 }
