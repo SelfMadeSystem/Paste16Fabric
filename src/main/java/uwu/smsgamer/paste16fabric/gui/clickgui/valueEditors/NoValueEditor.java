@@ -5,8 +5,8 @@ import net.minecraft.util.math.Vec2f;
 import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickGui;
 import uwu.smsgamer.paste16fabric.values.Val;
 
-public class NoValueEditor<T> extends AbstractValueEditor<T> {
-    public NoValueEditor(Val<T> thisVal) {
+public class NoValueEditor<V extends Val<T>, T> extends AbstractValueEditor<V, T> {
+    public NoValueEditor(V thisVal) {
         super(thisVal);
     }
 

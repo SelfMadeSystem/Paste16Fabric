@@ -1,6 +1,5 @@
-package uwu.smsgamer.paste16fabric.module.defaultmodules.render;
+package uwu.smsgamer.paste16fabric.module.defaultModules.render;
 
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.*;
 import uwu.smsgamer.paste16fabric.gui.hud.HudManager;

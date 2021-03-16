@@ -5,8 +5,8 @@ import net.minecraft.util.math.Vec2f;
 import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickGui;
 import uwu.smsgamer.paste16fabric.values.*;
 
-public class ToggleEditor extends AbstractValueEditor<Boolean> {
-    public ToggleEditor(Val<Boolean> thisVal) {
+public class ToggleEditor extends AbstractValueEditor<VBool, Boolean> {
+    public ToggleEditor(VBool thisVal) {
         super(thisVal);
     }
 

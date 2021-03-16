@@ -14,7 +14,7 @@ public class VBool extends Val<Boolean> {
     }
 
     @Override
-    public AbstractValueEditor<?> getValueEditor() {
+    public AbstractValueEditor<VBool, Boolean> getValueEditor() {
         return new ToggleEditor(this);
     }
 }

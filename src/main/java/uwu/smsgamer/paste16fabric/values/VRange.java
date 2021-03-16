@@ -3,6 +3,7 @@ package uwu.smsgamer.paste16fabric.values;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import uwu.smsgamer.paste16fabric.config.ConfigManager;
+import uwu.smsgamer.paste16fabric.gui.clickgui.valueEditors.*;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
 import uwu.smsgamer.paste16fabric.utils.MathUtils;
 
@@ -57,6 +58,45 @@ public class VRange extends Val<VRange.Range> {
 
     public void setMaxValue(double d) {
         getValue().max = MathUtils.clamp(MathUtils.roundInc(d, step), min, max);
+    }
+
+    public double getRandom() {
+        return Math.random() * (getValue().max.doubleValue() - getValue().min.doubleValue()) + getValue().min.doubleValue();
+    }
+
+    public double getTime(long amount, long time) {
+        return (time % amount) / ((float) amount) * (getValue().max.doubleValue() - getValue().min.doubleValue()) + getValue().min.doubleValue();
+    }
+
+    public double getLoopTime(long amount, long time) {
+        double l = (time % amount * 2);
+        return (l > amount ? -l + amount * 2 : l) / amount *
+          (getValue().max.doubleValue() - getValue().min.doubleValue()) + getValue().min.doubleValue();
+    }
+
+    public double getScaledMin() {
+        return (getValue().min.doubleValue() - min) / (max - min);
+    }
+
+    public double getScaledMax() {
+        return (getValue().max.doubleValue() - min) / (max - min);
+    }
+
+    public double getScaledDiff() {
+        return getScaledMax() - getScaledMin();
+    }
+
+    public void setScaledMin(double d) {
+        setMinValue(d * (max - min) + min);
+    }
+
+    public void setScaledMax(double d) {
+        setMaxValue(d * (max - min) + min);
+    }
+
+    @Override
+    public AbstractValueEditor<VRange, Range> getValueEditor() {
+        return new RangeEditor(this);
     }
 
     @Getter

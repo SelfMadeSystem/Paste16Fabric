@@ -1,13 +1,15 @@
-package uwu.smsgamer.paste16fabric.module.defaultmodules.movement;
+package uwu.smsgamer.paste16fabric.module.defaultModules.movement;
 
 import net.minecraft.util.math.Vec3d;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.UpdateEvent;
 import uwu.smsgamer.paste16fabric.module.*;
-import uwu.smsgamer.paste16fabric.values.VNumber;
+import uwu.smsgamer.paste16fabric.values.*;
 
 public class Speed extends PasteModule {
     public final VNumber speed = new VNumber(this, "Speed", 1.1, 0, 2, 0.01,
+      "Speed multiplier.");
+    public final VRange idk = new VRange(this, "idk", 0.9, 1.1, 0, 2, 0.01,
       "Speed multiplier.");
 
     public Speed() {

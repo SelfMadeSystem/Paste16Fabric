@@ -24,9 +24,9 @@ public class ValueMenu extends AbstractBlockMenu {
         this.name = name;
     }
 
-    public ValueMenu(BlockClickGui gui, List<AbstractValueEditor<?>> editors, String name) {
+    public ValueMenu(BlockClickGui gui, List<AbstractValueEditor<?, ?>> editors, String name) {
         super(gui, 200, 60);
-        for (AbstractValueEditor<?> editor : editors) {
+        for (AbstractValueEditor<?, ?> editor : editors) {
             children.add(new ValueBlock(editor, this));
         }
         this.name = name;
@@ -88,11 +88,11 @@ public class ValueMenu extends AbstractBlockMenu {
 
 class ValueBlock extends AbstractClickComponent {
     public final String name;
-    public final AbstractValueEditor<?> editor;
+    public final AbstractValueEditor<?, ?> editor;
     public final ValueMenu menu;
     public final int textWidth;
 
-    ValueBlock(AbstractValueEditor<?> editor, ValueMenu menu) {
+    ValueBlock(AbstractValueEditor<?, ?> editor, ValueMenu menu) {
         this.editor = editor;
         this.menu = menu;
         this.name = editor.val.getName();

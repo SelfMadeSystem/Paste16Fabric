@@ -2,7 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.clickgui;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.NarratorManager;
-import uwu.smsgamer.paste16fabric.module.defaultmodules.render.ClickGui;
+import uwu.smsgamer.paste16fabric.module.defaultModules.render.ClickGui;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 import uwu.smsgamer.paste16fabric.values.Val;
 

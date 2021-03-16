@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste16fabric.module.defaultmodules.render;
+package uwu.smsgamer.paste16fabric.module.defaultModules.render;
 
 import uwu.smsgamer.paste16fabric.gui.clickgui.ClickGuiManager;
 import uwu.smsgamer.paste16fabric.module.*;
@@ -19,6 +19,6 @@ public class ClickGui extends PasteModule {
     @Override
     protected void onEnable() {
         ClickGuiManager.getInstance().openClickGUI();
-        setState(false);
+//        setState(false);
     }
 }

@@ -4,7 +4,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.*;
-import uwu.smsgamer.paste16fabric.module.defaultmodules.render.Hud;
+import uwu.smsgamer.paste16fabric.module.defaultModules.render.Hud;
 import uwu.smsgamer.paste16fabric.utils.text.GlyphPageFontRenderer;
 
 import java.lang.reflect.*;

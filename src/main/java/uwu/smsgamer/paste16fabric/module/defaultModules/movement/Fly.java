@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste16fabric.module.defaultmodules.movement;
+package uwu.smsgamer.paste16fabric.module.defaultModules.movement;
 
 import net.minecraft.util.math.Vec3d;
 import uwu.smsgamer.paste16fabric.events.PasteListener;

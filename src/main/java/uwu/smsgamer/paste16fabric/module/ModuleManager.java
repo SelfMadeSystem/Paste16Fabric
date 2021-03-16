@@ -2,8 +2,8 @@ package uwu.smsgamer.paste16fabric.module;
 
 import uwu.smsgamer.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
-import uwu.smsgamer.paste16fabric.module.defaultmodules.movement.*;
-import uwu.smsgamer.paste16fabric.module.defaultmodules.render.*;
+import uwu.smsgamer.paste16fabric.module.defaultModules.movement.*;
+import uwu.smsgamer.paste16fabric.module.defaultModules.render.*;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 
 import java.util.*;

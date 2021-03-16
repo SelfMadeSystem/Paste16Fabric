@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste16fabric.module.defaultmodules.movement;
+package uwu.smsgamer.paste16fabric.module.defaultModules.movement;
 
 import uwu.smsgamer.paste16fabric.module.*;
 

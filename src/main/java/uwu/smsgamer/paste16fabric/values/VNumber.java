@@ -70,7 +70,7 @@ public class VNumber extends Val<Number> {
     }
 
     @Override
-    public AbstractValueEditor<?> getValueEditor() {
+    public AbstractValueEditor<VNumber, Number> getValueEditor() {
         return new NumberEditor(this);
     }
 }

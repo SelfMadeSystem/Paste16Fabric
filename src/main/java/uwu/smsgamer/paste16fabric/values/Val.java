@@ -46,7 +46,7 @@ public class Val<T> extends ConfigValue<T> {
         return getValue().toString();
     }
 
-    public AbstractValueEditor<?> getValueEditor() {
+    public AbstractValueEditor<?, ?> getValueEditor() {
         return new NoValueEditor(this);
     }
 }

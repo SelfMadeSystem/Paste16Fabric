@@ -6,16 +6,18 @@ import uwu.smsgamer.paste16fabric.gui.clickgui.AbstractClickGui;
 import uwu.smsgamer.paste16fabric.utils.MathUtils;
 import uwu.smsgamer.paste16fabric.values.*;
 
-public class NumberEditor extends AbstractValueEditor<VNumber, Number> {
-    public NumberEditor(VNumber thisVal) {
+public class RangeEditor extends AbstractValueEditor<VRange, VRange.Range> {
+    private boolean max;
+
+    public RangeEditor(VRange thisVal) {
         super(thisVal);
     }
 
     @Override
     protected Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY) {
         fill(stack, (int) x, (int) y, (int) (x + width), (int) (y + height), 0xFF666666);
-        fill(stack, (int) x, (int) y,
-          (int) (x + width * MathUtils.clamp(val.getScaledValue(), 0, 1)),
+        fill(stack, (int) (x + width * MathUtils.clamp(val.getScaledMin(), 0, 1)), (int) y,
+          (int) (x + width * MathUtils.clamp(val.getScaledMax(), 0, 1)),
           (int) (y + height), 0xFF66FFFF);
         drawCenteredString(stack, mc.textRenderer, val.getStringValue(), (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
         return new Vec2f(width, height);
@@ -29,6 +31,8 @@ public class NumberEditor extends AbstractValueEditor<VNumber, Number> {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (isMouseOver(mouseX, mouseY) && button == 0) {
+            double scaledMouse = getScaledMouse(mouseX);
+            max = Math.abs(scaledMouse - val.getScaledMin()) > Math.abs(scaledMouse - val.getScaledMax());
             setValue(mouseX);
             setDragging(true);
             return true;
@@ -49,6 +53,11 @@ public class NumberEditor extends AbstractValueEditor<VNumber, Number> {
     }
 
     public void setValue(double mouseX) {
-        val.setScaledValue((mouseX - lastX) / width);
+        if (max) val.setScaledMax(getScaledMouse(mouseX));
+        else val.setScaledMin(getScaledMouse(mouseX));
+    }
+
+    public double getScaledMouse(double mouseX) {
+        return (mouseX - lastX) / width;
     }
 }
