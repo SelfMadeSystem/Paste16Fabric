@@ -55,4 +55,8 @@ public class VSelect<T> extends Val<Integer> {
     public String[] getSelections() {
         return Arrays.stream(types).map(Object::toString).toArray(String[]::new);
     }
+
+    public T getSelected() {
+        return types[getValue()];
+    }
 }

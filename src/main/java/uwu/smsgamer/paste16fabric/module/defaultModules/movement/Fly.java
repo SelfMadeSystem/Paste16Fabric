@@ -14,7 +14,7 @@ public class Fly extends PasteModule {
       "3D",
       "Space");
 
-    public final VNumber speed = new VNumber(this, "Speed", 1, 0, 2, 0.001,
+    public final VNumber speed = new VNumber(this, "Speed", 1, 0, 2, 0.05,
       "Speed for Creative, 3D & Space.") {
         @Override
         public boolean visible() {
@@ -22,7 +22,7 @@ public class Fly extends PasteModule {
         }
     };
 
-    public final VNumber friction = new VNumber(this, "Friction", 0.9, 0, 1.2, 0.001,
+    public final VNumber friction = new VNumber(this, "Friction", 0.9, 0, 1.2, 0.05,
       "Friction for Space.") {
         @Override
         public boolean visible() {
@@ -89,7 +89,7 @@ public class Fly extends PasteModule {
 
                 spaceSpeed = spaceSpeed.add(frwdVec.multiply(0.2 * speed.getDouble())).multiply(friction.getDouble());
 
-                spaceSpeed = EntityUtils.adjustMovementForCollisions(mc.player, spaceSpeed);
+                if (!mc.player.noClip) spaceSpeed = EntityUtils.adjustMovementForCollisions(mc.player, spaceSpeed);
 
                 mc.player.setVelocity(spaceSpeed);
                 mc.player.forwardSpeed = 0;

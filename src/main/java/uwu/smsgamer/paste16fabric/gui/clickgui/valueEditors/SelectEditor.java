@@ -51,18 +51,18 @@ public class SelectEditor<T> extends AbstractValueEditor<VSelect<T>, Integer> {
     protected void postRender(MatrixStack stack) {
         String[] selections = val.getSelections();
         for (int i = 0; i < selections.length; i++) {
-            renderThing(stack, i, selections[i]);
+            renderThing(stack, i + 1, selections[i]);
         }
     }
 
     public void renderThing(MatrixStack stack, int i, String s) {
         float x = lastX;
         float y = lastY + (height * i);
-        fill(stack, (int) x, (int) y, (int) (x + width), (int) (y + height), 0xFF00FF00);
+        fill(stack, (int) x, (int) y, (int) (x + width), (int) (y + height), 0xFF44FF77);
         drawCenteredString(stack, mc.textRenderer, s, (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
     }
 
     public int getMouseVal(double mouseY) {
-        return (int) ((mouseY - lastY) / height);
+        return (int) ((mouseY - lastY - height) / height);
     }
 }
