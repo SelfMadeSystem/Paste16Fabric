@@ -1,13 +1,11 @@
-package uwu.smsgamer.paste16fabric.mixins.screen;
+package uwu.smsgamer.paste16fabric.injection.mixins.screen;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.LiteralText;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import uwu.smsgamer.paste16fabric.command.CommandManager;
-import uwu.smsgamer.paste16fabric.utils.Render2D;
 
 @Mixin(Screen.class)
 public class MixinScreen {

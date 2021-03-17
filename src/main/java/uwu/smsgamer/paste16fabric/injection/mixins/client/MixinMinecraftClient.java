@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste16fabric.mixins.client;
+package uwu.smsgamer.paste16fabric.injection.mixins.client;
 
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;

@@ -22,6 +22,7 @@ public class ModuleManager implements MinecraftHelper {
 
         addModule(ClickGui.getInstance());
         addModule(new Hud());
+        addModule(new RollTest());
 
         addModule(new Fly());
         addModule(new Speed());

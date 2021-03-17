@@ -3,6 +3,7 @@ package uwu.smsgamer.paste16fabric.module.defaultModules.movement;
 import net.minecraft.util.math.Vec3d;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.UpdateEvent;
+import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
 import uwu.smsgamer.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.utils.*;
 import uwu.smsgamer.paste16fabric.values.*;
@@ -90,6 +91,14 @@ public class Fly extends PasteModule {
                 spaceSpeed = spaceSpeed.add(frwdVec.multiply(0.2 * speed.getDouble())).multiply(friction.getDouble());
 
                 if (!mc.player.noClip) spaceSpeed = EntityUtils.adjustMovementForCollisions(mc.player, spaceSpeed);
+
+                System.out.println(spaceSpeed.length());
+
+//                mc.gameRenderer.getCamera().getPitch()
+
+//                RotationUtils.setQuaternion(mc.gameRenderer.getCamera().getRotation(), mc.player.yaw, mc.player.pitch,
+//                  (float) (spaceSpeed.length() * 20));
+                ((ICamera) mc.gameRenderer.getCamera()).setRoll((float) (spaceSpeed.length() * 40));
 
                 mc.player.setVelocity(spaceSpeed);
                 mc.player.forwardSpeed = 0;

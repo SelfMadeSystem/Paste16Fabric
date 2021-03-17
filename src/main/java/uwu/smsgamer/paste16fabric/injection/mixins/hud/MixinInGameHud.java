@@ -1,4 +1,4 @@
-package uwu.smsgamer.paste16fabric.mixins.hud;
+package uwu.smsgamer.paste16fabric.injection.mixins.hud;
 
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
