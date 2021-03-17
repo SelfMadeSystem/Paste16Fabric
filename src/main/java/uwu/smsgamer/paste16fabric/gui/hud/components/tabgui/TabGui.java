@@ -150,10 +150,9 @@ public class TabGui extends HudComponent {
         public CategoryOptions() {
             baseOptions = new Options();
             hoverOptions = new Options();
-            hoverOptions.setBoxBorder(2);
-            hoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
+            hoverOptions.setBoxBorder(3);
             selectedOptions = new Options();
-            selectedOptions.setBoxBorder(2);
+            selectedOptions.setBoxBorder(3);
         }
     }
 
@@ -170,25 +169,22 @@ public class TabGui extends HudComponent {
 
             hoverOptions = baseOptions.clone();
             hoverOptions.setBoxBorder(2);
-            hoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
 
             selectedOptions = baseOptions.clone();
+            selectedOptions.setTextColour(Colours.RED);
+
             selectedHoverOptions = baseOptions.clone();
             selectedHoverOptions.setBoxBorder(2);
-            selectedHoverOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
             selectedHoverOptions.setTextColour(Colours.RED);
-            selectedOptions.setBoxBorder(2);
-            selectedOptions.setBoxInsideColour(Colours.LIGHT_GRAY);
-            selectedOptions.setTextColour(Colours.RED);
         }
     }
 
     @Getter
     @Setter
     public static class Options implements Cloneable {
-        private Colour boxInsideColour = Colours.WHITE;
-        private Colour boxBorderColour = Colours.BLACK;
-        private Colour textColour = Colours.BLACK;
+        private Colour boxInsideColour = new RGB(0, 0, 0, 0.8);
+        private Colour boxBorderColour = new RGB(0, 0, 0, 0.8);
+        private Colour textColour = Colours.WHITE;
         private int boxWidth = 100;
         private int boxHeight = 20;
         private int boxBorder = 1;

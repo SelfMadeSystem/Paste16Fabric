@@ -2,7 +2,7 @@ package uwu.smsgamer.paste16fabric.gui.hud;
 
 import uwu.smsgamer.paste16fabric.config.ConfigValue;
 import uwu.smsgamer.paste16fabric.events.events.*;
-import uwu.smsgamer.paste16fabric.gui.hud.components.HudText;
+import uwu.smsgamer.paste16fabric.gui.hud.components.*;
 import uwu.smsgamer.paste16fabric.gui.hud.components.tabgui.TabGui;
 import uwu.smsgamer.paste16fabric.utils.Colours;
 
@@ -27,6 +27,12 @@ public class HudManager {
         tabgui.setVerticalAlignment(-1);
 
         list.add(tabgui);
+
+        HudArrayList hal = new HudArrayList();
+        hal.setHorizontalAlignment(1);
+        hal.setVerticalAlignment(-1);
+
+        list.add(hal);
 
         HudText text = new HudText();
 

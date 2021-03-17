@@ -63,4 +63,9 @@ public class Hud extends PasteModule {
         super.init();
         HudManager.getInstance().init();
     }
+
+    @Override
+    public boolean getVisibleState() {
+        return false;
+    }
 }

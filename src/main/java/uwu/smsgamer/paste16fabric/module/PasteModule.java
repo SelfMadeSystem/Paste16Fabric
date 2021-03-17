@@ -1,6 +1,7 @@
 package uwu.smsgamer.paste16fabric.module;
 
 import lombok.Getter;
+import net.minecraft.text.*;
 import uwu.smsgamer.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 import uwu.smsgamer.paste16fabric.values.*;
@@ -42,6 +43,14 @@ public class PasteModule implements MinecraftHelper {
 
     public boolean getState() {
         return enabled.getValue();
+    }
+
+    public boolean getVisibleState() {
+        return getState();
+    }
+
+    public Text getVisibleName() {
+        return new LiteralText(getName());
     }
 
     public int getKeyBinding() {

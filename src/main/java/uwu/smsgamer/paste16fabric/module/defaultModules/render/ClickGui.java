@@ -21,4 +21,9 @@ public class ClickGui extends PasteModule {
         ClickGuiManager.getInstance().openClickGUI();
 //        setState(false);
     }
+
+    @Override
+    public boolean getVisibleState() {
+        return false;
+    }
 }

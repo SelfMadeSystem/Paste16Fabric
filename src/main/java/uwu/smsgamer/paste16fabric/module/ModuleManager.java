@@ -9,6 +9,8 @@ import uwu.smsgamer.paste16fabric.module.defaultModules.world.Nuker;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
 
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class ModuleManager implements MinecraftHelper {
     private static ModuleManager instance;
@@ -52,6 +54,14 @@ public class ModuleManager implements MinecraftHelper {
         List<PasteModule> pasteModules = modulesByCategory.get(category);
         if (pasteModules == null) return new LinkedList<>();
         return new LinkedList<>(pasteModules);
+    }
+
+    public List<PasteModule> getEnabledModules() {
+        return getModulesConditional(PasteModule::getState);
+    }
+
+    public List<PasteModule> getModulesConditional(Predicate<PasteModule> condition) {
+        return modules.stream().filter(condition).collect(Collectors.toList());
     }
 
     public PasteModule getModuleByName(String name) {
