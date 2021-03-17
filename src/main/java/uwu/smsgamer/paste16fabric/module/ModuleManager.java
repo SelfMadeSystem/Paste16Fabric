@@ -3,6 +3,7 @@ package uwu.smsgamer.paste16fabric.module;
 import uwu.smsgamer.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.events.KeyPressEvent;
 import uwu.smsgamer.paste16fabric.module.defaultModules.movement.*;
+import uwu.smsgamer.paste16fabric.module.defaultModules.player.BetterRotation;
 import uwu.smsgamer.paste16fabric.module.defaultModules.render.*;
 import uwu.smsgamer.paste16fabric.module.defaultModules.world.Nuker;
 import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
@@ -20,13 +21,15 @@ public class ModuleManager implements MinecraftHelper {
     public ModuleManager() {
         EventManager.registerListener(this);
 
-        addModule(ClickGui.getInstance());
-        addModule(new Hud());
-        addModule(new RollTest());
-
         addModule(new Fly());
         addModule(new Speed());
         addModule(new Step());
+
+        addModule(BetterRotation.getInstance());
+
+        addModule(ClickGui.getInstance());
+        addModule(new Hud());
+        addModule(new RollTest());
 
         addModule(new Nuker());
     }
