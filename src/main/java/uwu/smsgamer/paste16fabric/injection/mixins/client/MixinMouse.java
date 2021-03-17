@@ -3,6 +3,7 @@ package uwu.smsgamer.paste16fabric.injection.mixins.client;
 import net.minecraft.client.*;
 import net.minecraft.client.util.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.*;
 import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
 import uwu.smsgamer.paste16fabric.module.defaultModules.player.BetterRotation;
@@ -114,26 +115,87 @@ public class MixinMouse {
         float x = (float) (cursorDeltaX * 0.15F);
         float y = (float) (cursorDeltaY * 0.15F);
         ICamera camera = ((ICamera) client.gameRenderer.getCamera());
-        float yaw = entity.yaw;
-        float pitch = entity.pitch;
-        float roll = camera.getRoll();
 
-        float cosYaw = MathUtils.cos_fd(yaw);
-        float sinYaw = MathUtils.sin_fd(yaw);
-        float cosPitch = MathUtils.cos_fd(pitch);
-        float sinPitch = MathUtils.sin_fd(pitch);
-        float cosRoll = MathUtils.cos_fd(roll);
-        float sinRoll = MathUtils.sin_fd(roll);
+        Vec3d euler = camera.getEuler();
 
-        entity.yaw += x * cosPitch * cosRoll + y * -sinRoll * cosPitch;
-        entity.pitch += y * cosRoll + x * sinRoll;
-        // Todo: Implement roll
+        double xSin = MathUtils.sin_dd(euler.x);
+        double xCos = MathUtils.cos_dd(euler.x);
+        double ySin = MathUtils.sin_dd(euler.y);
+        double yCos = MathUtils.cos_dd(euler.y);
+        double zSin = MathUtils.sin_dd(euler.z);
+        double zCos = MathUtils.cos_dd(euler.z);
+
+        switch (BetterRotation.getInstance().test.getInt()) {
+            case 0: {
+                camera.setEuler(euler.x + y * ySin * zSin + x * yCos * zCos,
+                  euler.y + y * xCos * zCos + x * xSin * zSin,
+                  euler.z + y * xCos * yCos + x * xSin * ySin);
+                break;
+            }
+            case 1: {
+                camera.setEuler(euler.x + x * ySin * zSin + y * yCos * zCos,
+                  euler.y + y * xCos * zCos + x * xSin * zSin,
+                  euler.z + y * xCos * yCos + x * xSin * ySin);
+                break;
+            }
+            case 2: {
+                camera.setEuler(euler.x + y * ySin * zSin + x * yCos * zCos,
+                  euler.y + x * xCos * zCos + y * xSin * zSin,
+                  euler.z + y * xCos * yCos + x * xSin * ySin);
+                break;
+            }
+            case 3: {
+                camera.setEuler(euler.x + x * ySin * zSin + y * yCos * zCos,
+                  euler.y + x * xCos * zCos + y * xSin * zSin,
+                  euler.z + y * xCos * yCos + x * xSin * ySin);
+                break;
+            }
+            case 4: {
+                camera.setEuler(euler.x + y * ySin * zSin + x * yCos * zCos,
+                  euler.y + y * xCos * zCos + x * xSin * zSin,
+                  euler.z + x * xCos * yCos + y * xSin * ySin);
+                break;
+            }
+            case 5: {
+                camera.setEuler(euler.x + x * ySin * zSin + y * yCos * zCos,
+                  euler.y + y * xCos * zCos + x * xSin * zSin,
+                  euler.z + x * xCos * yCos + y * xSin * ySin);
+                break;
+            }
+            case 6: {
+                camera.setEuler(euler.x + y * ySin * zSin + x * yCos * zCos,
+                  euler.y + x * xCos * zCos + y * xSin * zSin,
+                  euler.z + x * xCos * yCos + y * xSin * ySin);
+                break;
+            }
+            case 7: {
+                camera.setEuler(euler.x + x * ySin * zSin + y * yCos * zCos,
+                  euler.y + x * xCos * zCos + y * xSin * zSin,
+                  euler.z + x * xCos * yCos + y * xSin * ySin);
+                break;
+            }
+        }
+
+//        float yaw = entity.yaw;
+//        float pitch = entity.pitch;
+//        float roll = camera.getRoll();
+//
+//        float cosYaw = MathUtils.cos_fd(yaw);
+//        float sinYaw = MathUtils.sin_fd(yaw);
+//        float cosPitch = MathUtils.cos_fd(pitch);
+//        float sinPitch = MathUtils.sin_fd(pitch);
+//        float cosRoll = MathUtils.cos_fd(roll);
+//        float sinRoll = MathUtils.sin_fd(roll);
+//
+//        entity.yaw += x * cosPitch * cosRoll + y * -sinRoll * cosPitch;
+//        entity.pitch += y * cosRoll + x * sinRoll;
+//
 //        entity.pitch = (float)((double)entity.pitch + d);
 //        entity.yaw = (float)((double)entity.yaw + e);
 //        entity.prevPitch = (float)((double)entity.prevPitch + d);
 //        entity.prevYaw = (float)((double)entity.prevYaw + e);
-        if (entity.getVehicle() != null) {
-            entity.getVehicle().onPassengerLookAround(entity);
-        }
+//        if (entity.getVehicle() != null) {
+//            entity.getVehicle().onPassengerLookAround(entity);
+//        }
     }
 }

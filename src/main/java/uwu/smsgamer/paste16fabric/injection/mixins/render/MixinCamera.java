@@ -7,7 +7,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.BlockView;
 import org.spongepowered.asm.mixin.*;
 import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
-import uwu.smsgamer.paste16fabric.utils.RotationUtils;
 
 @Mixin(Camera.class)
 public class MixinCamera implements ICamera {
@@ -44,6 +43,8 @@ public class MixinCamera implements ICamera {
 
     private float roll;
 
+    private Vec3d euler = new Vec3d(0, 0, 0);
+
     /**
      * @author Sms_Gamer_3808
      */
@@ -55,15 +56,15 @@ public class MixinCamera implements ICamera {
         this.thirdPerson = thirdPerson;
         this.inverseView = inverseView;
         this.setRotation(focusedEntity.getYaw(tickDelta), focusedEntity.getPitch(tickDelta), this.roll);
-        this.setPos(MathHelper.lerp(tickDelta, focusedEntity.prevX, focusedEntity.getX()), MathHelper.lerp(tickDelta, focusedEntity.prevY, focusedEntity.getY()) + (double)MathHelper.lerp(tickDelta, this.lastCameraY, this.cameraY), MathHelper.lerp(tickDelta, focusedEntity.prevZ, focusedEntity.getZ()));
+        this.setPos(MathHelper.lerp(tickDelta, focusedEntity.prevX, focusedEntity.getX()), MathHelper.lerp(tickDelta, focusedEntity.prevY, focusedEntity.getY()) + (double) MathHelper.lerp(tickDelta, this.lastCameraY, this.cameraY), MathHelper.lerp(tickDelta, focusedEntity.prevZ, focusedEntity.getZ()));
         if (thirdPerson) {
             if (inverseView) {
                 this.setRotation(this.yaw + 180.0F, -this.pitch, this.roll);
             }
 
             this.moveBy(-this.clipToSpace(4.0D), 0.0D, 0.0D);
-        } else if (focusedEntity instanceof LivingEntity && ((LivingEntity)focusedEntity).isSleeping()) {
-            Direction direction = ((LivingEntity)focusedEntity).getSleepingDirection();
+        } else if (focusedEntity instanceof LivingEntity && ((LivingEntity) focusedEntity).isSleeping()) {
+            Direction direction = ((LivingEntity) focusedEntity).getSleepingDirection();
             this.setRotation(direction != null ? direction.asRotation() - 180.0F : 0.0F, 0.0F, this.roll);
             this.moveBy(0.0D, 0.3D, 0.0D);
         }
@@ -116,5 +117,15 @@ public class MixinCamera implements ICamera {
         this.verticalPlane.rotate(this.rotation);
         this.diagonalPlane.set(1.0F, 0.0F, 0.0F);
         this.diagonalPlane.rotate(this.rotation);
+    }
+
+    @Override
+    public void setEuler(Vec3d vec) {
+        euler = vec;
+    }
+
+    @Override
+    public Vec3d getEuler() {
+        return euler;
     }
 }

@@ -2,29 +2,17 @@ package uwu.smsgamer.paste16fabric.injection.mixins.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.ShaderEffect;
-import net.minecraft.client.gui.MapRenderer;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.util.math.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.profiler.Profiler;
-import org.apache.logging.log4j.*;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import uwu.smsgamer.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste16fabric.events.events.RenderEvent;
 import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
-
-import java.util.Random;
-import java.util.concurrent.*;
+import uwu.smsgamer.paste16fabric.module.defaultModules.player.BetterRotation;
 
 @SuppressWarnings("FieldMayBeFinal")
 @Mixin(GameRenderer.class)
@@ -45,11 +33,12 @@ public class MixinGamerRenderer {
     @Shadow
     private Camera camera;
 
-    @Inject(method = "render", at = @At("RETURN"))//value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
+    @Inject(method = "render", at = @At("RETURN"))
+//value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
     public void render(float tickDelta, long startTime, boolean tick, CallbackInfo ci) {
         EventManager.call(new RenderEvent(tickDelta, new MatrixStack(), RenderEvent.Place.POST));
     }
-    
+
     /**
      * @author Sms_Gamer_3808
      */
@@ -64,7 +53,7 @@ public class MixinGamerRenderer {
         this.client.getProfiler().push("center");
         boolean bl = this.shouldRenderBlockOutline();
         this.client.getProfiler().swap("camera");
-        this.viewDistance = (float)(this.client.options.viewDistance * 16);
+        this.viewDistance = (float) (this.client.options.viewDistance * 16);
         MatrixStack matrixStack = new MatrixStack();
         matrixStack.peek().getModel().multiply(this.getBasicProjectionMatrix(this.camera, tickDelta, true));
         this.bobViewWhenHurt(matrixStack, tickDelta);
@@ -78,9 +67,9 @@ public class MixinGamerRenderer {
             float g = 5.0F / (f * f + 5.0F) - f * 0.04F;
             g *= g;
             Vector3f vector3f = new Vector3f(0.0F, MathHelper.SQUARE_ROOT_OF_TWO / 2.0F, MathHelper.SQUARE_ROOT_OF_TWO / 2.0F);
-            matrixStack.multiply(vector3f.getDegreesQuaternion(((float)this.ticks + tickDelta) * (float)i));
+            matrixStack.multiply(vector3f.getDegreesQuaternion(((float) this.ticks + tickDelta) * (float) i));
             matrixStack.scale(1.0F / g, 1.0F, 1.0F);
-            float h = -((float)this.ticks + tickDelta) * (float)i;
+            float h = -((float) this.ticks + tickDelta) * (float) i;
             matrixStack.multiply(vector3f.getDegreesQuaternion(h));
         }
 
@@ -90,9 +79,55 @@ public class MixinGamerRenderer {
 //        matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(this.camera.getPitch()));
 //        matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(this.camera.getYaw() + 180.0F));
 //        matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(((ICamera) this.camera).getRoll()));
-        matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(((ICamera) this.camera).getRoll()));
-        matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(this.camera.getPitch()));
-        matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(this.camera.getYaw() + 180.0F));
+        // 123 132 213 231 312 321
+        // xyz xzy yxz yzx zxy zyx
+
+        if (BetterRotation.getInstance().implementRoll.getValue()) {
+            ICamera camera = ((ICamera) this.camera);
+            Vec3d euler = camera.getEuler();
+            switch (BetterRotation.getInstance().test1.getInt()) {
+                case 0: {
+                    matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) euler.x));
+                    matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) euler.y));
+                    matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) euler.z));
+                    break;
+                }
+                case 1: {
+                    matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) euler.x));
+                    matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) euler.z));
+                    matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) euler.y));
+                    break;
+                }
+                case 2: {
+                    matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) euler.y));
+                    matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) euler.x));
+                    matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) euler.z));
+                    break;
+                }
+                case 3: {
+                    matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) euler.y));
+                    matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) euler.z));
+                    matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) euler.x));
+                    break;
+                }
+                case 4: {
+                    matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) euler.z));
+                    matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) euler.x));
+                    matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) euler.y));
+                    break;
+                }
+                case 5: {
+                    matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) euler.z));
+                    matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) euler.y));
+                    matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) euler.x));
+                    break;
+                }
+            }
+        } else {
+            matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(((ICamera) this.camera).getRoll()));
+            matrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(this.camera.getPitch()));
+            matrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(this.camera.getYaw() + 180.0F));
+        }
 //        matrix.multiply(this.camera.getRotation());
         this.client.worldRenderer.render(matrix, tickDelta, limitTime, bl, this.camera, this.client.gameRenderer, this.lightmapTextureManager, matrix4f);
         this.client.getProfiler().swap("hand");
