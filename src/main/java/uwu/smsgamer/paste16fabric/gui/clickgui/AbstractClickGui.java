@@ -3,15 +3,18 @@ package uwu.smsgamer.paste16fabric.gui.clickgui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Matrix4f;
 import uwu.smsgamer.paste16fabric.module.defaultModules.render.ClickGui;
-import uwu.smsgamer.paste16fabric.utils.MinecraftHelper;
+import uwu.smsgamer.paste16fabric.utils.*;
 import uwu.smsgamer.paste16fabric.values.Val;
 
 import java.util.List;
 
-// Todo: Descriptions & internal name (for commands)
+// Todo: openValues
 public abstract class AbstractClickGui extends Screen implements MinecraftHelper {
     public AbstractClickComponent override;
+    public String description;
+    public String internName;
 
     protected AbstractClickGui() {
         super(NarratorManager.EMPTY);
@@ -25,7 +28,27 @@ public abstract class AbstractClickGui extends Screen implements MinecraftHelper
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        drawDescriptions(matrices);
         if (override != null) override.postRender(matrices);
+    }
+
+    public void drawDescriptions(MatrixStack matrices) {
+        int width = mc.getWindow().getScaledWidth();
+        int height = mc.getWindow().getScaledHeight();
+
+        int fontHeight = mc.textRenderer.fontHeight;
+
+        Matrix4f matrix = matrices.peek().getModel();
+
+        if (description != null && !description.isBlank()) {
+            Render2D.drawBorderedRect(matrix, 0, height - fontHeight - 2, mc.textRenderer.getWidth(description) + 3, height, 1, Colours.WHITE, Colours.BLACK);
+            Render2D.drawString(matrix, description, 2, height - fontHeight / 2F, -1, 0, false, false, Colours.BLACK);
+        }
+
+        if (internName != null && !internName.isBlank()) {
+            Render2D.drawBorderedRect(matrix, width - mc.textRenderer.getWidth(internName) - 3, height - fontHeight - 2,  width, height, 1, Colours.WHITE, Colours.BLACK);
+            Render2D.drawString(matrix, internName, width - mc.textRenderer.getWidth(internName) - 1, height - fontHeight / 2F, -1, 0, false, false, Colours.BLACK);
+        }
     }
 
     public abstract void openValues(List<Val<?>> vals);

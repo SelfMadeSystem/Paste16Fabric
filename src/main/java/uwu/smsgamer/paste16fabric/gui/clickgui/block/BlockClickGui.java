@@ -23,6 +23,8 @@ public class BlockClickGui extends AbstractClickGui {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        description = null;
+        internName = null;
         renderBackground(matrices);
         for (AbstractBlockMenu menu : menus) {
             menu.render(matrices, mouseX, mouseY, delta);

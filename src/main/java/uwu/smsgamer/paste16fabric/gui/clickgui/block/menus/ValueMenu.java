@@ -108,6 +108,9 @@ class ValueBlock extends AbstractClickComponent {
         } else {
             editor.render(stack, gui, x, y + mc.textRenderer.fontHeight + 2, mouseX, mouseY, width, height - mc.textRenderer.fontHeight - 2);
         }
+        if (isMouseOver(mouseX, mouseY) && (gui.override == null || gui.override == this)) {
+            gui.description = editor.val.getDescription();
+        }
         return new Vec2f(width, height);
     }
 

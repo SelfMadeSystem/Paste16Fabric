@@ -57,6 +57,9 @@ class ModuleBlock extends AbstractClickComponent {
     public Vec2f render(MatrixStack stack, AbstractClickGui gui, float x, float y, double mouseX, double mouseY) {
         fill(stack, (int) x + 1, (int) y + 1, (int) (x + width) - 2, (int) (y + height) - 2, 0xFF777777);
         drawCenteredString(stack, mc.textRenderer, module.getName(), (int) (x + width / 2), (int) (y + height / 2 - mc.textRenderer.fontHeight / 2), 0xFF404040);
+        if (isMouseOver(mouseX, mouseY) && (gui.override == null || gui.override == this)) {
+            gui.description = module.getDescription();
+        }
         return new Vec2f(width, height);
     }
 
