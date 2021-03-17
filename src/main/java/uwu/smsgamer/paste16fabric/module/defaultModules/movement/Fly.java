@@ -92,14 +92,6 @@ public class Fly extends PasteModule {
 
                 if (!mc.player.noClip) spaceSpeed = EntityUtils.adjustMovementForCollisions(mc.player, spaceSpeed);
 
-                System.out.println(spaceSpeed.length());
-
-//                mc.gameRenderer.getCamera().getPitch()
-
-//                RotationUtils.setQuaternion(mc.gameRenderer.getCamera().getRotation(), mc.player.yaw, mc.player.pitch,
-//                  (float) (spaceSpeed.length() * 20));
-                ((ICamera) mc.gameRenderer.getCamera()).setRoll((float) (spaceSpeed.length() * 40));
-
                 mc.player.setVelocity(spaceSpeed);
                 mc.player.forwardSpeed = 0;
                 mc.player.sidewaysSpeed = 0;
