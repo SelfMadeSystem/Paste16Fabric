@@ -16,6 +16,7 @@ public class RollTest extends PasteModule {
 
     @PasteListener
     public void onRender(RenderEvent event) {
+        if (!getState()) return;
         if (event.place == RenderEvent.Place.POST) {
             ((ICamera) mc.gameRenderer.getCamera()).setRoll(roll.getFloat());
         }
