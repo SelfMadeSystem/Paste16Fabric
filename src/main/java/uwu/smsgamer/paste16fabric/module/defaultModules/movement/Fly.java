@@ -15,7 +15,7 @@ public class Fly extends PasteModule {
       "3D",
       "Space");
 
-    public final VNumber speed = new VNumber(this, "Speed", 1, 0, 2, 0.05,
+    public final VNumber speed = new VNumber(this, "Speed", 1, 0, 2, 0.005,
       "Speed for Creative, 3D & Space.") {
         @Override
         public boolean visible() {
@@ -23,7 +23,7 @@ public class Fly extends PasteModule {
         }
     };
 
-    public final VNumber friction = new VNumber(this, "Friction", 0.9, 0, 1.2, 0.05,
+    public final VNumber friction = new VNumber(this, "Friction", 0.9, 0, 1.2, 0.005,
       "Friction for Space.") {
         @Override
         public boolean visible() {
