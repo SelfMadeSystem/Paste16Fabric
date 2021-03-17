@@ -67,7 +67,7 @@ public class VNumber extends Val<Number> {
     }
 
     public void setScaledValue(double d) {
-        setValue(d * (this.max - this.min) + this.min);
+        setValue(d * (this.max - this.min) + this.min + this.step / 2);
     }
 
     @Override
