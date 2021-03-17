@@ -4,7 +4,9 @@ import net.minecraft.client.*;
 import net.minecraft.client.util.*;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.*;
+import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
 import uwu.smsgamer.paste16fabric.module.defaultModules.player.BetterRotation;
+import uwu.smsgamer.paste16fabric.utils.MathUtils;
 
 @Mixin(Mouse.class)
 public class MixinMouse {
@@ -109,8 +111,23 @@ public class MixinMouse {
     }
 
     private void changeLookDirectionRoll(Entity entity, double cursorDeltaX, double cursorDeltaY) {
-        double d = cursorDeltaY * 0.15D;
-        double e = cursorDeltaX * 0.15D;
+        float x = (float) (cursorDeltaX * 0.15F);
+        float y = (float) (cursorDeltaY * 0.15F);
+        ICamera camera = ((ICamera) client.gameRenderer.getCamera());
+        float yaw = entity.yaw;
+        float pitch = entity.pitch;
+        float roll = camera.getRoll();
+
+        float cosYaw = MathUtils.cos_fd(yaw);
+        float sinYaw = MathUtils.sin_fd(yaw);
+        float cosPitch = MathUtils.cos_fd(pitch);
+        float sinPitch = MathUtils.sin_fd(pitch);
+        float cosRoll = MathUtils.cos_fd(roll);
+        float sinRoll = MathUtils.sin_fd(roll);
+
+        entity.yaw += x * cosPitch * cosRoll + y * -sinRoll * cosPitch;
+        entity.pitch += y * cosRoll + x * sinRoll;
+        // Todo: Implement roll
 //        entity.pitch = (float)((double)entity.pitch + d);
 //        entity.yaw = (float)((double)entity.yaw + e);
 //        entity.prevPitch = (float)((double)entity.prevPitch + d);

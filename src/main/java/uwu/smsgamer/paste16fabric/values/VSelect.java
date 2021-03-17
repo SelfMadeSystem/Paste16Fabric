@@ -1,6 +1,7 @@
 package uwu.smsgamer.paste16fabric.values;
 
 import org.jetbrains.annotations.NotNull;
+import uwu.smsgamer.paste16fabric.config.ConfigManager;
 import uwu.smsgamer.paste16fabric.gui.clickgui.valueEditors.*;
 import uwu.smsgamer.paste16fabric.module.PasteModule;
 
@@ -37,6 +38,7 @@ public class VSelect<T> extends Val<Integer> {
                 if (o.equals(types[i])) setValue(i);
             }
         }
+        ConfigManager.getInstance().setValue(this, true);
     }
 
     protected int selector(String s) {

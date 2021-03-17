@@ -35,6 +35,7 @@ public class VNumber extends Val<Number> {
 
     public void setValue(Number n) {
         this.value = MathUtils.clamp(MathUtils.roundInc(n.doubleValue(), step), min, max);
+        ConfigManager.getInstance().setValue(this, true);
     }
 
     public byte getByte() {
