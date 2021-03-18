@@ -1,7 +1,7 @@
 package uwu.smsgamer.paste16fabric.utils;
 
 import net.minecraft.client.MinecraftClient;
-import uwu.smsgamer.paste16fabric.injection.interfaces.IMinecraft;
+import uwu.smsgamer.paste16fabric.injection.interfaces.client.IMinecraft;
 
 public interface MinecraftHelper {
     MinecraftClient mc = MinecraftClient.getInstance();

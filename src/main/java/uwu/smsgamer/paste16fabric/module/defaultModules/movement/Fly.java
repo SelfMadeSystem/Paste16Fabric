@@ -3,7 +3,6 @@ package uwu.smsgamer.paste16fabric.module.defaultModules.movement;
 import net.minecraft.util.math.Vec3d;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.UpdateEvent;
-import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
 import uwu.smsgamer.paste16fabric.module.*;
 import uwu.smsgamer.paste16fabric.utils.*;
 import uwu.smsgamer.paste16fabric.values.*;
