@@ -55,12 +55,12 @@ public class RotationUtils implements MinecraftHelper {
         double lenY = startBox.getYLength() * 0.5 * vLimit;
         double lenZ = startBox.getZLength() * 0.5 * hLimit;
 
-        double yOffset = lenY * yHeight;
+        double yOffset = startBox.getYLength() * yHeight;
 
         Vec3d center = startBox.getCenter();
 
-        return new Box(center.x - lenX, center.y - yOffset - lenY, center.z - lenZ,
-          center.x + lenX, center.y - yOffset + lenY, center.z + lenZ);
+        return new Box(center.x - lenX, center.y + yOffset - lenY, center.z - lenZ,
+          center.x + lenX, center.y + yOffset + lenY, center.z + lenZ);
     }
 
     public static AimInfo getAimInfo(Matrix4f matrix, Box box, Rotation current) {

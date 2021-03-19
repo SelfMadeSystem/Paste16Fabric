@@ -16,7 +16,9 @@ public class KillAura extends PasteModule {
             return silent.getValue();
         }
     };
-
+    public VNumber hLimit = new VNumber(this, "Horizontal Limit", 1, 0, 2, 0.05, "Horizontal limit in % relative to the hitbox size.");
+    public VNumber vLimit = new VNumber(this, "Vertical Limit", 1, 0, 2, 0.05, "Vertical limit in % relative to the hitbox size.");
+    public VNumber yHeight = new VNumber(this, "Y Offset", 0, -1, 1, 0.05, "Vertical offset in % of the aiming box.");
     public VSelect<String> aim = new VSelect<>(this, "Aim", 0, "Aim...?",
       "Closest",
       "Min",
@@ -64,9 +66,9 @@ public class KillAura extends PasteModule {
     }
 
     public Rotation getRotation(Matrix4f matrix, Entity target) {
-        RotationUtils.AimInfo info = RotationUtils.getAimInfo(matrix, RotationUtils.getAimingBox(target.getBoundingBox(), 1, 1, 0),
+        RotationUtils.AimInfo info = RotationUtils.getAimInfo(matrix, RotationUtils.getAimingBox(target.getBoundingBox(), hLimit.getDouble(), vLimit.getDouble(), yHeight.getDouble()),
           silent.getValue() ? currentR : Rotation.player());
-        switch(aim.getValue()) {
+        switch (aim.getValue()) {
             case 0:
                 return info.closestRot;
             case 1:
