@@ -45,9 +45,9 @@ public class MixinCamera implements ICamera {
 
     private Vec3d euler = new Vec3d(0, 0, 0);
 
-    /**
+    /*
      * @author Sms_Gamer_3808
-     */
+     *
     @Overwrite
     public void update(BlockView area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta) {
         this.ready = true;

@@ -16,6 +16,7 @@ public class RenderEvent implements Event {
 
     public enum Place {
         HUD,
+        WORLD,
         POST
     }
 }

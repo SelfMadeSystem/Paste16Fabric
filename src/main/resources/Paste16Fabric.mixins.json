@@ -14,7 +14,7 @@
     "network.MixinClientConnection",
     "network.MixinClientConnection$QueuedPacket",
     "render.MixinCamera",
-    "render.MixinGamerRenderer",
+    "render.MixinGameRenderer",
     "screen.MixinScreen"
   ],
   "client": [

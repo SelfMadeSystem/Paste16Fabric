@@ -16,12 +16,17 @@ public class Rotation implements MinecraftHelper {
     }
 
     public static Rotation player() {
-        return new Rotation(mc.player.getRotationClient());
+        return new Rotation(mc.player.yaw, mc.player.pitch);
     }
 
     public void toPlayer() {
         mc.player.yaw = this.yaw;
         mc.player.pitch = this.pitch;
+    }
+
+    public Rotation diff(Rotation r) {
+        return new Rotation(RotationUtils.angleDiff(this.yaw, r.yaw),
+          RotationUtils.angleDiff(this.pitch, r.pitch));
     }
 
     @Override
