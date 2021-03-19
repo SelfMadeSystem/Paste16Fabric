@@ -4,15 +4,15 @@
   "package": "uwu.smsgamer.paste16fabric.injection.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "entity.MixinClientPlayerEntity",
-    "network.MixinClientConnection",
-    "network.MixinClientConnection$QueuedPacket",
     "client.MixinKeyboard",
     "client.MixinMinecraftClient",
     "client.MixinMouse",
     "entity.MixinClientPlayerEntity",
+    "entity.MixinEntity",
     "hud.MixinInGameHud",
     "hud.MixinInGameOverlayRenderer",
+    "network.MixinClientConnection",
+    "network.MixinClientConnection$QueuedPacket",
     "render.MixinCamera",
     "render.MixinGamerRenderer",
     "screen.MixinScreen"

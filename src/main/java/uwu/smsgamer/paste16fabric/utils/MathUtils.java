@@ -58,14 +58,14 @@ public class MathUtils {
         return f;
     }
 
+    public static float getAngleDifference(float a, float b) {
+        return ((((a - b) % 360F) + 540F) % 360F) - 180F;
+    }
+
     public static double roundInc(double val, double inc) {
         if (inc == 0) return val;
         val = val - inc / 2;
         return Math.round(val * (1d / inc)) / (1d / inc);
-    }
-
-    public static float getAngleDifference(float a, float b) {
-        return ((((a - b) % 360F) + 540F) % 360F) - 180F;
     }
 
     public static double clamp(double a, double min, double max) {

@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.*;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.MovementType;
 import net.minecraft.network.packet.c2s.play.*;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.*;
@@ -40,6 +41,8 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Shadow private boolean autoJumpEnabled;
 
     @Shadow @Final protected MinecraftClient client;
+
+    @Shadow public abstract void move(MovementType type, Vec3d movement);
 
     public MixinClientPlayerEntity(ClientWorld world, GameProfile profile) {
         super(world, profile);

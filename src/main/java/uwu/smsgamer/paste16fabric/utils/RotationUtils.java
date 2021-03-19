@@ -1,12 +1,13 @@
 package uwu.smsgamer.paste16fabric.utils;
 
 import lombok.Getter;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.*;
 import uwu.smsgamer.paste16fabric.events.PasteListener;
 import uwu.smsgamer.paste16fabric.events.events.*;
 
 @Getter
-public class RotationUtils {
+public class RotationUtils implements MinecraftHelper {
     private float oYaw;
     private float oPitch;
     private boolean override;
@@ -60,5 +61,32 @@ public class RotationUtils {
 
         return new Box(center.x - lenX, center.y - yOffset - lenY, center.z - lenZ,
           center.x + lenX, center.y - yOffset + lenY, center.z + lenZ);
+    }
+
+    public static Rotation rotationTo(Entity target) {
+        return toRotation(target.getPos().subtract(PlayerUtils.getEyePos()));
+    }
+
+    public static Rotation toRotation(Vec3d vec) {
+        return toRotation(vec.x, vec.y, vec.z);
+    }
+
+    public static Rotation toRotation(double x, double y, double z) {
+        return new Rotation(MathUtils.wrapAngle180((float) (Math.toDegrees(Math.atan2(z, x)) - 90)),
+          -MathUtils.wrapAngle180((float) Math.toDegrees(Math.atan2(y, Math.sqrt(x * x + z * z)))));
+    }
+
+    //thx lb
+    public static float angleDiff(float a, float b) {
+        return MathUtils.getAngleDifference(a, b);
+    }
+
+    public static boolean isBetweenAngles(float a, float b, float r) {
+        double diff = Math.abs(angleDiff(a, b));
+        return Math.abs(angleDiff(a, r)) <= diff & Math.abs(angleDiff(b, r)) <= diff;
+    }
+
+    public static float wrapAngle180(float f) {
+        return MathUtils.wrapAngle180(f);
     }
 }
