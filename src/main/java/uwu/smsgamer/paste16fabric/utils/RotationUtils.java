@@ -3,7 +3,7 @@ package uwu.smsgamer.paste16fabric.utils;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.*;
-import uwu.smsgamer.paste16fabric.events.PasteListener;
+import uwu.smsgamer.paste16fabric.events.*;
 import uwu.smsgamer.paste16fabric.events.events.SendMovementPacketsEvent;
 
 @Getter
@@ -22,6 +22,7 @@ public class RotationUtils implements MinecraftHelper {
 
     private RotationUtils() {
         instance = this;
+        EventManager.registerListener(this);
     }
 
     public void setoYaw(float oYaw) {

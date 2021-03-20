@@ -65,10 +65,12 @@ public class VRange extends Val<VRange.Range> {
     }
 
     public double getTime(long amount, long time) {
+        if (amount == 0 || time == 0) return getRandom();
         return (time % amount) / ((float) amount) * (getValue().max.doubleValue() - getValue().min.doubleValue()) + getValue().min.doubleValue();
     }
 
     public double getLoopTime(long amount, long time) {
+        if (amount == 0 || time == 0) return getRandom();
         double l = (time % amount * 2);
         return (l > amount ? -l + amount * 2 : l) / amount *
           (getValue().max.doubleValue() - getValue().min.doubleValue()) + getValue().min.doubleValue();
@@ -126,6 +128,50 @@ public class VRange extends Val<VRange.Range> {
                 max = n;
             }
             return b;
+        }
+    }
+
+    public static class SelectMode extends VSelect<String> {
+        public SelectMode(@NotNull PasteModule module, @NotNull String name, @NotNull Integer defaultValue, String description) {
+            super(module, name, defaultValue, description, "Random", "Time", "LoopTime");
+        }
+
+        public SelectMode(@NotNull Val<?> parent, @NotNull String name, @NotNull Integer defaultValue, String description) {
+            super(parent, name, defaultValue, description, "Random", "Time", "LoopTime");
+        }
+    }
+
+    public static class Time extends VNumber {
+        private final VRange range;
+        private final SelectMode mode;
+
+        public Time(@NotNull PasteModule module, @NotNull String name, String description, VRange range, SelectMode mode) {
+            super(module, name, 2, 0, 5, 0.1, description);
+            this.range = range;
+            this.mode = mode;
+        }
+
+        public Time(@NotNull Val<?> parent, @NotNull String name, String description, VRange range, SelectMode mode) {
+            super(parent, name, 2, 0, 5, 0.1, description);
+            this.range = range;
+            this.mode = mode;
+        }
+
+        public double getModeValue() {
+            switch (mode.getValue()) {
+                default:
+                case 0:
+                    return range.getRandom();
+                case 1:
+                    return range.getTime((long) (getDouble() * 1000), System.currentTimeMillis());
+                case 2:
+                    return range.getLoopTime((long) (getDouble() * 1000), System.currentTimeMillis());
+            }
+        }
+
+        @Override
+        public boolean visible() {
+            return mode.getValue() > 0;
         }
     }
 }

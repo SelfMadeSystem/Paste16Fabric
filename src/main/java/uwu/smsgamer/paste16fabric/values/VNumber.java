@@ -74,4 +74,34 @@ public class VNumber extends Val<Number> {
     public AbstractValueEditor<VNumber, Number> getValueEditor() {
         return new NumberEditor(this);
     }
+
+    public static class Percent extends VNumber {
+        public Percent(@NotNull PasteModule module, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step, String description) {
+            super(module, name, defaultValue, min, max, step, description);
+        }
+
+        public Percent(@NotNull Val<?> parent, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step, String description) {
+            super(parent, name, defaultValue, min, max, step, description);
+        }
+
+        @Override
+        public String getStringValue() {
+            return String.format("%d%%", (int) (getDouble() * 100));
+        }
+    }
+
+    public static class Int extends VNumber {
+        public Int(@NotNull PasteModule module, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step, String description) {
+            super(module, name, defaultValue, min, max, step, description);
+        }
+
+        public Int(@NotNull Val<?> parent, @NotNull String name, @NotNull Number defaultValue, Number min, Number max, Number step, String description) {
+            super(parent, name, defaultValue, min, max, step, description);
+        }
+
+        @Override
+        public String getStringValue() {
+            return String.format("%d", (int) getDouble());
+        }
+    }
 }

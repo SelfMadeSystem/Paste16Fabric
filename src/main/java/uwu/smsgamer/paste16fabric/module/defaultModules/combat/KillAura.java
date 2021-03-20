@@ -16,9 +16,21 @@ public class KillAura extends PasteModule {
             return silent.getValue();
         }
     };
-    public VNumber hLimit = new VNumber(this, "Horizontal Limit", 1, 0, 2, 0.05, "Horizontal limit in % relative to the hitbox size.");
-    public VNumber vLimit = new VNumber(this, "Vertical Limit", 1, 0, 2, 0.05, "Vertical limit in % relative to the hitbox size.");
-    public VNumber yHeight = new VNumber(this, "Y Offset", 0, -1, 1, 0.05, "Vertical offset in % of the aiming box.");
+//    public VNumber hLimit = new VNumber.Percent(this, "Horizontal Limit", 1, 0, 2, 0.05, "Horizontal limit in % relative to the hitbox size.");
+//    public VNumber vLimit = new VNumber.Percent(this, "Vertical Limit", 1, 0, 2, 0.05, "Vertical limit in % relative to the hitbox size.");
+//    public VNumber yHeight = new VNumber.Percent(this, "Y Offset", 0, -1, 1, 0.05, "Vertical offset in % of the aiming box.");
+    public VRange hLimitRange = new VRange(this, "Horizontal Limit", 1, 1, 0, 2, 0.05, "Horizontal limit in % relative to the hitbox size.");
+    public VRange.SelectMode hLimitSelect = new VRange.SelectMode(this, "Horizontal Limit Select Mode", 0, "");
+    public VRange.Time hLimit = new VRange.Time(this, "Horizontal Limit Time", "", hLimitRange, hLimitSelect);
+
+    public VRange vLimitRange = new VRange(this, "Vertical Limit", 1, 1, 0, 2, 0.05, "Vertical limit in % relative to the hitbox size.");
+    public VRange.SelectMode vLimitSelect = new VRange.SelectMode(this, "Vertical Limit Select Mode", 0, "");
+    public VRange.Time vLimit = new VRange.Time(this, "Vertical Limit Time", "", vLimitRange, vLimitSelect);
+
+    public VRange yHeightRange = new VRange(this, "Y Offset", 0, 0, -1, 1, 0.05, "Vertical offset in % of the aiming box.");
+    public VRange.SelectMode yHeightSelect = new VRange.SelectMode(this, "Y Offset Select Mode", 0, "");
+    public VRange.Time yHeight = new VRange.Time(this, "Y Offset Time", "", yHeightRange, yHeightSelect);
+
     public VSelect<String> aim = new VSelect<>(this, "Aim", 0, "Aim...?",
       "Closest",
       "Min",
@@ -47,7 +59,7 @@ public class KillAura extends PasteModule {
         if (event.place.equals(RenderEvent.Place.WORLD)) {
             Entity target = Targets.getClosestEntity(6, 180);
             if (target != null) {
-                Rotation rotation = getRotation(event.matrices.peek().getModel(), target);//RotationUtils.rotationTo(target);
+                Rotation rotation = getRotation(event.matrices.peek().getModel(), target);
                 if (currentR == null) currentR = rotation;
                 else currentR = new Rotation(currentR.yaw + RotationUtils.angleDiff(rotation.yaw, currentR.yaw),
                   rotation.pitch);
@@ -60,13 +72,14 @@ public class KillAura extends PasteModule {
                     currentR.toPlayer();
                 }
             } else {
+                RotationUtils.getInstance().setOverride(false);
                 currentR = Rotation.player();
             }
         }
     }
 
     public Rotation getRotation(Matrix4f matrix, Entity target) {
-        RotationUtils.AimInfo info = RotationUtils.getAimInfo(matrix, RotationUtils.getAimingBox(target.getBoundingBox(), hLimit.getDouble(), vLimit.getDouble(), yHeight.getDouble()),
+        RotationUtils.AimInfo info = RotationUtils.getAimInfo(matrix, RotationUtils.getAimingBox(target.getBoundingBox(), hLimit.getModeValue(), vLimit.getModeValue(), yHeight.getModeValue()),
           silent.getValue() ? currentR : Rotation.player());
         switch (aim.getValue()) {
             case 0:
