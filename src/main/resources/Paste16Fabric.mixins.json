@@ -6,7 +6,6 @@
   "mixins": [
     "client.MixinKeyboard",
     "client.MixinMinecraftClient",
-    "client.MixinMouse",
     "entity.MixinClientPlayerEntity",
     "entity.MixinEntity",
     "hud.MixinInGameHud",

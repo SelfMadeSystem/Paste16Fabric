@@ -16,7 +16,7 @@ import uwu.smsgamer.paste16fabric.injection.interfaces.render.ICamera;
 import uwu.smsgamer.paste16fabric.module.defaultModules.player.BetterRotation;
 
 @SuppressWarnings("FieldMayBeFinal")
-@Mixin(GameRenderer.class)
+@Mixin(value = GameRenderer.class, priority = 100)
 public class MixinGameRenderer {
     @Final
     @Shadow
@@ -40,14 +40,14 @@ public class MixinGameRenderer {
         EventManager.call(new RenderEvent(tickDelta, new MatrixStack(), RenderEvent.Place.POST));
     }
 
-//    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 1))
-//    public void renderWorld(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
-//        EventManager.call(new RenderEvent(tickDelta, matrix, RenderEvent.Place.WORLD));
-//    }
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 1))
+    public void renderWorld(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
+        EventManager.call(new RenderEvent(tickDelta, matrix, RenderEvent.Place.WORLD));
+    }
 
-    /**
+    /*
      * @author Sms_Gamer_3808
-     */
+     *
     @Overwrite
     public void renderWorld(float tickDelta, long limitTime, MatrixStack matrix) {
         this.lightmapTextureManager.update(tickDelta);
@@ -94,7 +94,7 @@ public class MixinGameRenderer {
         }
 
         this.client.getProfiler().pop();
-    }
+    }*/
 
     @Shadow
     private void bobViewWhenHurt(MatrixStack matrixStack, float tickDelta) {

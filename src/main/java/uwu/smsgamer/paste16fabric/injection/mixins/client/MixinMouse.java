@@ -1,3 +1,4 @@
+/*
 package uwu.smsgamer.paste16fabric.injection.mixins.client;
 
 import net.minecraft.client.*;
@@ -51,9 +52,11 @@ public class MixinMouse {
     @Shadow
     private boolean cursorLocked;
 
-    /**
+    */
+/**
      * @author Sms_Gamer_3808
-     */
+     *//*
+
     @Overwrite
     public void updateMouse() {
         double d = GlfwUtil.getTime();
@@ -199,3 +202,4 @@ public class MixinMouse {
 //        }
     }
 }
+*/

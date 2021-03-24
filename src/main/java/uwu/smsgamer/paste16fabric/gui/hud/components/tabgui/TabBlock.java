@@ -189,7 +189,7 @@ public abstract class TabBlock implements MinecraftHelper {
         y /= getTextSize();
 
         String font = getOptions().getFontSettings().getFont();
-        if (font == null || font.isBlank()) {
+        if (font == null || font.isEmpty()) {
             float v = getOptions().getFontSettings().getBaseFontSize() / 14F;
             model.multiply(v);
 

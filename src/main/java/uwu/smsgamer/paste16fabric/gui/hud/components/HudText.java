@@ -27,7 +27,7 @@ public class HudText extends HudComponent {
         float x = (getX() / size);
         float y = (getY() / size);
 
-        if (fontSettings.font == null || fontSettings.font.isBlank()) {
+        if (true || fontSettings.font == null || fontSettings.font.isEmpty()) {
             float v = getFontSettings().getBaseFontSize() / 14F;
             model.multiply(v);
 
@@ -51,8 +51,8 @@ public class HudText extends HudComponent {
     }
 
     public void reloadRenderer() {
-        if (fontSettings.font != null && !fontSettings.font.isBlank())
-            renderer = fontSettings.generateRenderer();
+//        if (fontSettings.font != null && !fontSettings.font.isEmpty())
+//            renderer = fontSettings.generateRenderer();
     }
 
     @Override

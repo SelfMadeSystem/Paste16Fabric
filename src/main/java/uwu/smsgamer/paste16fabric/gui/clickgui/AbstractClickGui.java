@@ -40,12 +40,12 @@ public abstract class AbstractClickGui extends Screen implements MinecraftHelper
 
         Matrix4f matrix = matrices.peek().getModel();
 
-        if (description != null && !description.isBlank()) {
+        if (description != null && !description.isEmpty()) {
             Render2D.drawBorderedRect(matrix, 0, height - fontHeight - 2, mc.textRenderer.getWidth(description) + 3, height, 1, Colours.WHITE, Colours.BLACK);
             Render2D.drawString(matrix, description, 2, height - fontHeight / 2F, -1, 0, false, false, Colours.BLACK);
         }
 
-        if (internName != null && !internName.isBlank()) {
+        if (internName != null && !internName.isEmpty()) {
             Render2D.drawBorderedRect(matrix, width - mc.textRenderer.getWidth(internName) - 3, height - fontHeight - 2,  width, height, 1, Colours.WHITE, Colours.BLACK);
             Render2D.drawString(matrix, internName, width - mc.textRenderer.getWidth(internName) - 1, height - fontHeight / 2F, -1, 0, false, false, Colours.BLACK);
         }

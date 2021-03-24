@@ -8,7 +8,7 @@
     "Sms_Gamer_3808"
   ],
   "contact": {},
-  "license": "MIT",
+  "license": "GPL3",
   "icon": "assets/Paste16Fabric/icon.png",
   "environment": "*",
   "entrypoints": {

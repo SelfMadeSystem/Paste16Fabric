@@ -64,10 +64,10 @@ public class TabGui extends HudComponent {
     }
 
     public void regenerateRenderers() {
-        if (categoryOptions.getFontSettings().getFont() != null && !categoryOptions.getFontSettings().getFont().isBlank())
+        if (categoryOptions.getFontSettings().getFont() != null && !categoryOptions.getFontSettings().getFont().isEmpty())
             categoryRenderer = categoryOptions.getFontSettings().generateRenderer();
 
-        if (moduleOptions.getFontSettings().getFont() != null && !moduleOptions.getFontSettings().getFont().isBlank())
+        if (moduleOptions.getFontSettings().getFont() != null && !moduleOptions.getFontSettings().getFont().isEmpty())
             moduleRenderer = moduleOptions.getFontSettings().generateRenderer();
     }
 

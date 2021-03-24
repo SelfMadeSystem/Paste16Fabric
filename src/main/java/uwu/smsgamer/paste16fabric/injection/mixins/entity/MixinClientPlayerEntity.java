@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import uwu.smsgamer.paste16fabric.events.EventManager;
 import uwu.smsgamer.paste16fabric.events.events.*;
 
-@Mixin(ClientPlayerEntity.class)
+@Mixin(value = ClientPlayerEntity.class, priority = 100)
 public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
 
     @Shadow private boolean lastSprinting;
@@ -52,6 +52,14 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     public void onUpdate(CallbackInfo ci) {
         EventManager.call(new UpdateEvent());
     }
+
+//    @ModifyConstant(method = "sendMovementPackets", constant = @Constant(doubleValue = 9.0E-4D))
+//    private double OWO(double value) {
+//
+//        final float scale = ScaleUtils.getMotionScale((Entity) (Object) this);
+//
+//        return scale < 1.0F ? scale * scale * value : value;
+//    }
 
     /**
      * @author Sms_Gamer_3808
